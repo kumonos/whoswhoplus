@@ -6,6 +6,6 @@ SampleKoalaRailsApp::Application.routes.draw do
 
   root :to => 'home#index'
 
-  match 'home/callback' => 'home#callback'
+  get 'home/callback' => 'home#callback'
 
 end
