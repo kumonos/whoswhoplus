@@ -1,6 +1,8 @@
 Looping through your statuses:<br />
 <ul>
 
+<%=@pic_data["picture"]["data"]["url"] %>
+
 <% @graph_data.each do |status| %>
 <%= status["message"] %> (<i><%=status["updated_time"]%></i>)<hr>
 <% end %>
