@@ -3,3 +3,12 @@
 * apiで取ってきたJSONデータのパース->youcune
 * FB apiから取得するデータ修正->tomoima
 * 
+### gitignoreしてるもの
+* gitignoreして大丈夫なんすかねこれら…
+/.bundle
+/db/*.sqlite3
+/db/*.sqlite3-journal
+/log/*.log
+/tmp
+config/initializers/constants.rb
+
