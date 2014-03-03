@@ -25,26 +25,19 @@ class HomeController < ActionController::Base
 		begin
 			@graph_data = @api.get_object("/me/statuses", "fields"=>"message")
 			@pic_data=@api.get_object("100003980373324","fields"=>"picture")
-			#@pic_data=@api.get_object("/me/photos")
+			#userのプロフィール画像とれる
 			puts @api.get_object("100003980373324","fields"=>"picture")
-			#puts  @api.get_object("/me/photos")
-			#puts @api.get_connections("me","friends")
+
+			#message一覧
 			puts @api.get_object("/me/statuses","fields"=>"message")
 		rescue Exception=>ex
 			puts ex.message
 		end
 		puts @pic_data.class
 		puts @pic_data['picture']['data']['url']
-
+		#parse がうまくいかない
 		#hash=JSON.parse @pic_data
 		#parsed=hash['picture']
-
-		#puts @data=@pic_data['picture']
-		#puts @url_data=@data['data']
-		#puts @url=@url_data['url']
-		#@url_data.each do |pic|
-		#	puts pic['url']
-		#end
 
  		respond_to do |format|
 		 format.html {   }
