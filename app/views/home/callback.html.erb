@@ -1,8 +1,11 @@
-Looping through your statuses:<br />
+
 <ul>
+<p>とりあえず友人のプロフィール画像</p>
 
-<%=@pic_data["picture"]["data"]["url"] %>
-
+<img src="<%=@pic_data["picture"][p"data"]["url"] %>">
+</br>
+<p>自分のウォール（test）</p>
+</br>
 <% @graph_data.each do |status| %>
 <%= status["message"] %> (<i><%=status["updated_time"]%></i>)<hr>
 <% end %>
