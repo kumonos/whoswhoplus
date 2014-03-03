@@ -1,34 +1,29 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
-gem 'rails', '4.0.0'
+gem 'rails', '4.0.3'
+
+# Facebook API
 gem 'koala', "~>1.8.0rc1"
 
-# Bundle edge Rails instead:
-# gem 'rails',     :git => 'git://github.com/rails/rails.git'
-
-gem 'sqlite3'
-
-
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'sass-rails', "  ~> 4.0.0"
-  gem 'coffee-rails', "~> 4.0.0"
-  gem 'uglifier'
-end
-
+# Assets
+gem 'sass-rails'
+gem 'coffee-rails'
+gem 'uglifier'
 gem 'jquery-rails'
+gem 'therubyracer'
 
-# Use unicorn as the web server
-# gem 'unicorn'
+group :development, :test do
+  # Debugging
+  gem 'byebug'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'
-
-group :test do
-  # Pretty printed test output
-  gem 'turn', :require => false
+  # Database
+  gem 'sqlite3'
 end
+
+group :production do
+  # AP Server
+  # gem 'unicorn'
+end
+
