@@ -1,0 +1,12 @@
+!!! 5
+%html
+  %head
+    %meta{ charset: 'UTF-8' }
+    %meta{ name: 'viewport', content: 'initial-scale=1.0, user-scalable=no' }
+    %title FB app
+    = stylesheet_link_tag    'application'
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+  %body
+    .container
+      = yield
