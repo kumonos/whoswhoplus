@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class Profile < ActiveRecord::Base
   # 年齢を取得する
   # @return [Integer] 年齢
   def age
