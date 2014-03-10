@@ -5,6 +5,9 @@ gem 'rails', '4.0.3'
 # Facebook API
 gem 'koala', "~>1.8.0rc1"
 
+# Views
+gem 'haml-rails'
+
 # Assets
 gem 'sass-rails'
 gem 'coffee-rails'
@@ -12,16 +15,25 @@ gem 'uglifier'
 gem 'jquery-rails'
 gem 'therubyracer'
 
-group :development, :test do
+group :development do
   # Debugging
-  gem 'byebug'
   gem 'better_errors'
   gem 'binding_of_caller'
 
+  # CLI Tools
+  gem 'erb2haml'
+end
+
+group :test do
   # Specs
   gem 'rspec-rails', '~> 3.0.0.beta2'
   gem 'factory_girl_rails'
   gem 'faker'
+end
+
+group :development, :test do
+  # Debugging
+  gem 'byebug'
 
   # Database
   gem 'sqlite3'
@@ -31,4 +43,3 @@ group :production do
   # AP Server
   # gem 'unicorn'
 end
-
