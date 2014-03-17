@@ -1,4 +1,6 @@
 class RelationsController < ApplicationController
+  before_action :requires_login
+
   # GET /relations/:user
   # 紹介画面：指定ユーザへの経路を提案する
   def index
