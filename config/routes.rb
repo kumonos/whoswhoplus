@@ -3,8 +3,8 @@ SampleKoalaRailsApp::Application.routes.draw do
   get '/home/callback' => 'home#callback'
 
   # 紹介画面
-  get '/relations/:user' => 'relations#index'
+  get '/relations/:user' => 'relations#index', as: :relations
 
   # メッセージ送信画面
-  get '/relations/:user/via/:via' => 'relations#show'
+  get '/relations/:user/via/:via' => 'relations#show', as: :relation
 end
