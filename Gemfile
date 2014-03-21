@@ -15,6 +15,10 @@ gem 'uglifier'
 gem 'jquery-rails'
 gem 'therubyracer'
 
+# JSON
+gem 'json'
+gem 'multi_json'
+
 group :development do
   # Debugging
   gem 'better_errors'
