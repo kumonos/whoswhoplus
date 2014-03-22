@@ -29,10 +29,6 @@ module SampleKoalaRailsApp
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
 
-    # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-    # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    # config.i18n.default_locale = :de
-
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
 
@@ -51,5 +47,8 @@ module SampleKoalaRailsApp
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
     end
 
+    # 日本語環境で使うことを明示
+    I18n.enforce_available_locales = true
+    config.i18n.default_locale = :ja
   end
 end
