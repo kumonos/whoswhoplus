@@ -1,2 +1,15 @@
-%h1 Relations#show
-%p Find me in app/views/relations/show.html.haml
+= breadcrumbs [['HOME', root_path], ["#{@profile.name}さんを", relations_path(user: @profile.fb_id)], "#{@via.name}さんに紹介してもらう"]
+%h2= @profile.name
+%p
+  = image_tag @profile.picture_url, alt: @profile.name
+%h3 メッセージ作成
+%p #{@via.name}さんに、#{@profile.name}さんの紹介をお願いするメッセージを送ろう。
+%script
+  TEMPLATES = new Object();
+  - @templates.each do |t|
+    TEMPLATES['#{t.id}'] = '#{t.body}';
+%form
+  %p= select_tag :objective, options_for_select(@templates.map { |t| [t.objective, t.id]}), include_blank: true, id: 'message-objective', class: 'form-control'
+  %p.small目的を選択すると、文例が自動的に入力されます。
+  %p= text_area_tag :body, nil, id: 'message-body', class: 'form-control'
+  %p= button_tag '<i class="fa fa-envelope-o"></i> 送信する'.html_safe, class: 'btn btn-primary'

@@ -1,5 +1,8 @@
 class RelationsController < ApplicationController
-  before_action :requires_login
+  #before_action :requires_login
+  before_action def stub
+    @current_user = Profile.find(12)
+  end
 
   # GET /relations/:user
   # 紹介画面：指定ユーザへの経路を提案する
@@ -30,7 +33,8 @@ class RelationsController < ApplicationController
       # TODO 見つからなかったときのことを一切考えてない
       # TODO 上記と処理を共通化できないか検討必要
       @profile = Profile.where(fb_id: params[:user]).first
-      @vias = Profile.where(fb_id: params[:via]).first
+      @via = Profile.where(fb_id: params[:via]).first
+      @templates = Template.all
     else
       # TODO 該当の経路なし。404にする
     end

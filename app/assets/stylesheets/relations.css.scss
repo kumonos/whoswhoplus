@@ -1,3 +1,21 @@
-// Place all the styles related to the relations controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+ul.via-candidates{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  li.via-candidate{
+    float: left;
+    text-align: center;
+    width: 100px;
+
+    img{
+      height: 80px;
+      width: 80px;
+    }
+  }
+}
+form{
+  textarea#message-body{
+    height: 12em;
+  }
+}

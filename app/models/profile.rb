@@ -46,6 +46,6 @@ class Profile < ActiveRecord::Base
   def age
     birth = self.birthday.strftime('%Y%m%d').to_i
     today = Date.today.strftime('%Y%m%d').to_i
-    return (birth - today) / 10000
+    return (today - birth) / 10000
   end
 end
