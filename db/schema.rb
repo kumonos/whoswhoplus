@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140322121504) do
+ActiveRecord::Schema.define(version: 20140323163120) do
 
   create_table "access_tokens", force: true do |t|
     t.string   "access_token", null: false
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20140322121504) do
     t.string   "picture_url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "friend_mutual"
   end
 
   add_index "profiles", ["access_token_id"], name: "index_profiles_on_access_token_id", unique: true

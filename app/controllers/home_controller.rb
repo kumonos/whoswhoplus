@@ -28,7 +28,6 @@ class HomeController < ApplicationController
       token = AccessToken.create!(access_token: session[:oauth].get_access_token(params[:code]))
       api = Koala::Facebook::API.new(token.access_token)
       profile = Profile.insert_or_update(api.get_object('/me','fields'=>'name,gender,picture'), token)
-      byebug
       session[:current_user] = profile.id
     #rescue
       # TODO
