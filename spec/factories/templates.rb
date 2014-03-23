@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :template do
-    objective "MyString"
-    body "MyText"
+    objective { Faker::Lorem.words(3).join(' ') }
+    body { Faker::Lorem.paragraphs(3).join("\n\n") }
   end
 end
