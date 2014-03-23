@@ -11,4 +11,12 @@ class ApplicationController < ActionController::Base
       @current_user = nil
     end
   end
+
+  # ログイン必須とする場合に呼ぶ
+  def requires_login
+    if @current_user.nil?
+      # TODO flashか何かで通知するほうがよい？
+      redirect_to root_path
+    end
+  end
 end
