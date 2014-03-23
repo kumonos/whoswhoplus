@@ -7,4 +7,13 @@ SampleKoalaRailsApp::Application.routes.draw do
 
   # メッセージ送信画面
   get '/relations/:user/via/:via' => 'relations#show', as: :relation
+  get 'home/callback' => 'home#callback'
+
+  resources :profiles do
+	collection {get "search"}
+  end
+
 end
+
+
+
