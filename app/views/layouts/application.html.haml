@@ -9,4 +9,7 @@
     = csrf_meta_tags
   %body
     .container
+      - if flash.present?
+        - flash.each do |type, msg|
+          %div{class: "alert alert-#{type.to_s}"}= msg.html_safe
       = yield
