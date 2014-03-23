@@ -34,6 +34,19 @@ class Profile < ActiveRecord::Base
   end
 
   # -----------------------------------------------------------------
+  # Public Class Methods
+  # -----------------------------------------------------------------
+  # ユーザの Friendsのトークンがあるかどうかを確認する
+  # Friendsのトークン情報を配列でまとめて返す
+  # @param [Hash] /me/friendの返り値
+  # 
+  def self.checkFriendsToken(me_friends)
+
+      profile = Profile.where(fb_id:me_friends.first['id'])
+  
+  end  
+
+  # -----------------------------------------------------------------
   # Public Instance Methods
   # -----------------------------------------------------------------
   # Facebook Graph APIをインスタンス化する
