@@ -1,5 +1,5 @@
 = breadcrumbs [['HOME', root_path], ["#{@profile.name}さんを", relations_path(user: @profile.fb_id)], "#{@via.name}さんに紹介してもらう"]
-%h2= @profile.name
+%h2= "#{@profile.name}さん"
 %p
   = image_tag @profile.picture_url, alt: @profile.name
 %h3 メッセージ作成
@@ -12,4 +12,5 @@
   %p= select_tag :objective, options_for_select(@templates.map { |t| [t.objective, t.id]}), include_blank: true, id: 'message-objective', class: 'form-control'
   %p.small目的を選択すると、文例が自動的に入力されます。
   %p= text_area_tag :body, nil, id: 'message-body', class: 'form-control'
-  %p= button_tag '<i class="fa fa-envelope-o"></i> 送信する'.html_safe, class: 'btn btn-primary'
+  %p.pull-right= button_tag '<i class="fa fa-envelope-o"></i> 送信する'.html_safe, class: 'btn btn-primary'
+  %p.pull-left= link_to '<i class="fa fa-angle-double-left"></i> 戻る'.html_safe, relations_path(user: @profile.fb_id), class: 'btn btn-default'
