@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140310112717) do
+ActiveRecord::Schema.define(version: 20140322121504) do
 
   create_table "access_tokens", force: true do |t|
     t.string   "access_token", null: false
@@ -45,5 +45,12 @@ ActiveRecord::Schema.define(version: 20140310112717) do
   end
 
   add_index "relations", ["friend_friend", "friend_mutual"], name: "index_relations_on_friend_friend_and_friend_mutual", unique: true
+
+  create_table "templates", force: true do |t|
+    t.string   "objective"
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
