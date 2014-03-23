@@ -1,8 +1,5 @@
 class RelationsController < ApplicationController
-  #before_action :requires_login
-  before_action def stub
-    @current_user = Profile.find(12)
-  end
+  before_action :requires_login
 
   # GET /relations/:user
   # 紹介画面：指定ユーザへの経路を提案する
