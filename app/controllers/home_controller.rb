@@ -4,12 +4,12 @@ class HomeController < ApplicationController
   def index
     if @current_user
       # ログイン状態
-      @friends = @current_user.api.get_object('/me/friends')
-      @friends_pic=@current_user.api.get_object('/me/friends','fields'=>'gender,birthday,picture')    
-      @friends_pic.each do |key|
+      @friends = Profile.checkFriendsToken(@current_user.api.get_object('/me/friends','fields'=>'name,gender,picture'))
+      #@friends_pic=@current_user.api.get_object('/me/friends','fields'=>'name,gender,picture')    
+      @friends.each do |key|
+        #puts "url is "+key["picture"]["data"]["url"].to_s
+        #puts "url is "+key.picture_url
 
-        #puts key["picture"]["data"]["url"].to_s
-         
       end  
       
     else
@@ -27,7 +27,8 @@ class HomeController < ApplicationController
     #begin
       token = AccessToken.create!(access_token: session[:oauth].get_access_token(params[:code]))
       api = Koala::Facebook::API.new(token.access_token)
-      profile = Profile.insert_or_update(api.get_object('/me'), token)
+      profile = Profile.insert_or_update(api.get_object('/me','fields'=>'name,gender,picture'), token)
+      byebug
       session[:current_user] = profile.id
     #rescue
       # TODO
