@@ -36,13 +36,14 @@ class Profile < ActiveRecord::Base
   # -----------------------------------------------------------------
   # Public Class Methods
   # -----------------------------------------------------------------
-  # ユーザ情報の友人情報を格納する
-  # すでにいる場合はそれを返す
-  # @param [Hash] /me/friends の返り値
+  # ユーザの Friendsのトークンがあるかどうかを確認する
+  # Friendsのトークン情報を配列でまとめて返す
+  # @param [Hash] /me/friendの返り値
   # 
-  def self.insert_or_update(profiles)
+  def self.checkFriendsToken(me_friends)
 
-
+      profile = Profile.where(fb_id:me_friends.first['id'])
+  
   end  
 
   # -----------------------------------------------------------------
