@@ -21,4 +21,4 @@
       %li #{f.name}
       %li
         -# =link_to f.picture_url, friends_path(f.fb_id) 
-        = link_to(image_tag(f.picture_url,size:"100x100",alt:"Pic") ,friends_path(f.fb_id))
+        = link_to(image_tag(f.picture_url,size:"100x100",alt:"Pic") ,friends_path(@current_user.fb_id,f.fb_id))
