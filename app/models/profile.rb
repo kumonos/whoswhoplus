@@ -36,20 +36,18 @@ class Profile < ActiveRecord::Base
   # -----------------------------------------------------------------
   # Public Class Methods
   # -----------------------------------------------------------------
-  # Facebook APIの返り値から友人の友人の情報をDBに格納する
+  # Facebook APIの返り値からprofile情報をDBに格納する
   # @param [Hash] /me/friends の返り値
-  # @param friend_mutual 共通の友人のID。検索の識別用
   # @return 
-  # TODO 友人の友人の情報は別テーブルに格納したほうが良い気がするので検討する
-  def self.insert(friends,friend_mutual)
+  def self.insert(friends)
 
     friends.each do |friend|
       #すでに存在していないか確認
-      data=Profile.where(fb_id:friend['id'],friend_mutual:friend_mutual).first
+      data=Profile.where(fb_id:friend['id']).first
       #TODO 途中で失敗してしまった場合の処理
 
       #存在していない場合は格納
-      if data.nil? && (friend['id']==friend_mutual)
+      if data.nil? 
         data=Profile.create!(
           fb_id:friend['id'],
           name:friend['name'],
@@ -57,7 +55,6 @@ class Profile < ActiveRecord::Base
           gender:friend['gender'],
           relationship_status:friend['relationship_status'],
           picture_url:friend['picture'].try { |p| p['data'].try { |d| d['url'] } },
-          friend_mutual:friend_mutual
           )
 
       end
