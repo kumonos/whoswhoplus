@@ -38,5 +38,25 @@ class HomeController < ApplicationController
 
   end
 
+  # get /sign_out
+  def sign_out
+    session[:current_user] = nil
+    flash[:info] = 'ログアウトしました！'
+    redirect_to root_path
+  end
+
+  # GET /dummy_login
+  # 危険なので開発環境でしか呼べないようにすること！
+  def dummy_form
+    render
+  end
+
+  # POST /dummy_login
+  # 危険なので開発環境でしか呼べないようにすること！
+  def dummy_login
+    session[:current_user] = params[:user_id]
+    flash[:info] = 'なりすましログインしました'
+    redirect_to root_path
+  end
 end
 
