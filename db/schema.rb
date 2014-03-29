@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140323163120) do
+ActiveRecord::Schema.define(version: 20140322121504) do
 
   create_table "access_tokens", force: true do |t|
     t.string   "access_token", null: false
@@ -31,21 +31,19 @@ ActiveRecord::Schema.define(version: 20140323163120) do
     t.string   "picture_url"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "friend_mutual"
   end
 
   add_index "profiles", ["access_token_id"], name: "index_profiles_on_access_token_id", unique: true
   add_index "profiles", ["fb_id"], name: "index_profiles_on_fb_id", unique: true
 
   create_table "relations", force: true do |t|
-    t.string   "friend_friend", null: false
-    t.string   "friend_mutual", null: false
-    t.integer  "profile_id",    null: false
+    t.string   "fb_id_younger", null: false
+    t.string   "fb_id_older",   null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "relations", ["friend_friend", "friend_mutual"], name: "index_relations_on_friend_friend_and_friend_mutual", unique: true
+  add_index "relations", ["fb_id_younger", "fb_id_older"], name: "index_relations_on_fb_id_younger_and_fb_id_older", unique: true
 
   create_table "templates", force: true do |t|
     t.string   "objective"
