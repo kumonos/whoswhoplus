@@ -72,7 +72,7 @@ class Profile < ActiveRecord::Base
   # TODO 色々な検索条件に対応する
 
   def self.search(gender)
-    data=Profile.where(gender:gender)
+    data = Profile.where(gender: gender)
     return data
   end
 
