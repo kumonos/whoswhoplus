@@ -1,12 +1,15 @@
 class RelationsController < ApplicationController
-  before_action :requires_login
+  #before_action :requires_login
+  before_action def dummy_login_path
+    @current_user = Profile.find(11)
+  end
   before_action :set_relations_and_profile
 
   # GET /relations/:user
   # 紹介画面：指定ユーザへの経路を提案する
   def index
     # 経由できる人を検索する
-    @vias = Profile.where(fb_id: @relations.pluck(:friend_mutual))
+    @vias = Profile.where(fb_id: @relations)
 
     # 経路が見つかればrender
     if @profile.present? && @vias.any?
@@ -36,9 +39,7 @@ class RelationsController < ApplicationController
   private
     # 紹介してもらう相手と、紹介できる友人のリストを作る
     def set_relations_and_profile
-      p = { profile_id: @current_user.id, friend_friend: params[:user] }
-      p.merge!(friend_mutual: params[:via]) if params[:via].present?
-      @relations = Relation.where(p)
-      @profile   = Profile.where(fb_id: params[:user]).first
+      @profile   = Profile.find_by_fb_id(params[:user])
+      @relations = Relation.common_friends(@current_user.fb_id, params[:user])
     end
 end
