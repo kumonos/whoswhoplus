@@ -14,13 +14,14 @@ class FriendsController < ApplicationController
 		render 'friends' #viewのhamlの名前
 	end
 
+	
 	# 検索結果ページ
 	def search
 		@friends=Profile.search(params[:gender])
+		@profile = Profile.getUser(params[:fb_id])
 
-		render 'friends' #viewのhamlの名前
-	end
-
-
-
+  private
+    def search_params
+      { gender: params[:gender] }
+    end
 end
