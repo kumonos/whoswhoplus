@@ -1,8 +1,5 @@
 class RelationsController < ApplicationController
-  #before_action :requires_login
-  before_action def dummy_login_path
-    @current_user = Profile.find(11)
-  end
+  before_action :requires_login
   before_action :set_relations_and_profile
 
   # GET /relations/:user
@@ -23,12 +20,12 @@ class RelationsController < ApplicationController
   # GET /relations/:user/via/:via
   # メッセージ送信画面：経由する人にメッセージを送信する
   def show
-    # 経由してきた人を検索する
-    @via = Profile.where(fb_id: params[:via]).first
+    # テンプレート読み込み
     @templates = Template.all
 
     # 経路が見つかればrender
-    if @relations.one? && @via.present?
+    if @relations.include?(params[:via])
+      @via = Profile.find_by_fb_id(params[:via])
       render
     else
       flash[:warning] = '指定された経路でユーザがみつかりませんでした'
