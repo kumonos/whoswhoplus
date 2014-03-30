@@ -20,7 +20,6 @@ class ApplicationController < ActionController::Base
   def requires_login
     if @current_user.nil?
       flash[:warning] = 'ログインしてください！'
-      raise
       redirect_to root_path
     end
   end
