@@ -1,0 +1,15 @@
+= breadcrumbs [['HOME', root_path], "#{@profile.name}さんを紹介してもらう"]
+%h2= "#{@profile.name}さん"
+%p
+  = image_tag @profile.picture_url, alt: @profile.name
+%h3 とは、この方がお知り合いです！
+%p 誰に紹介してもらうかを選択してください。
+%ul.via-candidates.clearfix
+  - @vias.each do |via|
+    %li.via-candidate
+      = image_tag via.picture_url, alt: via.name
+      %br
+      = via.name
+      %br
+      = link_to '<i class="fa fa-envelope-o"></i>紹介を頼む'.html_safe, relation_path(user: @profile.fb_id, via: via.fb_id), class: 'btn btn-primary btn-xs'
+%p{ style: 'margin-top: 10px;' }= link_to '<i class="fa fa-angle-double-left"></i> 戻る'.html_safe, '#', class: 'btn btn-default'

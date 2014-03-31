@@ -3,10 +3,27 @@
   %head
     %meta{ charset: 'UTF-8' }
     %meta{ name: 'viewport', content: 'initial-scale=1.0, user-scalable=no' }
-    %title FB app
+    %title #{rails_env}FB app
     = stylesheet_link_tag    'application'
     = javascript_include_tag 'application'
     = csrf_meta_tags
   %body
     .container
+      - if flash.present?
+        - flash.each do |type, msg|
+          %div{class: "alert alert-#{type.to_s}"}= msg.html_safe
+      %nav.navbar.navbar-default{role: "navigation"}
+        .navbar-header
+          %button.navbar-toggle{"data-target" => ".navbar-ex1-collapse", "data-toggle" => "collapse", :type => "button"}
+            %span.sr-only Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.navbar-brand{href: root_path} title
+        .collapse.navbar-collapse.navbar-ex1-collapse
+          %ul.nav.navbar-nav
+            %li
+              = link_to sign_out_path do
+                %i.fa.fa-power-off
+                サインアウト
       = yield
