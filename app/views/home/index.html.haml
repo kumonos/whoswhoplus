@@ -1,3 +1,17 @@
+%h3 You
+= @current_user.fb_id
+%br
+= @current_user.name
+%br
+= @current_user.picture_url
+
+%h3 friends using who's who ++
+
 %ul
-  - @friends.each do |f|
-    %li= f['name']
+- @friends.each do |f|
+  %li #{f.fb_id}
+  %li #{f.name}
+  %li
+    -# =link_to f.picture_url, friends_path(f.fb_id)
+    = link_to(image_tag(f.picture_url,size:"100x100",alt:"Pic") ,friends_path(f.fb_id))
+

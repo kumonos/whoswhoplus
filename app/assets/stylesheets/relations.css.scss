@@ -1,0 +1,21 @@
+ul.via-candidates{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  li.via-candidate{
+    float: left;
+    text-align: center;
+    width: 100px;
+
+    img{
+      height: 80px;
+      width: 80px;
+    }
+  }
+}
+form{
+  textarea#message-body{
+    height: 12em;
+  }
+}
