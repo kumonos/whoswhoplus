@@ -1,6 +1,7 @@
 class Relation < ActiveRecord::Base
-<<<<<<< HEAD
   belongs_to :profile
+
+  validates :fb_id_younger, :uniqueness => {:scope => :fb_id_younger}
 
   # -----------------------------------------------------------------
   # Public Class Methods
@@ -29,7 +30,6 @@ class Relation < ActiveRecord::Base
   	  end
   end
 
-=======
   # -----------------------------------------------------------------
   # Public Class Methods
   # -----------------------------------------------------------------
@@ -50,5 +50,5 @@ class Relation < ActiveRecord::Base
     fb_ids.sort_by! { |id| id.to_i }
     Relation.create!(fb_id_younger: fb_ids[0], fb_id_older: fb_ids[1])
   end
->>>>>>> master
+
 end
