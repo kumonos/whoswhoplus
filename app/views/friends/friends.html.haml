@@ -5,5 +5,5 @@
       %input{:type=> "radio", :name=> "gender", :value=>"male",:checked=>"checked"} male
       %input{:type=> "radio", :name=> "gender", :value=>"female"} female
       %input{:type => "submit" }
-  - @friends.each do |f|
+  - @friends_friends.each do |f|
     = link_to(image_tag(f['picture']['data']['url'],size:"100x100",alt:"Pic"), relations_path(f['id']))

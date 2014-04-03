@@ -7,9 +7,6 @@ SampleKoalaRailsApp::Application.routes.draw do
   # サインアウト
   get '/sign_out' => 'home#sign_out'
 
-  # 友人の友人一覧表示画面
-  get '/friends/:fb_id' => 'friends#show', as: :friends
-
   # 紹介画面
   get '/relations/:user' => 'relations#index', as: :relations
 
