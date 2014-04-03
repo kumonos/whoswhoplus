@@ -103,7 +103,14 @@ class Profile < ActiveRecord::Base
       profile = Profile.where(fb_id:me_fb_id).first
       return profile
   
-  end    
+  end
+
+  # fb_id を指定してユーザ情報を取得する。取得できなかった場合 nil を返す
+  # @param [String] fb_id
+  # @return [Profile]
+  def self.find_by_fb_id(fb_id)
+    Profile.where(fb_id: fb_id).first
+  end
 
   # -----------------------------------------------------------------
   # Public Instance Methods

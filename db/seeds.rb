@@ -21,9 +21,11 @@ p5 = FactoryGirl.create(:profile)
 # 1と2, 1と3が友達
 # 2と4, 2と5が友達
 # 3と4が友達
-FactoryGirl.create(:relation, friend_friend: p4.fb_id, friend_mutual: p2.fb_id, profile: p1)
-FactoryGirl.create(:relation, friend_friend: p5.fb_id, friend_mutual: p2.fb_id, profile: p1)
-FactoryGirl.create(:relation, friend_friend: p4.fb_id, friend_mutual: p3.fb_id, profile: p1)
+Relation.store(p1.fb_id, p2.fb_id)
+Relation.store(p1.fb_id, p3.fb_id)
+Relation.store(p2.fb_id, p4.fb_id)
+Relation.store(p2.fb_id, p5.fb_id)
+Relation.store(p3.fb_id, p4.fb_id)
 
 # テンプレート投入
 Template.create(

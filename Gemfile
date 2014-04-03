@@ -42,4 +42,5 @@ end
 group :production do
   # AP Server
   # gem 'unicorn'
+  gem 'pg'
 end
