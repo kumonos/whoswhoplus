@@ -6,10 +6,10 @@ class FriendsController < ApplicationController
 		@profile=Profile.getUser(params[:fb_id])
 		
 		#ユーザーの友人の友人情報をprofilesに格納
-		friends_friends=@profile.api.get_object('/me/friends','fields'=>'name,gender,picture,relationship_status')
-		Profile.insert(friends_friends)
+		@friends_friends=@profile.api.get_object('/me/friends','fields'=>'name,gender,picture,relationship_status')
+		Profile.insert(@friends_friends)
 		#「ユーザーの友人」と「友人の友人」のfb_idをrelationsに登録する
-		Relation.insert(parames[:user_fb_id]params[:fb_id],friends_friends)
+		Relation.insert(params[:fb_id],friends_friends)
 
 		render 'friends' #viewのhamlの名前
 	end
@@ -19,6 +19,7 @@ class FriendsController < ApplicationController
 	def search
 		@friends=Profile.search(params[:gender])
 		@profile = Profile.getUser(params[:fb_id])
+	end
 
   private
     def search_params
