@@ -9,7 +9,7 @@ class FriendsController < ApplicationController
 		@friends_friends=@profile.api.get_object('/me/friends','fields'=>'name,gender,picture,relationship_status')
 		Profile.insert(@friends_friends)
 		#「ユーザーの友人」と「友人の友人」のfb_idをrelationsに登録する
-		Relation.insert(params[:fb_id],friends_friends)
+		Relation.insert(params[:fb_id],@friends_friends)
 
 		render 'friends' #viewのhamlの名前
 	end
