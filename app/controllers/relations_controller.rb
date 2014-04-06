@@ -13,7 +13,7 @@ class RelationsController < ApplicationController
       render
     else
       flash[:warning] = '指定された経路でユーザがみつかりませんでした'
-      redirect_to root_path
+      render 'home/404'
     end
   end
 
@@ -29,7 +29,7 @@ class RelationsController < ApplicationController
       render
     else
       flash[:warning] = '指定された経路でユーザがみつかりませんでした'
-      redirect_to root_path
+      render 'home/404'
     end
   end
 
