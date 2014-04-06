@@ -1,7 +1,10 @@
 class Relation < ActiveRecord::Base
   belongs_to :profile
 
-  validates :fb_id_younger, :uniqueness => {:scope => :fb_id_younger}
+  # -----------------------------------------------------------------
+  # Validations
+  # -----------------------------------------------------------------
+  validates :fb_id_older, uniqueness: { scope: :fb_id_younger }
 
   # -----------------------------------------------------------------
   # Public Class Methods
@@ -13,16 +16,14 @@ class Relation < ActiveRecord::Base
   def self.insert(fb_id,friends_friends)
   	friends_friends.each do |friend|
       begin
-        store(fb_id,friend[id])
-      rescue
+        self.store!(fb_id,friend['id'])
+      rescue ActiveRecord::RecordInvalid => e
+        # 重複によるバリデーションエラーは無視
         next
       end
     end
   end
 
-  # -----------------------------------------------------------------
-  # Public Class Methods
-  # -----------------------------------------------------------------
   # 指定した2人のユーザ間の共通の友人を取得する
   # @param [String] fb_id_1 ユーザ1
   # @param [String] fb_id_2 ユーザ2
@@ -36,9 +37,9 @@ class Relation < ActiveRecord::Base
   # 友人関係を登録する（順序は問わない）
   # @param [String] fb_id_1 ユーザ1
   # @param [String] fb_id_2 ユーザ2
-  def store(*fb_ids)
+  def self.store!(*fb_ids)
     fb_ids.sort_by! { |id| id.to_i }
-    Relation.create!(fb_id_younger: fb_ids[0], fb_id_older: fb_ids[1])
+    param = { fb_id_younger: fb_ids[0], fb_id_older: fb_ids[1] }
+    Relation.create!(param) if Relation.where(param).count == 0
   end
-
 end
