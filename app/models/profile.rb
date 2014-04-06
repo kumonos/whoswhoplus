@@ -85,8 +85,7 @@ class Profile < ActiveRecord::Base
   # @param [Hash] /me/friendの返り値
   # 
   def self.checkFriendsToken(me_friends)
-
-      profile = Profile.where(fb_id:me_friends.first['id'])
+      profile = Profile.where("fb_id= ? and access_token_id IS NOT NULL",me_friends.first['id'])
       return profile
   
   end
