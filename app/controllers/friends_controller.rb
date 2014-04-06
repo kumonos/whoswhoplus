@@ -2,16 +2,23 @@ class FriendsController < ApplicationController
 
 	# 検索ページ
 	def show
-		# render text: "fb_idは#{params[:fb_id]}"
-		@profile = Profile.getUser(params[:fb_id])
+		#ユーザーの友人のfb_idよりトークンを取得
+		@profile=Profile.getUser(params[:fb_id])
+		
+		#ユーザーの友人の友人情報をprofilesに格納
+		@friends_friends=@profile.api.get_object('/me/friends','fields'=>'name,gender,picture,relationship_status')
+		Profile.insert(@friends_friends)
+		#「ユーザーの友人」と「友人の友人」のfb_idをrelationsに登録する
+		Relation.insert(params[:fb_id],@friends_friends)
 
-		# dbに格納
-		Profile.insert(@profile.api.get_object("/#{@profile.fb_id}/friends", 'fields'=>'name,gender,picture,relationship_status'), params[:fb_id])
-
-    # 取得
-    # TODO 上と処理を併合したい
-    @friends = Profile.where({friend_mutual: params[:fb_id]}.merge(search_params))
 		render 'friends' #viewのhamlの名前
+	end
+
+	
+	# 検索結果ページ
+	def search
+		@friends=Profile.search(params[:gender])
+		@profile = Profile.getUser(params[:fb_id])
 	end
 
   private
