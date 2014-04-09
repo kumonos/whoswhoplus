@@ -19,6 +19,8 @@ class FriendsController < ApplicationController
 	def search
 		@friends=Profile.search(params[:gender])
 		@profile = Profile.getUser(params[:fb_id])
+
+		render 'show'
 	end
 
   private
