@@ -11,17 +11,22 @@ class FriendsController < ApplicationController
 		#「ユーザーの友人」と「友人の友人」のfb_idをrelationsに登録する
 		Relation.insert(params[:fb_id],@friends_friends)
 
+		@q = Profile.search(params[:gender])
+		@profile = Profile.getUser(params[:fb_id])
+		@result = @q.result
+
 		render 'friends' #viewのhamlの名前
 	end
 
 	
 	# 検索結果ページ
-	def search
-		@friends=Profile.search(params[:gender])
-		@profile = Profile.getUser(params[:fb_id])
+	#def search
+	#	@q = Profile.search(params[:q])
+	#	@profile = Profile.getUser(params[:fb_id])
+	#	@result = @q.result(distinct: true)
 
-		render 'show'
-	end
+	#	render 'show'
+	#end
 
   private
     def search_params
