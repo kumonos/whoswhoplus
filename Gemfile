@@ -14,6 +14,8 @@ gem 'coffee-rails'
 gem 'uglifier'
 gem 'jquery-rails'
 gem 'therubyracer'
+gem "ransack"
+
 
 group :development do
   # Debugging

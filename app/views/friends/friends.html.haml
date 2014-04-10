@@ -1,13 +1,14 @@
 %form{ method: :get, action: friends_path(fb_id: @profile.fb_id) }
   %h3 #{@profile.name} の友人を検索する！
-  .search_form
+  = search_form_for @q do |f|
     %table
       %tr
         %th 性別 :
         %td
-          %input.gender{:type=> "checkbox", :name=> "gender", :value=>"male"} 男性
-          %input.gender{:type=> "checkbox", :name=> "gender", :value=>"female"} 女性
-          %input.gender{:type=> "checkbox", :name=> "gender", :value=>"empty"} データなしを表示
+          = check_box_tag :gender, "male",params[:gender] 
+          = check_box_tag :gender,"female" ,params[:gender]
+          = check_box_tag :gender,"empty" ,params[:gender]
+
       %tr
         %th 交際ステータス:
         %td
@@ -23,10 +24,13 @@
           〜
           %input#age_max{:size => "3", :type => "text"}/
           %input#age_show_empty.trigger_filter{:type=> "checkbox" , :value=>"true"} データなしを表示
+          
+          = f.submit
 
 
   %h3 検索結果
   .result
 
-  - @friends_friends.each do |f|
+  -#- @friends_friends.each do |f|
+    - @result.each do |f|  
     = link_to(image_tag(f['picture']['data']['url'],size:"100x100",alt:"Pic"), relations_path(f['id']))

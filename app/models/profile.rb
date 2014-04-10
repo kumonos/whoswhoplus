@@ -71,10 +71,10 @@ class Profile < ActiveRecord::Base
   # return [Hash] formの値
   # TODO 色々な検索条件に対応する
 
-  def self.search(gender)
-    data = Profile.where(gender: gender)
-    return data
-  end
+  #def self.search(gender)
+ #   data = Profile.where(gender: gender)
+ #   return data
+ # end
 
 
   # -----------------------------------------------------------------
