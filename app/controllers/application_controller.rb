@@ -23,4 +23,22 @@ class ApplicationController < ActionController::Base
       redirect_to root_path
     end
   end
+
+  # 指定したユーザと共通の友人を検索する
+  def check_common_friends
+    # この人を紹介してほしい
+    @profile = Profile.find_by_fb_id(params[:user])
+
+    # その人を紹介できる人
+    @vias    = Relation.common_friends(@current_user.fb_id, params[:user])
+
+    # その中でこの人に紹介してほしい
+    @via = @vias.where(fb_id: params[:via]).first if params[:via].present?
+
+    # 紹介してほしい相手がいない場合、紹介できる友人がいない場合、その中に経由したい人がいない場合はエラー
+    if @profile.nil? || @vias.empty? || (params[:via].present? && @via.nil?)
+      flash.now[:warning] = '指定された経路でユーザがみつかりませんでした'
+      render 'home/404', status: :not_found
+    end
+  end
 end

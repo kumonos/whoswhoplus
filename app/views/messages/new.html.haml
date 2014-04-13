@@ -8,9 +8,12 @@
   TEMPLATES = new Object();
   - @templates.each do |t|
     TEMPLATES['#{t.id}'] = '#{t.body}';
-%form
+= form_for @message do |f|
   %p= select_tag :objective, options_for_select(@templates.map { |t| [t.objective, t.id]}), include_blank: true, id: 'message-objective', class: 'form-control'
   %p.small目的を選択すると、文例が自動的に入力されます。
-  %p= text_area_tag :body, nil, id: 'message-body', class: 'form-control'
+  %p
+    = f.text_area :message, id: 'message-body', class: 'form-control'
+    = hidden_field_tag :user, @profile.fb_id
+    = hidden_field_tag :via, @via.fb_id
   %p.pull-right= button_tag '<i class="fa fa-envelope-o"></i> 送信する'.html_safe, class: 'btn btn-primary'
   %p.pull-left= link_to '<i class="fa fa-angle-double-left"></i> 戻る'.html_safe, relations_path(user: @profile.fb_id), class: 'btn btn-default'
