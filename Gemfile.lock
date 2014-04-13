@@ -179,6 +179,7 @@ DEPENDENCIES
   byebug
   coffee-rails
   erb2haml
+  execjs
   factory_girl_rails
   faker
   haml-rails

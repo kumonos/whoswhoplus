@@ -42,6 +42,7 @@ end
 group :staging, :production do
   # AP Server
   gem 'unicorn'
+  gem 'execjs'
 
   # Database
   gem 'mysql2'
