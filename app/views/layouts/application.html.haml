@@ -19,9 +19,17 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.navbar-brand{href: root_path} title
+          %a.navbar-brand{href: root_path} who's who ++
         .collapse.navbar-collapse.navbar-ex1-collapse
           %ul.nav.navbar-nav
+            %li
+              = link_to root_path do
+                %i.fa.fa-users
+                友人一覧
+            %li
+              = link_to messages_path do
+                %i.fa.fa-list
+                利用履歴
             %li
               = link_to sign_out_path do
                 %i.fa.fa-power-off

@@ -114,9 +114,16 @@ class Profile < ActiveRecord::Base
   # -----------------------------------------------------------------
   # Public Instance Methods
   # -----------------------------------------------------------------
-  # Facebook Graph APIをインスタンス化する
+  # Facebook Graph API をインスタンス化する
+  # @return [Koala::Facebook::API]
   def api
-    Koala::Facebook::API.new(self.access_token.access_token)
+    self.access_token.access_token.try { |t| Koala::Facebook::API.new(t) }
+  end
+
+  # FacebookChat::Client のインスタンスを返す
+  # @return [FacebookChat::Client]
+  def chat_api
+    self.access_token.access_token.try { |t| FacebookChat::Client.new(t) }
   end
 
   # 年齢を取得する
