@@ -33,6 +33,7 @@ class Profile < ActiveRecord::Base
     profile
   end
 
+
   # -----------------------------------------------------------------
   # Public Class Methods
   # -----------------------------------------------------------------
@@ -63,18 +64,51 @@ class Profile < ActiveRecord::Base
 
   end
 
+
+  scope :by_gender, lambda {|gender| where("gender=?","#{gender}")}
+  scope :by_relationship_status, lambda{|relationship_status| where("relationship_status=?","#{relationship_status}")}
+  scope :by_relationship_status_null, where("relationship_status IS NULL")
   # -----------------------------------------------------------------
   # Public Class Methods
   # -----------------------------------------------------------------
   # formデータから検索
   # @param formの値
   # return [Hash] formの値
-  # TODO 色々な検索条件に対応する
+  def self.search(params={})
+    exec_scopes=0
 
-  #def self.search(gender)
- #   data = Profile.where(gender: gender)
- #   return data
- # end
+    if params[:gender]
+      exec_scopes += 1
+      
+    end
+
+    if params[:relationship_status]
+      if params[:relationship_status] == 'empty'
+        exec_scopes += 4
+      else
+        exec_scopes += 2 
+      end
+    end
+
+    case exec_scopes
+    when 0
+      return Profile.all
+    when 1
+      Profile.by_gender(params[:gender])
+    when 2
+      Profile.by_relationship_status(params[:relationship_status])
+    when 3
+      Profile.by_gender(params[:gender]).by_relationship_status(params[:relationship_status])
+    when 4
+      Profile.by_relationship_status_null
+    when 5
+      Profile.by_relationship_status_null.by_gender(params[:gender])
+    else
+      return nil      
+    end
+
+
+  end
 
 
   # -----------------------------------------------------------------

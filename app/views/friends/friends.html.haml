@@ -1,36 +1,44 @@
-%form{ method: :get, action: friends_path(fb_id: @profile.fb_id) }
-  %h3 #{@profile.name} の友人を検索する！
-  = search_form_for @q do |f|
-    %table
-      %tr
-        %th 性別 :
-        %td
-          = check_box_tag :gender, "male",params[:gender] 
-          = check_box_tag :gender,"female" ,params[:gender]
-          = check_box_tag :gender,"empty" ,params[:gender]
+%h3 #{@profile.name} の友人を検索する！
+= form_for @search_form, :url => friends_path,:remote => true, :html => {:method => :get} do |f|
+  %table
+    %tr
+      %th 性別 :
+      %td
+        = f.check_box :gender, {}, 'male',nil
+        男性        
+        = f.check_box :gender, {}, 'female',nil
+        女性
+        = f.check_box :gender, {},'empty',nil
+        データなし 
 
-      %tr
-        %th 交際ステータス:
-        %td
-          %input.relationship_status{:type=> "checkbox", :name=> "relationship_status", :value=>"Single"} 独身
-          %input.relationship_status{:type=> "checkbox", :name=> "relationship_status", :value=>"In a Relationship"} 交際中
-          %input.relationship_status{:type=> "checkbox", :name=> "relationship_status", :value=>"In an Open Relationship"}   オープンな関係
-          %input.relationship_status{:type=> "checkbox", :name=> "relationship_status", :value=>"Married"} 既婚
-          %input.relationship_status{:type=> "checkbox", :name=> "relationship_status", :value=>"empty"} データなしを表示
-      %tr
-        %th 年齢:
-        %td
-          %input#age_min{:size => "3", :type => "text"}>/
-          〜
-          %input#age_max{:size => "3", :type => "text"}/
-          %input#age_show_empty.trigger_filter{:type=> "checkbox" , :value=>"true"} データなしを表示
-          
-          = f.submit
+    %tr
+      %th 交際ステータス:
+      %td
+        = f.check_box :relationship_status, {}, 'Single',nil
+        独身
+        = f.check_box :relationship_status, {}, 'In a Relationship',nil
+        交際中
+        = f.check_box :relationship_status, {}, 'In an Open Relationship',nil
+        オープンな関係
+        = f.check_box :relationship_status, {}, 'Married',nil
+        既婚
+        = f.check_box :relationship_status, {}, 'empty',nil
+        データなしを表示      
+
+    %tr
+      %th 年齢:
+      %td
+        %input#age_min{:size => "3", :type => "text"}>/
+        〜
+        %input#age_max{:size => "3", :type => "text"}/
+        %input#age_show_empty.trigger_filter{:type=> "checkbox" , :value=>"true"} データなしを表示
+
+  
+  %p 
+  = f.submit '検索'
+%p
+%h3 検索結果
+#search_result
+  = render 'search_result'
 
 
-  %h3 検索結果
-  .result
-
-  -#- @friends_friends.each do |f|
-    - @result.each do |f|  
-    = link_to(image_tag(f['picture']['data']['url'],size:"100x100",alt:"Pic"), relations_path(f['id']))
