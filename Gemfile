@@ -23,6 +23,7 @@ group :development do
 
   # CLI Tools
   gem 'erb2haml'
+  gem 'rspec-kickstarter'
 end
 
 group :test do
