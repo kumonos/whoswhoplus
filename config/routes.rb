@@ -18,10 +18,6 @@ SampleKoalaRailsApp::Application.routes.draw do
   # 友人の友人一覧表示画面
   get '/friends/:user_fb_id/:fb_id' => 'friends#show', as: :friends
 
-  # 検索結果
-  get '/friends/:user_fb_id/:fb_id/search_result' => 'friends#search_result' as: :search_result
-
-  end
 
   # 開発環境のみのダミーログイン画面
   if Rails.env.development?
