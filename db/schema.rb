@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140322121504) do
+ActiveRecord::Schema.define(version: 20140412062649) do
 
   create_table "access_tokens", force: true do |t|
     t.string   "access_token", null: false
@@ -20,6 +20,14 @@ ActiveRecord::Schema.define(version: 20140322121504) do
   end
 
   add_index "access_tokens", ["access_token"], name: "index_access_tokens_on_access_token", unique: true
+
+  create_table "messages", force: true do |t|
+    t.string   "fb_id_from"
+    t.string   "fb_id_to"
+    t.text     "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "profiles", force: true do |t|
     t.integer  "access_token_id"

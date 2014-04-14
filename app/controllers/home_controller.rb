@@ -10,12 +10,12 @@ class HomeController < ApplicationController
         #puts "url is "+key["picture"]["data"]["url"].to_s
         #puts "url is "+key.picture_url
 
-      end  
+      end
       
     else
       # 非ログイン状態
       session[:oauth] = Koala::Facebook::OAuth.new(APP_ID, APP_SECRET, SITE_URL + ':3000/home/callback')
-      @auth_url = session[:oauth].url_for_oauth_code(permissions: "read_stream")
+      @auth_url = session[:oauth].url_for_oauth_code(permissions: ['xmpp_login'])
 
       render 'intro'
     end
