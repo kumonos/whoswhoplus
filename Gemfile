@@ -4,6 +4,7 @@ gem 'rails', '4.0.3'
 
 # Facebook API
 gem 'koala', "~>1.8.0rc1"
+gem 'facebook_chat'
 
 # Views
 gem 'haml-rails'
@@ -22,6 +23,7 @@ group :development do
 
   # CLI Tools
   gem 'erb2haml'
+  gem 'rspec-kickstarter'
 end
 
 group :test do
