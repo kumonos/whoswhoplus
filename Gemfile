@@ -41,8 +41,11 @@ group :development, :test do
   gem 'sqlite3'
 end
 
-group :production do
+group :staging, :production do
   # AP Server
-  # gem 'unicorn'
-  gem 'pg'
+  gem 'unicorn'
+  gem 'execjs'
+
+  # Database
+  gem 'mysql2'
 end
