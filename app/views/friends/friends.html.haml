@@ -1,5 +1,5 @@
 %h3 #{@profile.name} の友人を検索する！
-= form_for @search_form, :url => friends_path,:remote => true, :html => {:method => :get} do |f|
+= form_for @search_form, url: friends_path, remote: true, html: {method: :get} do |f|
   %table
     %tr
       %th 性別 :
