@@ -1,9 +1,45 @@
-%form{ method: :get, action: friends_path(fb_id: @profile.fb_id) }
-  %h3 Search friends of #{@profile.name}
-  %tr
-    %td
-      %input{:type=> "radio", :name=> "gender", :value=>"male",:checked=>"checked"} male
-      %input{:type=> "radio", :name=> "gender", :value=>"female"} female
-      %input{:type => "submit" }
-- @friends_friends.each do |f|
-  = link_to(image_tag(f['picture']['data']['url'],size:"100x100",alt:"Pic"), relations_path(f['id']))
+%h3 #{@profile.name} の友人を検索する！
+= form_for @search_form, url: friends_path, remote: true, html: {method: :get} do |f|
+  %table
+    %tr
+      %th 性別 :
+      %td
+        = f.check_box :gender, {}, 'male',nil
+        男性        
+        = f.check_box :gender, {}, 'female',nil
+        女性
+        = f.check_box :gender, {},'empty',nil
+        データなし 
+
+    %tr
+      %th 交際ステータス:
+      %td
+        = f.check_box :relationship_status, {}, 'Single',nil
+        独身
+        = f.check_box :relationship_status, {}, 'In a Relationship',nil
+        交際中
+        = f.check_box :relationship_status, {}, 'In an Open Relationship',nil
+        オープンな関係
+        = f.check_box :relationship_status, {}, 'Married',nil
+        既婚
+        = f.check_box :relationship_status, {}, 'empty',nil
+        データなしを表示      
+
+    %tr
+      %th 年齢:
+      %td
+        %input#age_min{:size => "3", :type => "text"}>/
+        〜
+        %input#age_max{:size => "3", :type => "text"}/
+        %input#age_show_empty.trigger_filter{:type=> "checkbox" , :value=>"true"} データなしを表示
+
+  
+  %p 
+  = f.submit '検索'
+
+%p
+%h3 検索結果
+#search_result
+  = render 'search_result'
+
+

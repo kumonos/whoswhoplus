@@ -5,18 +5,16 @@ class HomeController < ApplicationController
     if @current_user
       # ログイン状態
       @friends = Profile.checkFriendsToken(@current_user.api.get_object('/me/friends','fields'=>'name,gender,picture'))
-      #@friends_pic=@current_user.api.get_object('/me/friends','fields'=>'name,gender,picture')    
-      @friends.each do |key|
-        #puts "url is "+key["picture"]["data"]["url"].to_s
-        #puts "url is "+key.picture_url
-
-      end
-      
     else
       # 非ログイン状態
       session[:oauth] = Koala::Facebook::OAuth.new(APP_ID, APP_SECRET, SITE_URL + ':3000/home/callback')
-      @auth_url = session[:oauth].url_for_oauth_code(permissions: ['xmpp_login'])
-
+      
+      #permission 必要なものだけ
+      #public_profile
+      #relationship_status
+      #friends_birthday
+      #friends_relationship
+      @auth_url = session[:oauth].url_for_oauth_code(:permissions=>'public_profile,friends_birthday,friends_relationships')
       render 'intro'
     end
   end

@@ -16,11 +16,6 @@ SampleKoalaRailsApp::Application.routes.draw do
   # 友人の友人一覧表示画面
   get '/friends/:user_fb_id/:fb_id' => 'friends#show', as: :friends
 
-  #profilesの扱いがよく解んなくなった時の残骸（削除してもOKかも）
-  resources :profiles do
-	collection { get "search" }
-  end
-
   # 開発環境のみのダミーログイン画面
   if Rails.env.development?
     get '/dummy_login' => 'home#dummy_form'
