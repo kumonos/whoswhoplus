@@ -16,6 +16,7 @@ gem 'uglifier'
 gem 'jquery-rails'
 gem 'therubyracer'
 
+
 group :development do
   # Debugging
   gem 'better_errors'
