@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.3'
 
 # Facebook API
+gem 'omniauth-facebook'
 gem 'koala', "~>1.8.0rc1"
 gem 'facebook_chat'
 

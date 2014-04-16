@@ -1,0 +1,9 @@
+APP_ID = '000000000000000'
+APP_SECRET = '00000000000000000000000000000000'
+SITE_URL = 'http://localhost:3000'
+CLIENT_TOKEN = '00000000000000000000000000000000'
+
+Rails.application.config.middleware.use OmniAuth::Builder do
+  provider :facebook, APP_ID, APP_SECRET, scope: 'public_profile,friends_birthday,
+friends_relationships,xmpp_login'
+end
