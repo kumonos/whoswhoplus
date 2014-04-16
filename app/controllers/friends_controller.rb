@@ -14,12 +14,13 @@ class FriendsController < ApplicationController
 		@profile.touch
 	    end
 		@search_form =  SearchForm.new params[:search_form]
+
 		if @search_form.no_age.present?
 			#TODO:データなしの場合はage_min,age_maxが入っていても優先される
 
 		end
 
-	    @results=Profile.search(:gender => @search_form.gender,:relationship_status =>@search_form.relationship_status)
+	    @results=Profile.search(:gender => @search_form.gender,:relationship_status =>@search_form.relationship_status,:fb_id=>params[:fb_id])
 
 		render 'friends' #viewのhamlの名前
 	end
