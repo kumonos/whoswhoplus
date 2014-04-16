@@ -6,6 +6,11 @@ class Profile < ActiveRecord::Base
   has_many :relations
 
   # -----------------------------------------------------------------
+  # Scopes
+  # -----------------------------------------------------------------
+  scope :has_token, -> { where.not(access_token_id: nil) }
+
+  # -----------------------------------------------------------------
   # Public Class Methods
   # -----------------------------------------------------------------
   # Facebook APIの返り値からユーザ情報を作成する
@@ -117,11 +122,9 @@ class Profile < ActiveRecord::Base
   # ユーザの Friendsのトークンがあるかどうかを確認する
   # Friendsのトークン情報を返す
   # @param [Hash] /me/friendの返り値
-  # 
+  # @return [[Profile]] トークンのある友人の Profile の配列
   def self.checkFriendsToken(me_friends)
-      profile = Profile.where("fb_id= ? and access_token_id IS NOT NULL",me_friends.first['id'])
-      return profile
-  
+    self.has_token.where(fb_id: me_friends.map{ |f| f['id'] })
   end
 
   # -----------------------------------------------------------------
