@@ -6,16 +6,6 @@ class HomeController < ApplicationController
       # ログイン状態
       @friends = Profile.checkFriendsToken(@current_user.api.get_object('/me/friends','fields'=>'name,gender,picture'))
     else
-      # 非ログイン状態
-      session[:oauth] = Koala::Facebook::OAuth.new(APP_ID, APP_SECRET, SITE_URL + '/home/callback')
-      
-      #permission 必要なものだけ
-      #public_profile
-      #relationship_status
-      #friends_birthday
-      #friends_relationship
-      @auth_url = session[:oauth].url_for_oauth_code(:permissions=>'public_profile,friends_birthday,
-friends_relationships,xmpp_login')
       render 'intro'
     end
   end
@@ -23,18 +13,19 @@ friends_relationships,xmpp_login')
   # ログイン状態を作り、ホームにリダイレクトさせる
   # GET /home/callback
 	def callback
-    #begin
-      token = AccessToken.create!(access_token: session[:oauth].get_access_token(params[:code]))
-      api = Koala::Facebook::API.new(token.access_token)
-      profile = Profile.insert_or_update(api.get_object('/me','fields'=>'name,gender,picture'), token)
-      session[:current_user] = profile.id
-    #rescue
-      # TODO
-    #else
-      redirect_to root_path
-    #end
+    begin
+      token = request.env['omniauth.auth'][:credentials][:token]
+      access_token = AccessToken.create!(access_token: token)
+    rescue => e
+      Rails.logger.warn "認証失敗 #{e.class.to_s}: #{e.message}"
+      flash[:danger] = '認証に失敗しました！'
+    end
 
+    api = Koala::Facebook::API.new(token)
+    profile = Profile.insert_or_update(api.get_object('/me','fields'=>'name,gender,picture'), access_token)
+    session[:current_user] = profile.id
 
+    redirect_to root_path
   end
 
   # get /sign_out
