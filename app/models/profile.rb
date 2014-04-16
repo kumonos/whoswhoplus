@@ -52,7 +52,7 @@ class Profile < ActiveRecord::Base
         data=Profile.create!(
           fb_id:friend['id'],
           name:friend['name'],
-          birthday:nil,
+          birthday:friend['birthday'],
           gender:friend['gender'],
           relationship_status:friend['relationship_status'],
           picture_url:friend['picture'].try { |p| p['data'].try { |d| d['url'] } },
