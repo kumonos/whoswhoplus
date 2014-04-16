@@ -2,7 +2,7 @@ SampleKoalaRailsApp::Application.routes.draw do
   root :to => 'home#index'
 
   # サインイン時のコールバック画面
-  get '/home/callback' => 'home#callback'
+  get '/auth/facebook/callback' => 'home#callback'
 
   # サインアウト
   get '/sign_out' => 'home#sign_out'
