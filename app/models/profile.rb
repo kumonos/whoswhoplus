@@ -6,6 +6,11 @@ class Profile < ActiveRecord::Base
   has_many :relations
 
   # -----------------------------------------------------------------
+  # Scopes
+  # -----------------------------------------------------------------
+  scope :has_token, -> { where.not(access_token_id: nil) }
+
+  # -----------------------------------------------------------------
   # Public Class Methods
   # -----------------------------------------------------------------
   # Facebook APIの返り値からユーザ情報を作成する
@@ -77,6 +82,10 @@ class Profile < ActiveRecord::Base
   def self.search(params={})
     exec_scopes=0
 
+    if params[:fb_id].nil?
+      return nil
+    end
+
     if params[:gender]
       exec_scopes += 1
       
@@ -92,17 +101,17 @@ class Profile < ActiveRecord::Base
 
     case exec_scopes
     when 0
-      return Profile.all
+      return Profile.where(fb_id: params[:fb_id])
     when 1
-      Profile.by_gender(params[:gender])
+      Profile.where(fb_id: params[:fb_id]).by_gender(params[:gender])
     when 2
-      Profile.by_relationship_status(params[:relationship_status])
+      Profile.where(fb_id: params[:fb_id]).by_relationship_status(params[:relationship_status])
     when 3
-      Profile.by_gender(params[:gender]).by_relationship_status(params[:relationship_status])
+      Profile.where(fb_id: params[:fb_id]).by_gender(params[:gender]).by_relationship_status(params[:relationship_status])
     when 4
-      Profile.by_relationship_status_null
+      Profile.where(fb_id: params[:fb_id]).by_relationship_status_null
     when 5
-      Profile.by_relationship_status_null.by_gender(params[:gender])
+      Profile.where(fb_id: params[:fb_id]).by_relationship_status_null.by_gender(params[:gender])
     else
       return nil      
     end
@@ -117,11 +126,9 @@ class Profile < ActiveRecord::Base
   # ユーザの Friendsのトークンがあるかどうかを確認する
   # Friendsのトークン情報を返す
   # @param [Hash] /me/friendの返り値
-  # 
+  # @return [[Profile]] トークンのある友人の Profile の配列
   def self.checkFriendsToken(me_friends)
-      profile = Profile.where("fb_id= ? and access_token_id IS NOT NULL",me_friends.first['id'])
-      return profile
-  
+    self.has_token.where(fb_id: me_friends.map{ |f| f['id'] })
   end
 
   # -----------------------------------------------------------------
