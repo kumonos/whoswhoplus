@@ -14,7 +14,7 @@ class FriendsController < ApplicationController
 		@profile.touch
 	    end
 		@search_form =  SearchForm.new params[:search_form]
-	    @results=Profile.search(:gender => @search_form.gender,:relationship_status =>@search_form.relationship_status)
+	    @results=Profile.search(:gender => @search_form.gender,:relationship_status =>@search_form.relationship_status,:fb_id=>params[:fb_id])
 
 		render 'friends' #viewのhamlの名前
 	end
