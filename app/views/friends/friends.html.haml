@@ -26,13 +26,15 @@
         データなしを表示      
 
     %tr
-      %th 年齢:
+      %th 年齢範囲:
       %td
-        = f.number_field :age_min
-        ~
-        = f.number_field :age_max
+
+        = f.number_field :age_min, value: 20
+        歳から
+        = f.number_field :age_max, value: 30
+        歳まで
         = f.check_box :no_age, {}, 'true',nil
-        データなしを表示
+        年齢データなしを表示
   
   %p 
   = f.submit '検索'

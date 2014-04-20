@@ -3,17 +3,17 @@ class SearchForm
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-  attr_accessor :gender
-  attr_accessor :relationship_status
-  attr_accessor :age_min
-  attr_accessor :age_max
+  attr_accessor :gender,:relationship_status,:age_min,:age_max,:no_age
+  validates :age_max, :age_min, :numericality => {:only_integer => true}
 
-  validates :age_check
+  validate :age_check
 
   def age_check
+    if :no_age == nil
     errors.add(attr, '最小年齢を記入してください') if :age_min == nil and :age_max != nil
     errors.add(attr, '最大年齢を記入してください') if :age_min != nil and :age_max == nil
     errors.add(attr, '最大値と最小値が正しくありません') if :age_min > :age_max 
+    end
   end
 
 
