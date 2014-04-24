@@ -4,6 +4,7 @@ class Profile < ActiveRecord::Base
   # -----------------------------------------------------------------
   belongs_to :access_token
   has_many :relations
+  has_many :relations_views , foreign_key: :fb_id_from,primary_key: :fb_id
 
   # -----------------------------------------------------------------
   # Scopes
