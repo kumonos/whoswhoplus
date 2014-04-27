@@ -4,6 +4,7 @@ class Profile < ActiveRecord::Base
   # -----------------------------------------------------------------
   belongs_to :access_token
   has_many :relations
+  has_many :relations_views , foreign_key: :fb_id_from,primary_key: :fb_id
 
   # -----------------------------------------------------------------
   # Scopes
@@ -57,7 +58,8 @@ class Profile < ActiveRecord::Base
         data=Profile.create!(
           fb_id:friend['id'],
           name:friend['name'],
-          birthday:nil,
+          birthday:friend['birthday'],
+          age:Profile.age(friend['birthday']),
           gender:friend['gender'],
           relationship_status:friend['relationship_status'],
           picture_url:friend['picture'].try { |p| p['data'].try { |d| d['url'] } },
@@ -69,10 +71,13 @@ class Profile < ActiveRecord::Base
 
   end
 
-
+  scope :by_fb_id, lambda {|fb_id| joins("left outer join relations_view on fb_id = fb_id_to").where("fb_id is not ?","#{fb_id}")}
+  
   scope :by_gender, lambda {|gender| where("gender=?","#{gender}")}
   scope :by_relationship_status, lambda{|relationship_status| where("relationship_status=?","#{relationship_status}")}
-  scope :by_relationship_status_null, where("relationship_status IS NULL")
+  scope :by_relationship_status_null, ->{where(relationship_status: nil)}
+  scope :by_age, lambda {|age_min,age_max| where(:age => age_min...age_max)}
+  scope :by_age_null, ->{where(age: nil)}
   # -----------------------------------------------------------------
   # Public Class Methods
   # -----------------------------------------------------------------
@@ -80,44 +85,35 @@ class Profile < ActiveRecord::Base
   # @param formの値
   # return [Hash] formの値
   def self.search(params={})
-    exec_scopes=0
 
-    if params[:fb_id].nil?
-      return nil
-    end
+    return nil if params[:fb_id].nil?
+
+    profile_result = Profile.by_fb_id(fb_id: params[:fb_id])
+
 
     if params[:gender]
-      exec_scopes += 1
-      
+      profile_result = profile_result.by_gender(params[:gender])
     end
 
     if params[:relationship_status]
       if params[:relationship_status] == 'empty'
-        exec_scopes += 4
+        profile_result = profile_result.by_relationship_status_null
       else
-        exec_scopes += 2 
+        profile_result = profile_result.by_relationship_status(params[:relationship_status])
       end
     end
-
-    case exec_scopes
-    when 0
-      return Profile.where(fb_id: params[:fb_id])
-    when 1
-      Profile.where(fb_id: params[:fb_id]).by_gender(params[:gender])
-    when 2
-      Profile.where(fb_id: params[:fb_id]).by_relationship_status(params[:relationship_status])
-    when 3
-      Profile.where(fb_id: params[:fb_id]).by_gender(params[:gender]).by_relationship_status(params[:relationship_status])
-    when 4
-      Profile.where(fb_id: params[:fb_id]).by_relationship_status_null
-    when 5
-      Profile.where(fb_id: params[:fb_id]).by_relationship_status_null.by_gender(params[:gender])
+    if params[:no_age].nil?
+      if params[:age_min]
+      profile_result = profile_result.by_age(params[:age_min],params[:age_max])
+      end
     else
-      return nil      
+      profile_result = profile_result.by_age_null
     end
 
+    return profile_result
 
   end
+
 
 
   # -----------------------------------------------------------------
@@ -168,10 +164,27 @@ class Profile < ActiveRecord::Base
   end
 
   # 年齢を取得する
+  # param [String] birthday
   # @return [Integer] 年齢
-  def age
-    birth = self.birthday.strftime('%Y%m%d').to_i
-    today = Date.today.strftime('%Y%m%d').to_i
-    return (today - birth) / 10000
+  def self.age(birthday)
+    formats = ['%m/%d/%Y','%m/%d']
+    birth_f = nil
+    if birthday
+      formats.each do |format|
+        begin
+          birth_f =Date.strptime(birthday,format)
+          break
+        rescue ArgumentError
+        end
+      end
+      if birth_f && birth_f.year
+        birth = birth_f.strftime('%Y%m%d').to_i
+        #birth = Date.parse(birthday).strftime('%Y%m%d').to_i
+        today = Date.today.strftime('%Y%m%d').to_i
+      return (today - birth) / 10000
+      else
+        return nil
+      end
+    end
   end
 end
