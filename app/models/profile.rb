@@ -75,9 +75,9 @@ class Profile < ActiveRecord::Base
   
   scope :by_gender, lambda {|gender| where("gender=?","#{gender}")}
   scope :by_relationship_status, lambda{|relationship_status| where("relationship_status=?","#{relationship_status}")}
-  scope :by_relationship_status_null, ->{where("relationship_status IS NULL")}
+  scope :by_relationship_status_null, ->{where(relationship_status: nil)}
   scope :by_age, lambda {|age_min,age_max| where(:age => age_min...age_max)}
-  scope :by_age_null, ->{where("age IS NULL")}
+  scope :by_age_null, ->{where(age: nil)}
   # -----------------------------------------------------------------
   # Public Class Methods
   # -----------------------------------------------------------------

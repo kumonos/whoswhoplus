@@ -9,10 +9,10 @@ class SearchForm
   validate :age_check
 
   def age_check
-    if :no_age == nil
-    errors.add(attr, '最小年齢を記入してください') if :age_min == nil and :age_max != nil
-    errors.add(attr, '最大年齢を記入してください') if :age_min != nil and :age_max == nil
-    errors.add(attr, '最大値と最小値が正しくありません') if :age_min > :age_max 
+    if no_age == nil
+    errors.add(attr, '最小年齢を記入してください') if age_min == nil and age_max != nil
+    errors.add(attr, '最大年齢を記入してください') if age_min != nil and age_max == nil
+    errors.add(attr, '最大値と最小値が正しくありません') if age_min > age_max 
     end
   end
 
