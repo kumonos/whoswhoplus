@@ -71,11 +71,12 @@ class Profile < ActiveRecord::Base
 
   end
 
-
+  scope :by_fb_id, lambda {|fb_id| joins("left outer join relations_view on fb_id = fb_id_to").where("fb_id is not ?","#{fb_id}")}
+  
   scope :by_gender, lambda {|gender| where("gender=?","#{gender}")}
   scope :by_relationship_status, lambda{|relationship_status| where("relationship_status=?","#{relationship_status}")}
   scope :by_relationship_status_null, ->{where("relationship_status IS NULL")}
-  scope :by_age, lambda {|age_min,age_max| where(:conditions=>{:age => age_min...age_max})}
+  scope :by_age, lambda {|age_min,age_max| where(:age => age_min...age_max)}
   scope :by_age_null, ->{where("age IS NULL")}
   # -----------------------------------------------------------------
   # Public Class Methods
@@ -85,11 +86,10 @@ class Profile < ActiveRecord::Base
   # return [Hash] formの値
   def self.search(params={})
 
-    #exec_scopes=0
-
     return nil if params[:fb_id].nil?
 
-    profile_result = Profile.where(fb_id: params[:fb_id])
+    profile_result = Profile.by_fb_id(fb_id: params[:fb_id])
+
 
     if params[:gender]
       profile_result = profile_result.by_gender(params[:gender])
@@ -102,7 +102,6 @@ class Profile < ActiveRecord::Base
         profile_result = profile_result.by_relationship_status(params[:relationship_status])
       end
     end
-
     if params[:no_age].nil?
       if params[:age_min]
       profile_result = profile_result.by_age(params[:age_min],params[:age_max])

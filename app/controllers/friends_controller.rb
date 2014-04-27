@@ -5,7 +5,7 @@ class FriendsController < ApplicationController
 		#ユーザーの友人のfb_idよりトークンを取得
 		@profile=Profile.getUser(params[:fb_id])
 		#ログインしてから1時間以上経過していた場合またはcreated_atとupdated_atが同じ場合はデータを更新する
-        if @profile.updated_at  <= 1.hour.ago || @profile.created_at = @profile.updated_at
+        if @profile.updated_at  <= 1.hour.ago || @profile.created_at == @profile.updated_at
 		#ユーザーの友人の友人情報をprofilesに格納
 		@friends_friends=@profile.api.get_object('/me/friends','fields'=>'name,gender,picture,relationship_status,birthday')
 		Profile.insert(@friends_friends)
@@ -22,14 +22,15 @@ class FriendsController < ApplicationController
 		   @results=Profile.search(:gender => @search_form.gender,
 	       :relationship_status =>@search_form.relationship_status,
 	       :fb_id=>params[:fb_id],
-	       :no_age=>params[:no_age])
+	       :no_age=>@search_form.no_age)
    
 		   else
 	       @results=Profile.search(:gender => @search_form.gender,
 	       :relationship_status =>@search_form.relationship_status,
 	       :fb_id=>params[:fb_id],
-	       :age_max=>params[:age_max],
-	       :age_min=>params[:age_min])
+	       :age_max=>@search_form.age_max,
+	       :age_min=>@search_form.age_min
+	       )
 	       end
 	    end
 
