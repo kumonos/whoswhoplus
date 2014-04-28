@@ -107,6 +107,7 @@ class Profile < ActiveRecord::Base
       profile_result = profile_result.by_age(params[:age_min],params[:age_max])
       end
     else
+
       profile_result = profile_result.by_age_null
     end
 

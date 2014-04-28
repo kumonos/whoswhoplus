@@ -1,20 +1,10 @@
 class SearchForm
-  extend ActiveModel::Naming
-  include ActiveModel::Conversion
-  include ActiveModel::Validations
+  include ActiveModel::Model
 
   attr_accessor :gender,:relationship_status,:age_min,:age_max,:no_age
-  validates :age_max, :age_min, :numericality => {:only_integer => true}
-
-  validate :age_check
-
-  def age_check
-    if no_age == nil
-    errors.add(attr, '最小年齢を記入してください') if age_min == nil and age_max != nil
-    errors.add(attr, '最大年齢を記入してください') if age_min != nil and age_max == nil
-    errors.add(attr, '最大値と最小値が正しくありません') if age_min > age_max 
-    end
-  end
+  validates :age_min, :age_max, :presence => true
+  validates :age_min, :numericality => {:greater_than_or_equal_to =>0}  # {:less_than_or_equal_to => :age_max}にするとArgumentError - comparison of Float with String failedでエラー発生
+  
 
 
   def initialize(params)
