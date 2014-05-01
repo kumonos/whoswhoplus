@@ -35,3 +35,13 @@
                 %i.fa.fa-power-off
                 サインアウト
       = yield
+
+:javascript
+  $(document).ready(function() {
+    var w = $(window).width();
+    if (w <= 320){
+      $.backstretch("http://res.cloudinary.com/friendtoss/image/upload/e_blur:800,w_400/friendmeeting_lp.jpg");
+    } else {
+      $.backstretch("http://res.cloudinary.com/friendtoss/image/upload/e_blur:800/friendmeeting_lp.jpg");
+    }
+  });

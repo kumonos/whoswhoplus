@@ -7,4 +7,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require youstrap.min
+//= require jquery.backstretch.min.js
 //= require_tree
