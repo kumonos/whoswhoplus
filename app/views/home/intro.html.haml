@@ -1,12 +1,17 @@
-.jumbotron
-  %h1 Who's who ++
-  %ul
-    %li Who's who ++ は「あなたの友人」から「友人の友人」を紹介してもらうための
-    サービスです
-    %li 「あなたの友人」が間に入ることで、気軽にコンタクトができるようになります
-    %li 紹介を依頼するテンプレートがあるので、依頼の文面に煩わされることがありません
-  
-  %h3 まずは使ってみよう！
+#content
+  %h1 Who's Who ++ 
+  %p 「あなたの友人」から「友人の友人」を紹介してもらうためのサービスです 
+  %p 紹介依頼テンプレートを利用して、気軽にコンタクトをとってみよう
+  %br
+
   = link_to '/auth/facebook', class: 'btn btn-primary' do
-    %i.fa.fa-facebook
-    Sign in with facebook
+    %fb facebookからログイン
+    %i.fa.fa-facebook.fa-2x
+
+.footer
+  %hr
+    2014 kumonos all rights reserved
+
+    
+    
+
