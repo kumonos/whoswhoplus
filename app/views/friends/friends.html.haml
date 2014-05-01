@@ -26,13 +26,15 @@
         データなしを表示      
 
     %tr
-      %th 年齢:
+      %th 年齢範囲:
       %td
-        %input#age_min{:size => "3", :type => "text"}>/
-        〜
-        %input#age_max{:size => "3", :type => "text"}/
-        %input#age_show_empty.trigger_filter{:type=> "checkbox" , :value=>"true"} データなしを表示
 
+        = f.number_field :age_min, value: 20
+        歳から
+        = f.number_field :age_max, value: 30
+        歳まで
+        = f.check_box :no_age, {}, 'true',nil
+        年齢データなしを表示
   
   %p 
   = f.submit '検索'
