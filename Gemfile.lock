@@ -27,6 +27,7 @@ GEM
       tzinfo (~> 0.3.37)
     addressable (2.3.6)
     arel (4.0.2)
+    aws_cf_signer (0.1.2)
     better_errors (1.1.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -36,6 +37,9 @@ GEM
     byebug (2.7.0)
       columnize (~> 0.3)
       debugger-linecache (~> 1.2)
+    cloudinary (1.0.72)
+      aws_cf_signer
+      rest-client
     coderay (1.1.0)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -144,6 +148,8 @@ GEM
     raindrops (0.13.0)
     rake (10.2.2)
     ref (1.0.5)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     rspec-collection_matchers (0.0.3)
       rspec-expectations (>= 2.99.0.beta1)
     rspec-core (3.0.0.beta2)
@@ -209,6 +215,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   byebug
+  cloudinary
   coffee-rails
   erb2haml
   execjs
