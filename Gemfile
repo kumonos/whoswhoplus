@@ -17,6 +17,7 @@ gem 'coffee-rails'
 gem 'uglifier'
 gem 'jquery-rails'
 gem 'therubyracer'
+gem 'cloudinary'
 
 group :development do
   # Debugging
