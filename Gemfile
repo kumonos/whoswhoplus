@@ -12,11 +12,11 @@ gem 'haml-rails'
 
 # Assets
 gem 'sass-rails'
+gem 'less-rails'
 gem 'coffee-rails'
 gem 'uglifier'
 gem 'jquery-rails'
 gem 'therubyracer'
-
 
 group :development do
   # Debugging
