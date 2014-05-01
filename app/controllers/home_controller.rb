@@ -2,6 +2,8 @@ class HomeController < ApplicationController
   # GET /
   # ログイン状態に応じて画面を切り替える
   def index
+
+
     if @current_user
       # ログイン状態
       @friends = Profile.checkFriendsToken(@current_user.api.get_object('/me/friends','fields'=>'name,gender,picture'))

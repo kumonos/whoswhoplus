@@ -1,16 +1,34 @@
 #content
   %h1 Who's Who ++ 
-  %p 「あなたの友人」から「友人の友人」を紹介してもらうためのサービスです 
-  %p 紹介依頼テンプレートを利用して、気軽にコンタクトをとってみよう
+  %p 「友人の友人」を探そう、つながろう
   %br
 
   = link_to '/auth/facebook', class: 'btn btn-primary' do
     %fb facebookからログイン
     %i.fa.fa-facebook.fa-2x
 
-.footer
   %hr
-    2014 kumonos all rights reserved
+  .plugins
+    .wrap
+      .pluginsImg
+        =image_tag "http://res.cloudinary.com/whoswhoplus/image/upload/c_scale,e_blur:400,w_400/v1398949918/xmechich13oph2k3bkqd.jpg"
+        -#ちゃんとしたイラスト置く予定
+      .pluginsText
+        %h3 「友人の友人」を探せる
+        %p Who's Who++に登録している友人から「友人の友人」を検索することができます。
+        %p 年齢、性別など、ニーズに応じて絞込みも容易です。
+        %h3 「友人」に紹介を依頼できる
+        %p 友人に気になる「友人の友人」の紹介を依頼することができます。
+        %p 様々な依頼テンプレートが用意されているため、気軽に依頼することができます。
+
+
+  .footer
+    %hr
+      2014 
+      %a{:href => 'http://kumonos.jp/'} kumonos
+      all rights reserved
+      
+
 
 :javascript
   window.onload=function(){
@@ -20,7 +38,15 @@
   css.setAttribute("href","/assets/intro.css");
   document.getElementsByTagName("head")[0].appendChild(css);
   }
-
+:javascript
+  $(document).ready(function() {
+    var w = $(window).width();
+    if (w <= 320){
+      $.backstretch("http://res.cloudinary.com/whoswhoplus/image/upload/c_scale,e_blur:400,w_400/v1398949918/xmechich13oph2k3bkqd.jpg");
+    } else {
+      $.backstretch("http://res.cloudinary.com/whoswhoplus/image/upload/e_blur:400/v1398954538/k4bpqnu0vbdulpaf6d76.jpg");
+    }
+  });
 
     
     
