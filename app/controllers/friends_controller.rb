@@ -23,14 +23,14 @@ class FriendsController < ApplicationController
 	       :relationship_status =>@search_form.relationship_status,
 	       :fb_id=>params[:fb_id],
 	       :no_age=>@search_form.no_age)
+
    
 		   else
 	       @results=Profile.search(:gender => @search_form.gender,
 	       :relationship_status =>@search_form.relationship_status,
 	       :fb_id=>params[:fb_id],
 	       :age_max=>@search_form.age_max,
-	       :age_min=>@search_form.age_min
-	       )
+	       :age_min=>@search_form.age_min)
 	       end
 	    end
 
