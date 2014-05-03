@@ -71,12 +71,10 @@ class Profile < ActiveRecord::Base
 
   end
 
-  scope :by_fb_id, lambda {|fb_id| joins("left outer join relations_view on fb_id = fb_id_to").where("fb_id is not ?","#{fb_id}")}
-  
-  scope :by_gender, lambda {|gender| where("gender=?","#{gender}")}
-  scope :by_relationship_status, lambda{|relationship_status| where("relationship_status=?","#{relationship_status}")}
+  scope :by_gender, lambda {|gender| where(arel_table[:gender].eq(gender))}
+  scope :by_relationship_status, lambda{|relationship_status| where(arel_table[:relationship_status].eq(relationship_status))}
   scope :by_relationship_status_null, ->{where(relationship_status: nil)}
-  scope :by_age, lambda {|age_min,age_max| where(:age => age_min...age_max)}
+  scope :by_age, lambda {|age_min,age_max| where(arel_table[:age].gteq(age_min).and(arel_table[:age].lteq(age_max)))}
   scope :by_age_null, ->{where(age: nil)}
   # -----------------------------------------------------------------
   # Public Class Methods
@@ -88,9 +86,14 @@ class Profile < ActiveRecord::Base
 
     return nil if params[:fb_id].nil?
 
-    profile_result = Profile.by_fb_id(fb_id: params[:fb_id])
+    relations_view=Arel::Table.new(:relations_view)
+    fb_relation = relations_view
+                  .project(relations_view[:fb_id_to])
+                  .where(relations_view[:fb_id_from].eq(params[:fb_id]))
 
-
+    profiles = Profile.arel_table 
+    profile_result= Profile.where(profiles[:fb_id].in(fb_relation))
+                     
     if params[:gender]
       profile_result = profile_result.by_gender(params[:gender])
     end
