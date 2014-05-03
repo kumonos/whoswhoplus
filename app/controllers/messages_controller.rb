@@ -26,7 +26,6 @@ class MessagesController < ApplicationController
 
       @message.save!
     rescue => e
-      raise
       flash.now[:danger] = @message.errors.full_messages.first.presence || 'エラーが発生しました'
       render :new
     end
