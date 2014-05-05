@@ -17,7 +17,6 @@ class MessagesController < ApplicationController
 
   # POST /messages
   def create
-    raise
     @templates = Template.all
     @message = Message.new(message_params)
 
