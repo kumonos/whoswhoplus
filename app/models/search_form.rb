@@ -1,9 +1,11 @@
 class SearchForm
-  extend ActiveModel::Naming
-  include ActiveModel::Conversion
+  include ActiveModel::Model
 
-  attr_accessor :gender
-  attr_accessor :relationship_status
+  attr_accessor :gender,:relationship_status,:age_min,:age_max,:no_age
+  validates :age_min, :age_max, :presence => true
+  validates :age_min, :numericality => {:greater_than_or_equal_to =>0}  # {:less_than_or_equal_to => :age_max}にするとArgumentError - comparison of Float with String failedでエラー発生
+  validates :age_max, :numericality => {:greater_than_or_equal_to =>0}
+
 
   def initialize(params)
     if params
