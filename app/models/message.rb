@@ -10,8 +10,9 @@ class Message < ActiveRecord::Base
   # Validations
   # ------------------------------------------------------------------
   validates :message, length: { minimum: 1, maximum: 4096 }
-  validates :fb_id_from, length: { minimum: 1, maximum: 256 }
-  validates :fb_id_to, length: { minimum: 1, maximum: 256 }
+  validates :fb_id_from,   length: { minimum: 1, maximum: 256 }
+  validates :fb_id_to,     length: { minimum: 1, maximum: 256 }
+  validates :fb_id_target, length: { minimum: 1, maximum: 256 }
 
   # ------------------------------------------------------------------
   # Public Instance Methods
@@ -22,7 +23,7 @@ class Message < ActiveRecord::Base
 #{self.message}
 
 --
-このメッセージは #{self.recipient_profile.name} さんがあなたの友人の #{self.target_profile.name} さんに興味を持ち、 Who's Who ++ 経由で送信したメッセージです。
+このメッセージは #{self.sender_profile.name} さんがあなたの友人の #{self.target_profile.name} さんに興味を持ち、 Who's Who ++ 経由で送信したメッセージです。
 Who's Who ++ は、「友人の友人」を探してつながれる Web サービスです。
 #{SITE_URL}/
 __EOM__
