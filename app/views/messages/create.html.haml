@@ -2,7 +2,8 @@
 
 %h2 メッセージ送信完了
 %p #{@via.name}さんに、#{@profile.name}さんの紹介をお願いするメッセージを送りました。
-%p who'swho plusをご利用いただきありがとうございました。
+%p Who's who ++ をご利用いただきありがとうございました。
+%p.messages-body= lf2br @message.message_to_send
 %p.text-center
   = link_to root_path, class: 'btn btn-primary' do
     %i.fa.fa-home
