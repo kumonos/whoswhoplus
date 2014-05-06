@@ -162,13 +162,13 @@ class Profile < ActiveRecord::Base
   # Facebook Graph API をインスタンス化する
   # @return [Koala::Facebook::API]
   def api
-    self.access_token.access_token.try { |t| Koala::Facebook::API.new(t) }
+    self.access_token.try { |t| t.access_token.try { |u| Koala::Facebook::API.new(u) } }
   end
 
   # FacebookChat::Client のインスタンスを返す
   # @return [FacebookChat::Client]
   def chat_api
-    self.access_token.access_token.try { |t| FacebookChat::Client.new(t) }
+    self.access_token.try { |t| t.access_token.try { |u| FacebookChat::Client.new(u) } }
   end
 
   # 年齢を取得する
