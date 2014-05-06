@@ -7,7 +7,7 @@ class FriendsController < ApplicationController
 		#ログインしてから1時間以上経過していた場合またはcreated_atとupdated_atが同じ場合はデータを更新する
         if @profile.updated_at  <= 1.hour.ago || @profile.created_at == @profile.updated_at
 		#ユーザーの友人の友人情報をprofilesに格納
-		@friends_friends=@profile.api.get_object('/me/friends','fields'=>'name,gender,picture,relationship_status,birthday')
+		@friends_friends=@profile.api.get_object('/me/friends','fields'=>'name,gender,picture.width(200).height(200),relationship_status,birthday')
 		Profile.insert(@friends_friends)
 		#「ユーザーの友人」と「友人の友人」のfb_idをrelationsに登録する
 		Relation.insert(params[:fb_id],@friends_friends)
