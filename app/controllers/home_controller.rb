@@ -6,7 +6,7 @@ class HomeController < ApplicationController
 
     if @current_user
       # ログイン状態
-      @friends = Profile.checkFriendsToken(@current_user.api.get_object('/me/friends','fields'=>'name,gender,picture'))
+      @friends = Profile.checkFriendsToken(@current_user.api.get_object('/me/friends','fields'=>'name,gender,picture.width(200).height(200)'))
     else
       render 'intro'
     end
@@ -24,7 +24,7 @@ class HomeController < ApplicationController
     end
 
     api = Koala::Facebook::API.new(token)
-    profile = Profile.insert_or_update(api.get_object('/me','fields'=>'name,gender,picture'), access_token)
+    profile = Profile.insert_or_update(api.get_object('/me','fields'=>'name,gender,picture.width(200).height(200)'), access_token)
     session[:current_user] = profile.id
 
     redirect_to root_path
