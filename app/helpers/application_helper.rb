@@ -20,4 +20,10 @@ module ApplicationHelper
     html += '</ol>'
     html.html_safe
   end
+
+  # 改行を <br> に変換して返す
+  # @param [String] str
+  def lf2br(str)
+    str.gsub(/\n/, '<br>').html_safe
+  end
 end

@@ -41,4 +41,6 @@ RSpec.configure do |config|
 
   # FactoryGirlを組み込む
   config.include FactoryGirl::Syntax::Methods
+
+  config.include SignInMacros
 end
