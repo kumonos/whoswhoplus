@@ -4,6 +4,10 @@ class ApplicationController < ActionController::Base
   # すべての画面でログインチェックを実施する
   before_action :check_login
 
+  # エラーを捕捉
+  rescue_from ActiveRecord::RecordNotFound, ActionController::RoutingError, with: :render_404
+  rescue_from Exception, with: :render_500
+
   def find_current_user
     Profile.find(session[:current_user])
   end
@@ -40,5 +44,29 @@ class ApplicationController < ActionController::Base
       flash.now[:warning] = '指定された経路でユーザがみつかりませんでした'
       render 'home/404', status: :not_found
     end
+  end
+
+  # 404 で応答する
+  def render_404(exception = nil)
+    render 'home/404', status: :not_found, formats: :html
+  end
+
+  # 500 で応答する
+  # @param [Exception] exception 補足したエラー
+  def render_500(exception = nil)
+    @inquiry_key = Random.rand(10000000 .. 99999999).to_s
+
+    Rails.logger.fatal("Rendering 500... inquiry_key: #{@inquiry_key}")
+    Rails.logger.fatal(exception.class)
+    Rails.logger.fatal(exception.message)
+    Rails.logger.fatal(exception.backtrace.join("\n"))
+
+    begin
+      SystemMailer.internal_server_error(request, exception, @inquiry_key).deliver
+    rescue => e
+      Rails.logger.fatal("Sending email has also failed: #{e.class} #{e.message}")
+    end
+
+    render 'home/500', status: :internal_server_error, formats: :html
   end
 end
