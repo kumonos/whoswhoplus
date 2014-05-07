@@ -21,12 +21,8 @@ class MessagesController < ApplicationController
     @message = Message.new(message_params)
 
     begin
-      client = @current_user.chat_api
-
-      unless client.nil?
-        client.send(@via.fb_id, @message.message_to_send)
-        @message.save!
-      end
+      @message.save!
+      @current_user.chat_api.try { |c| c.send(@via.fb_id, @message.message_to_send) }
     # ActiveRecord::RecordInvalid 以外の想定外エラーとして扱うべきなのでここで rescue しない
     rescue ActiveRecord::RecordInvalid => e
       flash.now[:danger] = @message.errors.full_messages.first.presence || 'エラーが発生しました'

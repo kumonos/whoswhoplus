@@ -5,10 +5,12 @@
   - @messages.each do |message|
     .message
       .row
-        .col-xs-8
+        .col-xs-12.col-sm-8
           %i.fa.fa-user
-          = message.recipient_profile.name
-        .col-xs-4
+          = message.recipient_profile.name_with_link
+          %i.fa.fa-arrow-right
+          = message.target_profile.name_with_link
+        .col-xs-12.col-sm-4
           %i.fa.fa-clock-o
           = message.created_at.strftime('%m/%d %H:%M')
       .row
