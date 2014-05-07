@@ -5,8 +5,10 @@ class ApplicationController < ActionController::Base
   before_action :check_login
 
   # エラーを捕捉
-  rescue_from ActiveRecord::RecordNotFound, ActionController::RoutingError, with: :render_404
-  rescue_from Exception, with: :render_500
+  if Rails.env.staging? || Rails.env.production?
+    rescue_from ActiveRecord::RecordNotFound, ActionController::RoutingError, with: :render_404
+    rescue_from Exception, with: :render_500
+  end
 
   def find_current_user
     Profile.find(session[:current_user])
