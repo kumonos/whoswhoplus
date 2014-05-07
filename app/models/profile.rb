@@ -23,8 +23,8 @@ class Profile < ActiveRecord::Base
     # すでに存在していないか探す
     profile = Profile.where(fb_id: me['id']).first
 
-    # 存在していない場合新しく作る
     if profile.nil?
+      # 存在していない場合新しく作る
       profile = Profile.create!(
         access_token_id: token.id,
         fb_id: me['id'],
@@ -34,6 +34,10 @@ class Profile < ActiveRecord::Base
         relationship_status: me['relationship_status'],
         picture_url: me['picture'].try { |p| p['data'].try { |d| d['url'] } }
       )
+    else
+      # 存在している場合、取得したアクセストークンで更新する
+      profile.access_token_id = token.id
+      profile.save!
     end
 
     profile

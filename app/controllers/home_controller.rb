@@ -14,18 +14,22 @@ class HomeController < ApplicationController
 
   # ログイン状態を作り、ホームにリダイレクトさせる
   # GET /home/callback
-	def callback
+  def callback
     begin
       token = request.env['omniauth.auth'][:credentials][:token]
       access_token = AccessToken.create!(access_token: token)
-    rescue => e
-      Rails.logger.warn "認証失敗 #{e.class.to_s}: #{e.message}"
-      flash[:danger] = '認証に失敗しました！'
-    end
+      Rails.logger.info access_token.inspect
 
-    api = Koala::Facebook::API.new(token)
-    profile = Profile.insert_or_update(api.get_object('/me','fields'=>'name,gender,picture.width(200).height(200)'), access_token)
-    session[:current_user] = profile.id
+      api = Koala::Facebook::API.new(token)
+      profile = Profile.insert_or_update(api.get_object('/me','fields'=>'name,gender,picture.width(200).height(200)'), access_token)
+      Rails.logger.info profile.inspect
+
+      session[:current_user] = profile.id
+      flash[:success] = 'サインインしました！'
+    rescue => e
+      flash[:danger] = '認証に失敗しました！'
+      raise e # 内部サーバーエラーに渡す
+    end
 
     redirect_to root_path
   end
