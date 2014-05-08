@@ -50,7 +50,6 @@ class HomeController < ApplicationController
     #更新時間が1分以内(ログイン直後)または1時間以上経過している場合データを更新する
           
     if @profile.updated_at  >= 1.minute.ago ||  @profile.updated_at <= 1.hour.ago
-      byebug
       #ユーザーの友人情報をprofilesに格納
       @friends=@profile.api.get_object('/me/friends','fields'=>'name,gender,picture.width(200).height(200),relationship_status,birthday')
       Profile.insert(@friends)
