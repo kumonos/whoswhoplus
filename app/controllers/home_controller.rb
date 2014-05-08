@@ -23,6 +23,8 @@ class HomeController < ApplicationController
       api = Koala::Facebook::API.new(token)
       profile = Profile.insert_or_update(api.get_object('/me','fields'=>'name,gender,picture.width(200).height(200)'), access_token)
       Rails.logger.info profile.inspect
+      
+      update_friends_data(profile.fb_id)
 
       session[:current_user] = profile.id
       flash[:success] = 'サインインしました！'
@@ -39,6 +41,23 @@ class HomeController < ApplicationController
     session[:current_user] = nil
     flash[:info] = 'ログアウトしました！'
     redirect_to root_path
+  end
+
+  #ユーザーの友人情報を取得または更新する
+  # @param fb_id
+  def update_friends_data(fb_id)
+    @profile=Profile.getUser(fb_id)
+    #更新時間が1分以内(ログイン直後)または1時間以上経過している場合データを更新する
+          
+    if @profile.updated_at  >= 1.minute.ago ||  @profile.updated_at <= 1.hour.ago
+      byebug
+      #ユーザーの友人情報をprofilesに格納
+      @friends=@profile.api.get_object('/me/friends','fields'=>'name,gender,picture.width(200).height(200),relationship_status,birthday')
+      Profile.insert(@friends)
+      #「ユーザーの友人」と「友人」のfb_idをrelationsに登録する
+      Relation.insert(fb_id,@friends)
+      @profile.touch
+    end
   end
 
   # GET /dummy_login

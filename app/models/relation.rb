@@ -10,12 +10,12 @@ class Relation < ActiveRecord::Base
   # -----------------------------------------------------------------
   # Public Class Methods
   # -----------------------------------------------------------------
-  # ユーザーの友人、友人の友人のリレーションを登録する
-  # @param ユーザーの友人のfb_id
-  # @param [Hash] 友人の友人の情報(ユーザの友人のトークンで取得した/me/friendsの返り値)
+  # ユーザー、友人のリレーションを登録する
+  # @param ユーザーのfb_id
+  # @param [Hash] 友人の情報(ユーザのトークンで取得した/me/friendsの返り値)
   # @return 
-  def self.insert(fb_id,friends_friends)
-  	friends_friends.each do |friend|
+  def self.insert(fb_id,friends)
+  	friends.each do |friend|
       begin
         self.store!(fb_id,friend['id'])
       rescue ActiveRecord::RecordInvalid => e
