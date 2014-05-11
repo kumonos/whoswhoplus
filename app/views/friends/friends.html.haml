@@ -4,25 +4,25 @@
     %tr
       %th 性別 :
       %td
-        = f.check_box :gender, {}, 'male',nil
+        = f.check_box :gender, {multiple: true,checked:true}, 'male',nil
         男性        
-        = f.check_box :gender, {}, 'female',nil
+        = f.check_box :gender, {multiple: true,checked:true}, 'female',nil
         女性
-        = f.check_box :gender, {},'empty',nil
+        = f.check_box :gender, {multiple: true,checked:true},'empty',nil
         データなし 
 
     %tr
       %th 交際ステータス:
       %td
-        = f.check_box :relationship_status, {}, 'Single',nil
+        = f.check_box :relationship_status, {multiple: true,checked:true}, 'Single',nil
         独身
-        = f.check_box :relationship_status, {}, 'In a Relationship',nil
+        = f.check_box :relationship_status, {multiple: true}, 'In a Relationship',nil
         交際中
-        = f.check_box :relationship_status, {}, 'In an Open Relationship',nil
+        = f.check_box :relationship_status, {multiple: true}, 'In an Open Relationship',nil
         オープンな関係
-        = f.check_box :relationship_status, {}, 'Married',nil
+        = f.check_box :relationship_status, {multiple: true}, 'Married',nil
         既婚
-        = f.check_box :relationship_status, {}, 'empty',nil
+        = f.check_box :relationship_status, {multiple: true}, 'empty',nil
         データなしを表示      
 
     %tr
