@@ -156,21 +156,6 @@ class Profile < ActiveRecord::Base
     Profile.where(fb_id: fb_id).first
   end
 
-  # -----------------------------------------------------------------
-  # Public Instance Methods
-  # -----------------------------------------------------------------
-  # Facebook Graph API をインスタンス化する
-  # @return [Koala::Facebook::API]
-  def api
-    self.access_token.try { |t| t.access_token.try { |u| Koala::Facebook::API.new(u) } }
-  end
-
-  # FacebookChat::Client のインスタンスを返す
-  # @return [FacebookChat::Client]
-  def chat_api
-    self.access_token.try { |t| t.access_token.try { |u| FacebookChat::Client.new(u) } }
-  end
-
   # 年齢を取得する
   # param [String] birthday
   # @return [Integer] 年齢
@@ -189,10 +174,66 @@ class Profile < ActiveRecord::Base
         birth = birth_f.strftime('%Y%m%d').to_i
         #birth = Date.parse(birthday).strftime('%Y%m%d').to_i
         today = Date.today.strftime('%Y%m%d').to_i
-      return (today - birth) / 10000
+        return (today - birth) / 10000
       else
         return nil
       end
     end
+  end
+
+  # -----------------------------------------------------------------
+  # Public Instance Methods
+  # -----------------------------------------------------------------
+  # Facebook Graph API をインスタンス化する
+  # @return [Koala::Facebook::API]
+  def api
+    self.access_token.try { |t| t.access_token.try { |u| Koala::Facebook::API.new(u) } }
+  end
+
+  # FacebookChat::Client のインスタンスを返す
+  # @return [FacebookChat::Client]
+  def chat_api
+    self.access_token.try { |t| t.access_token.try { |u| FacebookChat::Client.new(u) } }
+  end
+
+  # Facebook のページ URL を返す
+  # @return [String]
+  def facebook_url
+    "https://www.facebook.com/#{self.fb_id}"
+  end
+
+  # 性別を文字列で返す
+  # @return [String] 男性 / 女性 / データなし
+  def gender_str
+    case self.gender
+      when 'male'
+        '男性'
+      when 'female'
+        '女性'
+      else
+        'データなし'
+    end
+  end
+
+  # 年齢を文字列で返す
+  # @return [String]
+  def age_str
+    self.age.present? ? "#{self.age}歳" : 'データなし'
+  end
+
+  # 交際ステータスを文字列で返す
+  # @return [String]
+  def relationship_status_str
+    {
+      'Single' => '独身',
+      'In A Relationship' => '交際中',
+      'Engaged' => '婚約中',
+      'Married' => '既婚',
+      'It\'s Complicated' => '複雑な関係',
+      'In An Open Relationship' => 'オープンな関係',
+      'Widowed' => '配偶者と死別',
+      'Separated' => '別居',
+      'Divorced' => '離婚',
+    }[self.relationship_status].presence || 'データなし'
   end
 end
