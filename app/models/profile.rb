@@ -24,6 +24,12 @@ class Profile < ActiveRecord::Base
     profile = Profile.where(fb_id: me['id']).first
 
     if profile.nil?
+        if me['gender'].nil?
+          me['gender']='empty'
+        end
+        if me['relationship_status'].nil?
+          me['gender']='empty'
+        end
       # 存在していない場合新しく作る
       profile = Profile.create!(
         access_token_id: token.id,
@@ -59,6 +65,12 @@ class Profile < ActiveRecord::Base
 
       #存在していない場合は格納
       if data.nil? 
+        if friend['gender'].nil?
+          friend['gender']='empty'
+        end
+        if friend['relationship_status'].nil?
+          friend['relationship_status']='empty'
+        end
         data=Profile.create!(
           fb_id:friend['id'],
           name:friend['name'],
@@ -75,9 +87,9 @@ class Profile < ActiveRecord::Base
 
   end
 
-  scope :by_gender, lambda {|gender| where(arel_table[:gender].eq(gender))}
-  scope :by_relationship_status, lambda{|relationship_status| where(arel_table[:relationship_status].eq(relationship_status))}
-  scope :by_relationship_status_null, ->{where(relationship_status: nil)}
+  #scope :by_gender, lambda {|gender| where(arel_table[:gender].eq(gender))}
+  scope :by_gender, lambda {|gender| where(gender: gender)}
+  scope :by_relationship_status, lambda{|relationship_status| where(relationship_status: relationship_status)}
   scope :by_age, lambda {|age_min,age_max| where(arel_table[:age].gteq(age_min).and(arel_table[:age].lteq(age_max)))}
   scope :by_age_null, ->{where(age: nil)}
   # -----------------------------------------------------------------
@@ -99,15 +111,11 @@ class Profile < ActiveRecord::Base
     profile_result= Profile.where(profiles[:fb_id].in(fb_relation))
                      
     if params[:gender]
-      profile_result = profile_result.by_gender(params[:gender])
+        profile_result = profile_result.by_gender(params[:gender])
     end
 
     if params[:relationship_status]
-      if params[:relationship_status] == 'empty'
-        profile_result = profile_result.by_relationship_status_null
-      else
         profile_result = profile_result.by_relationship_status(params[:relationship_status])
-      end
     end
     if params[:no_age].nil?
       if params[:age_min]
