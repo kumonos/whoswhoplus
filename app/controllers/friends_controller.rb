@@ -27,13 +27,6 @@ class FriendsController < ApplicationController
 		render 'friends' #viewのhamlの名前
 	end
 
-	
-	# 検索結果ページ
-	def search_result
-
-
-	
-	end
 
   private
     def search_params
