@@ -196,6 +196,13 @@ class Profile < ActiveRecord::Base
     self.access_token.try { |t| t.access_token.try { |u| FacebookChat::Client.new(u) } }
   end
 
+
+  # 名前と Facebook へのリンクを返す
+  # @return [String]
+  def name_with_link
+    "<a href=\"#{self.facebook_url}\" target=\"_blank\">#{self.name}</a>".html_safe
+  end
+
   # Facebook のページ URL を返す
   # @return [String]
   def facebook_url
