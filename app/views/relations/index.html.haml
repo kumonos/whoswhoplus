@@ -1,13 +1,17 @@
 = breadcrumbs [['HOME', root_path], "#{@profile.name}さんを紹介してもらう"]
 %h2= "#{@profile.name}さん"
-%p
-  = image_tag @profile.picture_url, alt: @profile.name
+%p= image_tag @profile.picture_url, size: '200x200', alt: @profile.name
+%p= link_to '<i class="fa fa-facebook"></i> Facebookで詳しく見る'.html_safe, @profile.facebook_url, class: 'btn btn-info', target: '_blank'
+%ul
+  %li 性別：#{@profile.gender_str}
+  %li 年齢：#{@profile.age_str}
+  %li 交際ステータス：#{@profile.relationship_status_str}
 %h3 とは、この方がお知り合いです！
 %p 誰に紹介してもらうかを選択してください。
 %ul.via-candidates.clearfix
   - @vias.each do |via|
     %li.via-candidate
-      = image_tag via.picture_url, alt: via.name
+      = image_tag via.picture_url, size: '50x50', alt: via.name
       %br
       = via.name
       %br

@@ -156,21 +156,6 @@ class Profile < ActiveRecord::Base
     Profile.where(fb_id: fb_id).first
   end
 
-  # -----------------------------------------------------------------
-  # Public Instance Methods
-  # -----------------------------------------------------------------
-  # Facebook Graph API をインスタンス化する
-  # @return [Koala::Facebook::API]
-  def api
-    self.access_token.try { |t| t.access_token.try { |u| Koala::Facebook::API.new(u) } }
-  end
-
-  # FacebookChat::Client のインスタンスを返す
-  # @return [FacebookChat::Client]
-  def chat_api
-    self.access_token.try { |t| t.access_token.try { |u| FacebookChat::Client.new(u) } }
-  end
-
   # 年齢を取得する
   # param [String] birthday
   # @return [Integer] 年齢
@@ -189,7 +174,7 @@ class Profile < ActiveRecord::Base
         birth = birth_f.strftime('%Y%m%d').to_i
         #birth = Date.parse(birthday).strftime('%Y%m%d').to_i
         today = Date.today.strftime('%Y%m%d').to_i
-      return (today - birth) / 10000
+        return (today - birth) / 10000
       else
         return nil
       end
@@ -210,6 +195,7 @@ class Profile < ActiveRecord::Base
   def chat_api
     self.access_token.try { |t| t.access_token.try { |u| FacebookChat::Client.new(u) } }
   end
+
 
   # 名前と Facebook へのリンクを返す
   # @return [String]
