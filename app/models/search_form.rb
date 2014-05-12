@@ -2,9 +2,9 @@ class SearchForm
   include ActiveModel::Model
 
   attr_accessor :gender,:relationship_status,:age_min,:age_max,:no_age
-  validates :age_min, :age_max, :presence => true
-  validates :age_min, :numericality => {:greater_than_or_equal_to =>0}  # {:less_than_or_equal_to => :age_max}にするとArgumentError - comparison of Float with String failedでエラー発生
-  validates :age_max, :numericality => {:greater_than_or_equal_to =>0}
+  validates :age_min, :numericality => {:greater_than_or_equal_to =>0,:message=>'年齢は0以上にしてください'}
+  # {:less_than_or_equal_to => :age_max}にするとArgumentError - comparison of Float with String failedでエラー発生
+  validates :age_max, :numericality => {:greater_than_or_equal_to =>0,:message=>'年齢は0以上にしてください'}
 
 
   def initialize(params)
