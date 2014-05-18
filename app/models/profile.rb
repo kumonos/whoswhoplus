@@ -178,15 +178,18 @@ class Profile < ActiveRecord::Base
         rescue ArgumentError
         end
       end
-      if birth_f && birth_f.year
+      if birth_f.year == Date.today.year
+        #日付しか入っていない場合、年が自動的に今年になってしまうので、年齢はnilを返す
+        return nil
+      else
         birth = birth_f.strftime('%Y%m%d').to_i
         #birth = Date.parse(birthday).strftime('%Y%m%d').to_i
         today = Date.today.strftime('%Y%m%d').to_i
         return (today - birth) / 10000
-      else
-        return nil
       end
+      return nil
     end
+    return nil
   end
 
   # -----------------------------------------------------------------
