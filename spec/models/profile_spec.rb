@@ -18,13 +18,11 @@ describe Profile do
       it 'アクセストークンがなければ nil を返す'
     end
 
-<<<<<<< HEAD
     describe '#name_with_link' do
       it { expect(build(:profile, fb_id: 'youcune', name: 'なかにしゆう').name_with_link).to eq '<a href="https://www.facebook.com/youcune" target="_blank">なかにしゆう</a>' }
     end
 
-=======
->>>>>>> master
+
     describe '#facebook_url' do
       it { expect(build(:profile, fb_id: 'youcune').facebook_url).to eq 'https://www.facebook.com/youcune' }
     end
