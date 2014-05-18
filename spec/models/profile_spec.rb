@@ -5,6 +5,18 @@ describe Profile do
     describe '#find_by_fb_id' do
       pending
     end
+    describe '#age' do
+      it 'birthdayが1/25/1994の場合、20を返す' do
+        expect(Profile.age('01/25/1994')).to eq 20
+      end
+      it 'birthdayが1/25の場合、年齢nilを返す' do
+        expect(Profile.age('01/25')).to eq nil
+      end
+      it 'birthdayがnilの場合、年齢nilを返す' do
+        expect(Profile.age(nil)).to eq nil
+      end
+    end
+
   end
 
   describe 'Public Instance Methods' do
@@ -22,7 +34,6 @@ describe Profile do
       it { expect(build(:profile, fb_id: 'youcune', name: 'なかにしゆう').name_with_link).to eq '<a href="https://www.facebook.com/youcune" target="_blank">なかにしゆう</a>' }
     end
 
-
     describe '#facebook_url' do
       it { expect(build(:profile, fb_id: 'youcune').facebook_url).to eq 'https://www.facebook.com/youcune' }
     end
@@ -35,7 +46,7 @@ describe Profile do
 
     describe '#age_str' do
       it { expect(build(:profile, age: 25).age_str).to eq '25歳' }
-      it { expect(build(:profile, gender: nil).age_str).to eq 'データなし' }
+      it { expect(build(:profile, age: nil).age_str).to eq 'データなし' }
     end
     
     describe '#relationship_status_str' do
