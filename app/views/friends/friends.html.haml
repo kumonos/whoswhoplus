@@ -18,10 +18,14 @@
         独身
         = f.check_box :relationship_status, {multiple: true}, 'In a Relationship',nil
         交際中
-        = f.check_box :relationship_status, {multiple: true}, 'In an Open Relationship',nil
-        オープンな関係
+        = f.check_box :relationship_status, {multiple: true}, 'Engaged',nil
+        婚約中
         = f.check_box :relationship_status, {multiple: true}, 'Married',nil
         既婚
+        = f.check_box :relationship_status, {multiple: true}, 'In an Open Relationship',nil
+        オープンな関係
+        = f.check_box :relationship_status, {multiple: true}, 'It\'s Complicated',nil
+        複雑な関係
         = f.check_box :relationship_status, {multiple: true}, 'empty',nil
         データなしを表示      
 
@@ -29,15 +33,15 @@
       %th 年齢範囲:
       %td
 
-        = f.number_field :age_min, value: 20
+        = f.text_field :age_min
         歳から
-        = f.number_field :age_max, value: 30
+        = f.text_field :age_max
         歳まで
         = f.check_box :no_age, {}, 'true',nil
         年齢データなしを表示
-  
-  %p 
+  %p
   = f.submit '検索'
+
 
 %p
 %h3 検索結果
