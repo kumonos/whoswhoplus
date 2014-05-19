@@ -6,10 +6,13 @@ describe Profile do
       pending
     end
     describe '#age' do
+      before do
+        Date.stub(:today_test).and_return(Date.new(1994,1,25))
+      end
       it 'birthdayが1/25/1994の場合、20を返す' do
-        Date.stub(:today).and_return(Date.new(1994,1,25))
+        
         format = '%m/%d/%Y'
-        expect(Profile.age(Date.today.strftime(format))).to eq 20
+        expect(Profile.age(Date.today_test.strftime(format))).to eq 20
       end
       it 'birthdayが1/25の場合、年齢nilを返す' do
         expect(Profile.age('01/25')).to eq nil
