@@ -31,7 +31,8 @@ end
 
 group :test do
   # Specs
-  gem 'rspec-rails', '~> 3.0.0.beta2'
+  # rc1 にすると have が使えない？　のでひとまず beta2 固定
+  gem 'rspec-rails', '3.0.0.beta2'
   gem 'factory_girl_rails'
   gem 'faker'
 end
