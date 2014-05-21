@@ -38,7 +38,7 @@ end
 
 group :development, :test do
   # Debugging
-  gem 'byebug'
+  gem 'pry-byebug'
 
   # Database
   gem 'sqlite3'
