@@ -36,6 +36,7 @@ class ApplicationController < ActionController::Base
     @profile = Profile.find_by_fb_id(params[:user])
 
     # その人を紹介できる人を API に問い合わせて探す
+    # TODO そのうちキャッシュを考える
     via_candidates = @current_user.api
       .get_object("/v2.0/#{params[:user]}?fields=context.fields(mutual_friends)")['context']['mutual_friends']['data']
       .map{ |h| h['id']}
