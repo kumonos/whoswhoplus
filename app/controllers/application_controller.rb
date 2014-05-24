@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
     @via = @vias.where(fb_id: params[:via]).first if params[:via].present?
 
     # 紹介してほしい相手がいない場合、紹介できる友人がいない場合、その中に経由したい人がいない場合はエラー
-    if @profile.nil? || @vias.empty? || (params[:via].present? && @via.nil?)
+    if @profile.nil? || @vias.blank? || (params[:via].present? && @via.nil?)
       flash.now[:warning] = '指定された経路でユーザがみつかりませんでした'
       render 'home/404', status: :not_found
     end

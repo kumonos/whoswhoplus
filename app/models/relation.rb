@@ -1,6 +1,6 @@
 class Relation < ActiveRecord::Base
-  belongs_to :fb_id_from, :class_name => 'Profile', foreign_key: :fb_id_from
-  belongs_to :fb_id_to, :class_name => 'Profile' ,foreign_key: :fb_id_to
+  belongs_to :from_user, :class_name => 'Profile',foreign_key: :fb_id_from,primary_key: :fb_id
+  belongs_to :to_user, :class_name => 'Profile',foreign_key: :fb_id_to,primary_key: :fb_id
 
   # -----------------------------------------------------------------
   # Validations
@@ -30,19 +30,26 @@ class Relation < ActiveRecord::Base
   # @param [String] fb_id_2 ユーザ2
   # @return [[Profile]] 共通の友人の Profile の配列
   def self.common_friends(fb_id_1, fb_id_2)
-    # TODO ここの書き方正しい？というか、ここで定義すべきメソッドではない…？
-    friends1 = Profile.where(fb_id: fb_id_1).friends_of_from_user.pluck(:fb_id)
-    friends2 = Profile.where(fb_id: fb_id_2).friends_of_from_user.pluck(:fb_id)
+    # TODO ここで定義すべきメソッドではない…？
 
-    Profile.where(fb_id: friends1 & friends2)
+    #friends1 = Profile.where(fb_id: fb_id_1).first
+    #friends2 = Profile.where(fb_id: fb_id_2).first
+    friends1 = Profile.all_friends(fb_id: fb_id_1)
+    friends2 = Profile.all_friends(fb_id: fb_id_2)
+
+    return nil if friends1.nil? || friends2.nil?
+    #friends1 = Profile.where(fb_id: fb_id_1).first.friends_of_from_user.pluck(:fb_id)
+    #friends2 = Profile.where(fb_id: fb_id_2).first.friends_of_from_user.pluck(:fb_id)
+    byebug
+    Profile.where(fb_id: friends1.pluck(:fb_id) & friends2.pluck(:fb_id))
   end
 
   # 友人関係を登録する（順序は考慮必要）
   # @param [String] fb_id_1 ユーザー
   # @param [String] fb_id_2 ユーザーの友人
   def self.store!(*fb_ids)
-    fb_ids.sort_by! { |id| id.to_i }
-    param = { fb_id_to: fb_ids[0], fb_id_from: fb_ids[1] }
+    #fb_ids.sort_by! { |id| id.to_i }
+    param = { fb_id_from: fb_ids[0], fb_id_to: fb_ids[1] }
     Relation.create!(param) if Relation.where(param).count == 0
   end
 end

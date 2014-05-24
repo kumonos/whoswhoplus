@@ -3,10 +3,11 @@ class Profile < ActiveRecord::Base
   # Relations
   # -----------------------------------------------------------------
   belongs_to :access_token
-  has_many :relations_of_from_user, :class_name => 'Relation', :foreign_key => 'fb_id_from', :dependent => :destroy
-  has_many :relations_of_to_user, :class_name => 'Relation', :foreign_key => 'fb_id_to', :dependent => :destroy
-  has_many :friends_of_from_user, :through => :relations_of_from_user, :source => 'fb_id_to'
-  has_many :friends_of_to_user, :through => :relations_of_to_user, :source => 'fb_id_from'
+  has_many :relations_of_from_user, class_name: Relation,  primary_key: :fb_id, foreign_key: :fb_id_from, dependent: :destroy
+  has_many :relations_of_to_user, class_name: Relation,   primary_key: :fb_id, foreign_key: :fb_id_to, dependent: :destroy
+  has_many :friends_of_from_user, through: :relations_of_from_user, source: :to_user
+  has_many :friends_of_to_user, through: :relations_of_to_user, source: :from_user
+ 
 
   # -----------------------------------------------------------------
   # Scopes
@@ -105,8 +106,7 @@ class Profile < ActiveRecord::Base
     return nil if params[:fb_id].nil?
 
     profiles = Profile.where(fb_id: params[:fb_id]).first
-    byebug
-    profile_result = profiles.friends_of_to_user
+    profile_result = profiles.friends_of_from_user
     #relations=Arel::Table.new(:relations)
     #fb_relation = relations
     #              .project(relations[:fb_id_to])
@@ -258,5 +258,14 @@ class Profile < ActiveRecord::Base
       'Separated' => '別居',
       'Divorced' => '離婚',
     }[self.relationship_status].presence || 'データなし'
+  end
+
+  # 方向関係なく友人を取得する
+  def self.all_friends(fb_id)
+    user =Profile.where(fb_id: fb_id).first
+    return nil if user.nil?
+    from_friends =user.friends_of_from_user
+    to_friends =user.friends_of_from_user
+     return from_friends + to_friends
   end
 end
