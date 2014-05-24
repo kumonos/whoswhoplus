@@ -35,8 +35,12 @@ class ApplicationController < ActionController::Base
     # この人を紹介してほしい
     @profile = Profile.find_by_fb_id(params[:user])
 
-    # その人を紹介できる人
-    @vias    = Relation.common_friends(@current_user.fb_id, params[:user])
+    # その人を紹介できる人を API に問い合わせて探す
+    via_candidates = @current_user.api
+      .get_object("/v2.0/#{params[:user]}?fields=context.fields(mutual_friends)")['context']['mutual_friends']['data']
+      .map{ |h| h['id']}
+
+    @vias = Profile.where(fb_id: via_candidates)
 
     # その中でこの人に紹介してほしい
     @via = @vias.where(fb_id: params[:via]).first if params[:via].present?
