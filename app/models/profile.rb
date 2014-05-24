@@ -3,8 +3,8 @@ class Profile < ActiveRecord::Base
   # Relations
   # -----------------------------------------------------------------
   belongs_to :access_token
-  has_many :relations_of_from_user, :class_name => 'Relation', :foreign_key => 'fb_id_from_id', :dependent => :destroy
-  has_many :relations_of_to_user, :class_name => 'Relation', :foreign_key => 'fb_id_to_id', :dependent => :destroy
+  has_many :relations_of_from_user, :class_name => 'Relation', :foreign_key => 'fb_id_from', :dependent => :destroy
+  has_many :relations_of_to_user, :class_name => 'Relation', :foreign_key => 'fb_id_to', :dependent => :destroy
   has_many :friends_of_from_user, :through => :relations_of_from_user, :source => 'fb_id_to'
   has_many :friends_of_to_user, :through => :relations_of_to_user, :source => 'fb_id_from'
 
