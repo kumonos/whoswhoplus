@@ -47,13 +47,13 @@ ActiveRecord::Schema.define(version: 20140505084532) do
   add_index "profiles", ["fb_id"], name: "index_profiles_on_fb_id", unique: true
 
   create_table "relations", force: true do |t|
-    t.string   "fb_id_younger", null: false
-    t.string   "fb_id_older",   null: false
+    t.string   "fb_id_from", null: false
+    t.string   "fb_id_to",   null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "relations", ["fb_id_younger", "fb_id_older"], name: "index_relations_on_fb_id_younger_and_fb_id_older", unique: true
+  add_index "relations", ["fb_id_from", "fb_id_to"], name: "index_relations_on_fb_id_from_and_fb_id_to", unique: true
 
   create_table "templates", force: true do |t|
     t.string   "objective"

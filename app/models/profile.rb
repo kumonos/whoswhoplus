@@ -3,8 +3,10 @@ class Profile < ActiveRecord::Base
   # Relations
   # -----------------------------------------------------------------
   belongs_to :access_token
-  has_many :relations
-  has_many :relations_views , foreign_key: :fb_id_from,primary_key: :fb_id
+  has_many :relations_of_from_user, :class_name => 'Relation', :foreign_key => 'fb_id_from_id', :dependent => :destroy
+  has_many :relations_of_to_user, :class_name => 'Relation', :foreign_key => 'fb_id_to_id', :dependent => :destroy
+  has_many :friends_of_from_user, :through => :relations_of_from_user, :source => 'fb_id_to'
+  has_many :friends_of_to_user, :through => :relations_of_to_user, :source => 'fb_id_from'
 
   # -----------------------------------------------------------------
   # Scopes
@@ -102,13 +104,16 @@ class Profile < ActiveRecord::Base
 
     return nil if params[:fb_id].nil?
 
-    relations_view=Arel::Table.new(:relations_view)
-    fb_relation = relations_view
-                  .project(relations_view[:fb_id_to])
-                  .where(relations_view[:fb_id_from].eq(params[:fb_id]))
+    profiles = Profile.where(fb_id: params[:fb_id]).first
+    byebug
+    profile_result = profiles.friends_of_to_user
+    #relations=Arel::Table.new(:relations)
+    #fb_relation = relations
+    #              .project(relations[:fb_id_to])
+    #              .where(relations[:fb_id_from].eq(params[:fb_id]))
 
-    profiles = Profile.arel_table 
-    profile_result= Profile.where(profiles[:fb_id].in(fb_relation))
+    #profiles = Profile.arel_table 
+    #profile_result= Profile.where(profiles[:fb_id].in(fb_relation))
                      
     if params[:gender]
         profile_result = profile_result.by_gender(params[:gender])
