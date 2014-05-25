@@ -37,9 +37,8 @@ class ApplicationController < ActionController::Base
 
     # その人を紹介できる人を API に問い合わせて探す
     via_candidates = @current_user.api
-      .get_object("/v2.0/#{params[:user]}?fields=context.fields(mutual_friends)")['context']['mutual_friends']['data']
-      .map{ |h| h['id']}
-
+      .get_object("/user/mutualfriends/#{params[:user]}")
+      .map{ |h| h['id'] }
     @vias = Profile.where(fb_id: via_candidates)
 
     # その中でこの人に紹介してほしい
