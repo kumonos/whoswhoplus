@@ -1,12 +1,7 @@
-ul.via-candidates{
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-
-  li.via-candidate{
-    float: left;
+.via-candidates{
+  .via-candidate{
     text-align: center;
-    width: 100px;
+    height: 160px;
 
     img{
       height: 80px;
