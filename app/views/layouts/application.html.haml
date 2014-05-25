@@ -3,7 +3,7 @@
   %head
     %meta{ charset: 'UTF-8' }
     %meta{ name: 'viewport', content: 'initial-scale=1.0, user-scalable=no' }
-    %title #{rails_env}FB app
+    %title #{rails_env}Who's who ++
     = stylesheet_link_tag    'application'
     = javascript_include_tag 'application'
     = csrf_meta_tags
@@ -19,7 +19,7 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.navbar-brand{href: root_path} who's who ++
+          %a.navbar-brand{href: root_path} Who's who ++
         .collapse.navbar-collapse.navbar-ex1-collapse
           %ul.nav.navbar-nav
             %li
@@ -35,4 +35,3 @@
                 %i.fa.fa-power-off
                 サインアウト
       = yield
-
