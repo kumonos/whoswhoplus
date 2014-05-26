@@ -34,14 +34,13 @@ describe Relation do
     describe '#common_friends' do
       it '共通の友人を返す' do
         common_friends = Relation.common_friends('10', '30')
-        byebug
         expect(common_friends.count).to eq 1
         expect(common_friends.first.fb_id).to eq '20'
       end
 
       it '共通の友人がいない場合は空の値を返す' do
         common_friends = Relation.common_friends('10', '20')
-        expect(common_friends).to be_brank
+        expect(common_friends).to be_empty
       end
     end
 

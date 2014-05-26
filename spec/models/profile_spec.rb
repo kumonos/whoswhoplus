@@ -17,6 +17,18 @@ describe Profile do
       end
     end
 
+    describe '#all_friends' do
+      before do
+        create(:profile, fb_id: '10')
+      end
+      it 'fb_idがヒットしない場合nilが返る' do      
+        expect(Profile.all_friends('30')).to eq nil
+      end
+      it '友人がいない場合は空が返る' do
+        expect(Profile.all_friends('10')).to be_empty
+      end
+    end
+
   end
 
   describe 'Public Instance Methods' do

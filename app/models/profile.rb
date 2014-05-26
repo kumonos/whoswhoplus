@@ -197,6 +197,15 @@ class Profile < ActiveRecord::Base
     return nil
   end
 
+  # 登録の方向関係なく友人を取得する
+  def self.all_friends(fb_id)
+    user =Profile.where(fb_id:fb_id).first
+    return nil if user.nil?
+    from_friends =user.friends_of_from_user
+    to_friends =user.friends_of_to_user
+     return Profile.where(fb_id:from_friends.pluck(:fb_id) | to_friends.pluck(:fb_id))
+  end
+
   # -----------------------------------------------------------------
   # Public Instance Methods
   # -----------------------------------------------------------------
@@ -260,12 +269,5 @@ class Profile < ActiveRecord::Base
     }[self.relationship_status].presence || 'データなし'
   end
 
-  # 方向関係なく友人を取得する
-  def self.all_friends(fb_id)
-    user =Profile.where(fb_id: fb_id).first
-    return nil if user.nil?
-    from_friends =user.friends_of_from_user
-    to_friends =user.friends_of_from_user
-     return from_friends + to_friends
-  end
+
 end

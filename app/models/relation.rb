@@ -32,15 +32,10 @@ class Relation < ActiveRecord::Base
   def self.common_friends(fb_id_1, fb_id_2)
     # TODO ここで定義すべきメソッドではない…？
 
-    #friends1 = Profile.where(fb_id: fb_id_1).first
-    #friends2 = Profile.where(fb_id: fb_id_2).first
-    friends1 = Profile.all_friends(fb_id: fb_id_1)
-    friends2 = Profile.all_friends(fb_id: fb_id_2)
+    friends1 = Profile.all_friends(fb_id_1)
+    friends2 = Profile.all_friends(fb_id_2)
 
     return nil if friends1.nil? || friends2.nil?
-    #friends1 = Profile.where(fb_id: fb_id_1).first.friends_of_from_user.pluck(:fb_id)
-    #friends2 = Profile.where(fb_id: fb_id_2).first.friends_of_from_user.pluck(:fb_id)
-    byebug
     Profile.where(fb_id: friends1.pluck(:fb_id) & friends2.pluck(:fb_id))
   end
 
