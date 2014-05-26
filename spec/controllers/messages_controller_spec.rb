@@ -19,7 +19,8 @@ describe MessagesController do
   end
 
   before do
-    @from    = create(:profile)
+    token    = create(:access_token)
+    @from    = create(:profile, access_token_id: token.id)
     @to      = create(:profile)
     @target  = create(:profile)
     Relation.store!(@from.fb_id, @to.fb_id)
@@ -27,6 +28,7 @@ describe MessagesController do
     @message = create(:message, fb_id_from: @from.fb_id, fb_id_to: @to.fb_id, fb_id_target: @target.fb_id, message: 'HELLO')
     @dummy   = create(:message, fb_id_from: @to.fb_id, fb_id_to: @target.fb_id, fb_id_target: @from.fb_id)
     @template = create(:template, body: '$$NAME$$さんを紹介してください')
+    Koala::Facebook::API.any_instance.stub(:get_object).and_return([ { 'id' => @to.fb_id } ])
   end
 
   describe 'GET index' do
@@ -87,8 +89,8 @@ describe MessagesController do
     context 'メッセージがある場合' do
       before do
         fake_signed_in @from
+        Profile.any_instance.stub(:chat_api).and_return(nil)
         post :create, message: { message: 'HELLO' }, user: @target.fb_id, via: @to.fb_id
-        FacebookChat::Client.any_instance.stub(:send).and_return(true)
       end
 
       it '200 OK' do
