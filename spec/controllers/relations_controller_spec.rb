@@ -43,7 +43,7 @@ describe RelationsController do
   describe 'GET #index' do
     context '指定ユーザへの経路がある場合' do
       before do
-        get :index, user: @p4.fb_id
+        get :index, user: @p1.fb_id
       end
 
       it '200を返す' do
@@ -51,7 +51,7 @@ describe RelationsController do
       end
 
       it '指定ユーザをviewに渡す' do
-        expect(assigns[:profile]).to eq @p4
+        expect(assigns[:profile]).to eq @p1
       end
 
       it '経路をviewに渡す' do

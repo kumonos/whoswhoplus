@@ -3,8 +3,11 @@ class Profile < ActiveRecord::Base
   # Relations
   # -----------------------------------------------------------------
   belongs_to :access_token
-  has_many :relations
-  has_many :relations_views , foreign_key: :fb_id_from,primary_key: :fb_id
+  has_many :relations_of_from_user, class_name: Relation,  primary_key: :fb_id, foreign_key: :fb_id_from, dependent: :destroy
+  has_many :relations_of_to_user, class_name: Relation,   primary_key: :fb_id, foreign_key: :fb_id_to, dependent: :destroy
+  has_many :friends_of_from_user, through: :relations_of_from_user, source: :to_user
+  has_many :friends_of_to_user, through: :relations_of_to_user, source: :from_user
+ 
 
   # -----------------------------------------------------------------
   # Scopes
@@ -102,13 +105,8 @@ class Profile < ActiveRecord::Base
 
     return nil if params[:fb_id].nil?
 
-    relations_view=Arel::Table.new(:relations_view)
-    fb_relation = relations_view
-                  .project(relations_view[:fb_id_to])
-                  .where(relations_view[:fb_id_from].eq(params[:fb_id]))
-
-    profiles = Profile.arel_table 
-    profile_result= Profile.where(profiles[:fb_id].in(fb_relation))
+    profiles = Profile.where(fb_id: params[:fb_id]).first
+    profile_result = profiles.friends_of_from_user
                      
     if params[:gender]
         profile_result = profile_result.by_gender(params[:gender])
@@ -192,6 +190,15 @@ class Profile < ActiveRecord::Base
     return nil
   end
 
+  # 登録の方向関係なく友人を取得する
+  def self.all_friends(fb_id)
+    user =Profile.where(fb_id:fb_id).first
+    return nil if user.nil?
+    from_friends =user.friends_of_from_user
+    to_friends =user.friends_of_to_user
+     return Profile.where(fb_id:from_friends.pluck(:fb_id) | to_friends.pluck(:fb_id))
+  end
+
   # -----------------------------------------------------------------
   # Public Instance Methods
   # -----------------------------------------------------------------
@@ -254,4 +261,6 @@ class Profile < ActiveRecord::Base
       'Divorced' => '離婚',
     }[self.relationship_status].presence || 'データなし'
   end
+
+
 end
