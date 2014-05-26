@@ -48,7 +48,7 @@ describe RelationsController do
       before do
         Koala::Facebook::API.any_instance.stub(:get_object).and_return([ { 'id' => @p2.fb_id }, { 'id' => @p3.fb_id } ])
 
-        get :index, user: @p4.fb_id
+        get :index, user: @p1.fb_id
       end
 
       it '200を返す' do

@@ -60,14 +60,13 @@ class Profile < ActiveRecord::Base
   # @param [Hash] /me/friends の返り値
   # @return 
   def self.insert(friends)
-
+    friends_id = friends.map{ |f| f['id'] }
+    #DBに存在している友人を抽出
+    already_exist_friends = Profile.where(fb_id: friends_id).pluck(:fb_id)
     friends.each do |friend|
-      #すでに存在していないか確認
-      data=Profile.where(fb_id:friend['id']).first
       #TODO 途中で失敗してしまった場合の処理
-
       #存在していない場合は格納
-      if data.nil? 
+      if !already_exist_friends.include? friend['fb_id']
         if friend['gender'].nil?
           friend['gender']='empty'
         end
@@ -83,11 +82,8 @@ class Profile < ActiveRecord::Base
           relationship_status:friend['relationship_status'],
           picture_url:friend['picture'].try { |p| p['data'].try { |d| d['url'] } },
           )
-
       end
-
     end  
-
   end
 
   #scope :by_gender, lambda {|gender| where(arel_table[:gender].eq(gender))}
