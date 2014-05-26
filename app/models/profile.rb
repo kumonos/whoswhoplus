@@ -107,13 +107,6 @@ class Profile < ActiveRecord::Base
 
     profiles = Profile.where(fb_id: params[:fb_id]).first
     profile_result = profiles.friends_of_from_user
-    #relations=Arel::Table.new(:relations)
-    #fb_relation = relations
-    #              .project(relations[:fb_id_to])
-    #              .where(relations[:fb_id_from].eq(params[:fb_id]))
-
-    #profiles = Profile.arel_table 
-    #profile_result= Profile.where(profiles[:fb_id].in(fb_relation))
                      
     if params[:gender]
         profile_result = profile_result.by_gender(params[:gender])

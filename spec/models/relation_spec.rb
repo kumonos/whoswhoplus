@@ -38,7 +38,7 @@ describe Relation do
         expect(common_friends.first.fb_id).to eq '20'
       end
 
-      it '共通の友人がいない場合は空の値を返す' do
+      it '共通の友人がいない場合は空の配列を返す' do
         common_friends = Relation.common_friends('10', '20')
         expect(common_friends).to be_empty
       end
