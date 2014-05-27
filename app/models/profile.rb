@@ -66,7 +66,7 @@ class Profile < ActiveRecord::Base
     friends.each do |friend|
       #TODO 途中で失敗してしまった場合の処理
       #存在していない場合は格納
-      if !already_exist_friends.include? friend['fb_id']
+      if !already_exist_friends.include? friend['id']
         if friend['gender'].nil?
           friend['gender']='empty'
         end
