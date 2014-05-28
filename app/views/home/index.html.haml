@@ -2,10 +2,12 @@
 %li 以下の友人経由で友人を紹介してもらうことができます
 %li 写真をクリックすることで、友人の友人一覧が表示されます
 %ul
-- @friends.each do |f|
-  %table
-    %tr  
-      %th #{f.name}
-      %td
-      -# =link_to f.picture_url, friends_path(f.fb_id)
+.via-candidates.row
+  - @friends.each do |f|
+    .via-candidate.col-xs-6.col-sm-3.col-md-2
       = link_to(image_tag(f.picture_url,size:"100x100",alt:"Pic") ,friends_path(@current_user.fb_id,f.fb_id))
+      %br
+      #{f.name}
+
+
+          
