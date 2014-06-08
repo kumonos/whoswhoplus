@@ -9,11 +9,11 @@
 %h3 とは、この方がお知り合いです！
 %p 誰に紹介してもらうかを選択してください。
 .via-candidates.row
-  - (@vias*100).each do |via|
+  - @vias.each do |via|
     .via-candidate.col-xs-6.col-sm-3.col-md-2
       = image_tag via.picture_url, size: '50x50', alt: via.name
       %br
-      = via.name[0..Random.rand(5..50)]
+      = via.name
       %br
       = link_to '<i class="fa fa-envelope-o"></i>紹介を頼む'.html_safe, new_message_path(user: @profile.fb_id, via: via.fb_id), class: 'btn btn-primary btn-xs'
 %p{ style: 'margin-top: 10px;' }= link_to '<i class="fa fa-angle-double-left"></i> 戻る'.html_safe, root_path, class: 'btn btn-default'

@@ -1,11 +1,11 @@
 class Relation < ActiveRecord::Base
-  belongs_to :profile
-  
+  belongs_to :from_user, :class_name => 'Profile',foreign_key: :fb_id_from,primary_key: :fb_id
+  belongs_to :to_user, :class_name => 'Profile',foreign_key: :fb_id_to,primary_key: :fb_id
 
   # -----------------------------------------------------------------
   # Validations
   # -----------------------------------------------------------------
-  validates :fb_id_older, uniqueness: { scope: :fb_id_younger }
+  validates :fb_id_from, uniqueness: { scope: :fb_id_to }
 
   # -----------------------------------------------------------------
   # Public Class Methods
@@ -30,18 +30,21 @@ class Relation < ActiveRecord::Base
   # @param [String] fb_id_2 ユーザ2
   # @return [[Profile]] 共通の友人の Profile の配列
   def self.common_friends(fb_id_1, fb_id_2)
-    # TODO 人数が大きくなってきたらもうちょっと改善の余地あるかも……。
-    friends1 = RelationsView.where(fb_id_from: fb_id_1).pluck(:fb_id_to)
-    friends2 = RelationsView.where(fb_id_from: fb_id_2).pluck(:fb_id_to)
-    Profile.where(fb_id: friends1 & friends2)
+    # TODO ここで定義すべきメソッドではない…？
+
+    friends1 = Profile.all_friends(fb_id_1)
+    friends2 = Profile.all_friends(fb_id_2)
+
+    return nil if friends1.nil? || friends2.nil?
+    Profile.where(fb_id: friends1.pluck(:fb_id) & friends2.pluck(:fb_id))
   end
 
-  # 友人関係を登録する（順序は問わない）
-  # @param [String] fb_id_1 ユーザ1
-  # @param [String] fb_id_2 ユーザ2
+  # 友人関係を登録する（順序は考慮必要）
+  # @param [String] fb_id_1 ユーザー
+  # @param [String] fb_id_2 ユーザーの友人
   def self.store!(*fb_ids)
-    fb_ids.sort_by! { |id| id.to_i }
-    param = { fb_id_younger: fb_ids[0], fb_id_older: fb_ids[1] }
+    #fb_ids.sort_by! { |id| id.to_i }
+    param = { fb_id_from: fb_ids[0], fb_id_to: fb_ids[1] }
     Relation.create!(param) if Relation.where(param).count == 0
   end
 end

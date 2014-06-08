@@ -6,7 +6,7 @@ class HomeController < ApplicationController
 
     if @current_user
       # ログイン状態
-      @friends = Profile.checkFriendsToken(@current_user.api.get_object('/me/friends','fields'=>'name,gender,picture.width(200).height(200)'))
+      @friends = Profile.checkFriendsToken(@current_user.api.get_object('/me/friends','fields'=>'name,gender,picture.width(200).height(200)','locale' =>'ja_JP'))
     else
       render 'intro'
     end
@@ -21,7 +21,7 @@ class HomeController < ApplicationController
       Rails.logger.info access_token.inspect
 
       api = Koala::Facebook::API.new(token)
-      profile = Profile.insert_or_update(api.get_object('/me','fields'=>'name,gender,picture.width(200).height(200)'), access_token)
+      profile = Profile.insert_or_update(api.get_object('/me','fields'=>'name,gender,picture.width(200).height(200)','locale' =>'ja_JP'), access_token)
       Rails.logger.info profile.inspect
       
       update_friends_data(profile.fb_id)
@@ -51,7 +51,7 @@ class HomeController < ApplicationController
           
     if @profile.updated_at  >= 1.minute.ago ||  @profile.updated_at <= 1.hour.ago
       #ユーザーの友人情報をprofilesに格納
-      @friends=@profile.api.get_object('/me/friends','fields'=>'name,gender,picture.width(200).height(200),relationship_status,birthday')
+      @friends=@profile.api.get_object('/me/friends','fields'=>'name,gender,picture.width(200).height(200),relationship_status,birthday','locale' =>'ja_JP')
       Profile.insert(@friends)
       #「ユーザーの友人」と「友人」のfb_idをrelationsに登録する
       Relation.insert(fb_id,@friends)
