@@ -1,24 +1,25 @@
 #content
-  =image_tag 'http://res.cloudinary.com/whoswhoplus/image/upload/v1400415058/title_nxelar.png'
-  %p 「友人の友人」を探そう、つながろう
-  %br
-
-  = link_to '/auth/facebook', class: 'btn btn-primary' do
-    %fb facebookからログイン
-    %i.fa.fa-facebook.fa-2x
+  .row
+    .col-xs-12
+      =image_tag 'http://res.cloudinary.com/whoswhoplus/image/upload/v1400415058/title_nxelar.png' ,class:'img-responsive center-block'
+      %p 「友人の友人」を探そう、つながろう
+      %br
+    
+      = link_to '/auth/facebook', class: 'btn btn-primary' do
+        %fb facebookからログイン
+        %i.fa.fa-facebook.fa-2x
 
   %hr
-  .plugins
-    .wrap
-      .pluginsImg
-        =image_tag 'http://res.cloudinary.com/whoswhoplus/image/upload/c_scale,h_400,w_400/v1399394266/whoswho_sigqob.jpg'
-      .pluginsText
-        %h3 「友人の友人」を探せる
-        %p Who's who++に登録している友人から</br>「友人の友人」を検索することができます。
-        %p 年齢、性別など、ニーズに応じて</br>絞込みも容易です。
-        %h3 「友人」に紹介を依頼できる
-        %p 友人に気になる「友人の友人」の紹介を</br>依頼することができます。
-        %p 様々な依頼テンプレートが用意されて</br>いるため、気軽に依頼することができます。
+  .row
+    .col-xs-12.col-sm-6  
+      =image_tag 'http://res.cloudinary.com/whoswhoplus/image/upload/c_scale,h_400,w_400/v1399394266/whoswho_sigqob.jpg' ,class:'img-responsive center-block'
+    .col-xs-12.col-sm-6
+      %h2 「友人の友人」を探せる
+      %p Who's who++に登録している友人から</br>「友人の友人」を検索することができます。
+      %p 年齢、性別など、ニーズに応じて</br>絞込みも容易です。
+      %h2 「友人」に紹介を依頼できる
+      %p 友人に気になる「友人の友人」の紹介を</br>依頼することができます。
+      %p 様々な依頼テンプレートが用意されて</br>いるため、気軽に依頼することができます。
 
 
   .footer

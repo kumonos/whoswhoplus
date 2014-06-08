@@ -1,9 +1,10 @@
 %h3 #{@profile.name} の友人を検索する！
 = form_for @search_form, url: friends_path, remote: true, html: {method: :get} do |f|
-  %table
-    %tr
-      %th 性別 :
-      %td
+  #content 
+    .row
+      .col-xs-12.col-sm-2
+        性別 :
+      .col-xs-12.col-sm-10
         = f.check_box :gender, {multiple: true,checked:true}, 'male',nil
         男性        
         = f.check_box :gender, {multiple: true,checked:true}, 'female',nil
@@ -11,9 +12,10 @@
         = f.check_box :gender, {multiple: true,checked:true},'empty',nil
         データなし 
 
-    %tr
-      %th 交際ステータス:
-      %td
+    .row
+      .col-xs-12.col-sm-2
+        交際ステータス:
+      .col-xs-12.col-sm-10
         = f.check_box :relationship_status, {multiple: true,checked:true}, 'Single',nil
         独身
         = f.check_box :relationship_status, {multiple: true}, 'In a Relationship',nil
@@ -29,10 +31,10 @@
         = f.check_box :relationship_status, {multiple: true}, 'empty',nil
         データなしを表示      
 
-    %tr
-      %th 年齢範囲:
-      %td
-
+    .row
+      .col-xs-12.col-sm-2
+        年齢範囲:
+      .col-xs-12.col-sm-10
         = f.text_field :age_min
         歳から
         = f.text_field :age_max
@@ -40,7 +42,7 @@
         = f.check_box :no_age, {}, 'true',nil
         年齢データなしを表示
   %p
-  = f.submit '検索'
+  = f.submit '検索' ,class: 'btn btn-primary'
 
 
 %p
