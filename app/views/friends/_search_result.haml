@@ -1,3 +1,11 @@
+- if @error_message.present?
+  - @error_message.each do |f|
+    = f[1] 
+    %p
 - if @results.present?
-  - @results.each do |f| 
-    = link_to(image_tag(f['picture_url'],size:"100x100",alt:f['name']), relations_path(user: f['fb_id']))
+  = @results.size 
+  件(写真にマウスの乗せると名前、年齢が表示されます。)
+  %br
+  - @results.each do |f|
+    = link_to(image_tag(f['picture_url'],size:"100x100",title:"#{f.name} #{f.age_str}"), relations_path(user: f['fb_id']))
+

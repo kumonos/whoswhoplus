@@ -2,18 +2,23 @@
 %h2= "#{@profile.name}さん"
 %p
   = image_tag @profile.picture_url, alt: @profile.name
-%h3 メッセージ作成
-%p #{@via.name}さんに、#{@profile.name}さんの紹介をお願いするメッセージを送ろう。
+%h3 紹介を依頼
+%p #{@profile.name} さんを紹介してもらうために、 #{@via.name} さんにメッセージを送ろう。
+
 %script
   TEMPLATES = new Object();
   - @templates.each do |t|
-    TEMPLATES['#{t.id}'] = '#{t.body}';
+    TEMPLATES['#{t.id}'] = '#{t.body.gsub('$$TARGET$$', @profile.name)}';
 = form_for @message do |f|
-  %p= select_tag :objective, options_for_select(@templates.map { |t| [t.objective, t.id]}), include_blank: true, id: 'message-objective', class: 'form-control'
-  %p.small目的を選択すると、文例が自動的に入力されます。
   %p
+    %label どういう流れがいい？
+    = select_tag :objective, options_for_select(@templates.map { |t| [t.objective, t.id]}), include_blank: true, id: 'message-objective', class: 'form-control'
+  %p.small 選択すると文例が下に自動的に入力されます。上で選択した内容が相手に送られることはありません。
+  %p
+    %label お願いする文章を書こう
     = f.text_area :message, id: 'message-body', class: 'form-control'
     = hidden_field_tag :user, @profile.fb_id
     = hidden_field_tag :via, @via.fb_id
+  %p.small メッセージは #{@via.name} さんに送られます。ここに入力した内容が直接 #{@profile.name} さんに届くことはありません。
   %p.pull-right= button_tag '<i class="fa fa-envelope-o"></i> 送信する'.html_safe, class: 'btn btn-primary'
   %p.pull-left= link_to '<i class="fa fa-angle-double-left"></i> 戻る'.html_safe, relations_path(user: @profile.fb_id), class: 'btn btn-default'

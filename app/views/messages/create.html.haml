@@ -2,8 +2,33 @@
 
 %h2 メッセージ送信完了
 %p #{@via.name}さんに、#{@profile.name}さんの紹介をお願いするメッセージを送りました。
-%p who'swho plusをご利用いただきありがとうございました。
+%p Who's who ++ をご利用いただきありがとうございました。
+%p.messages-body= lf2br @message.message_to_send
 %p.text-center
   = link_to root_path, class: 'btn btn-primary' do
     %i.fa.fa-home
     戻る
+
+.fb-like{"data-action" => "like", "data-href" => "https://whoswhoplus.kumonos.jp", "data-layout" => "standard", "data-share" => "true", "data-show-faces" => "true", "data-count"=>"vertical"}
+%br
+%a.twitter-share-button{"data-hashtags" => "whoswhoplus", "data-lang" => "ja", "data-url" => "https://whoswhoplus.kumonos.jp", :href=>"https://twitter.com/share"} ツイート
+%br
+.g-plusone{:href=>"https://whoswhoplus.kumonos.jp","data-annotation" => "inline", "data-size" => "medium", "data-width" => "300"}
+
+#fb-root
+:javascript
+  (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&appId=1452215268348852&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+:javascript
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+
+:javascript
+  (function() {var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;po.src = 'https://apis.google.com/js/platform.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();

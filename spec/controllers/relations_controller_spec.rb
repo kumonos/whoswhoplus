@@ -13,8 +13,11 @@ end
 describe RelationsController do
   # テストデータ作成
   before do
+    # AccessToken 作成
+    token = create(:access_token)
+
     # Profile作成
-    @p1 = create(:profile)
+    @p1 = create(:profile, access_token_id: token.id)
     @p2 = create(:profile)
     @p3 = create(:profile)
     @p4 = create(:profile)
@@ -43,7 +46,9 @@ describe RelationsController do
   describe 'GET #index' do
     context '指定ユーザへの経路がある場合' do
       before do
-        get :index, user: @p4.fb_id
+        Koala::Facebook::API.any_instance.stub(:get_object).and_return([ { 'id' => @p2.fb_id }, { 'id' => @p3.fb_id } ])
+
+        get :index, user: @p1.fb_id
       end
 
       it '200を返す' do
@@ -51,7 +56,7 @@ describe RelationsController do
       end
 
       it '指定ユーザをviewに渡す' do
-        expect(assigns[:profile]).to eq @p4
+        expect(assigns[:profile]).to eq @p1
       end
 
       it '経路をviewに渡す' do
@@ -65,6 +70,8 @@ describe RelationsController do
 
     context '指定ユーザがいない場合' do
       before do
+        Koala::Facebook::API.any_instance.stub(:get_object).and_return([])
+
         get :index, user: 'not_found'
       end
       it_behaves_like 'Not Found'
@@ -72,6 +79,8 @@ describe RelationsController do
 
     context '指定ユーザと共通の友人がいない場合' do
       before do
+        Koala::Facebook::API.any_instance.stub(:get_object).and_return([])
+
         get :index, user: @p6.fb_id
       end
       it_behaves_like 'Not Found'

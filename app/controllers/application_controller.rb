@@ -5,8 +5,10 @@ class ApplicationController < ActionController::Base
   before_action :check_login
 
   # エラーを捕捉
-  rescue_from ActiveRecord::RecordNotFound, ActionController::RoutingError, with: :render_404
-  rescue_from Exception, with: :render_500
+  if Rails.env.staging? || Rails.env.production?
+    rescue_from ActiveRecord::RecordNotFound, ActionController::RoutingError, with: :render_404
+    rescue_from Exception, with: :render_500
+  end
 
   def find_current_user
     Profile.find(session[:current_user])
@@ -33,8 +35,11 @@ class ApplicationController < ActionController::Base
     # この人を紹介してほしい
     @profile = Profile.find_by_fb_id(params[:user])
 
-    # その人を紹介できる人
-    @vias    = Relation.common_friends(@current_user.fb_id, params[:user])
+    # その人を紹介できる人を API に問い合わせて探す
+    via_candidates = @current_user.api
+      .get_object("/user/mutualfriends/#{params[:user]}")
+      .map{ |h| h['id'] }
+    @vias = Profile.where(fb_id: via_candidates)
 
     # その中でこの人に紹介してほしい
     @via = @vias.where(fb_id: params[:via]).first if params[:via].present?

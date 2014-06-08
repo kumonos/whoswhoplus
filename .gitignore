@@ -12,7 +12,6 @@
 
 # Constants
 config/initializers/constants.rb
-config/initializers/secret_token.rb
 
 # OS X
 .DS_Store
