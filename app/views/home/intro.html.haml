@@ -21,14 +21,34 @@
       %p 友人に気になる「友人の友人」の紹介を</br>依頼することができます。
       %p 様々な依頼テンプレートが用意されて</br>いるため、気軽に依頼することができます。
 
-
+  .fb-like{"data-action" => "like", "data-href" => "https://whoswhoplus.kumonos.jp", "data-layout" => "standard", "data-share" => "true", "data-show-faces" => "true", "data-count"=>"vertical"}
+  %br
+  %a.twitter-share-button{"data-hashtags" => "whoswhoplus", "data-lang" => "ja", "data-url" => "https://whoswhoplus.kumonos.jp", :href=>"https://twitter.com/share"} ツイート
+  %br
+  .g-plusone{:href=>"https://whoswhoplus.kumonos.jp","data-annotation" => "inline", "data-size" => "medium", "data-width" => "300"}
   .footer
     %hr
       2014 
       %a{:href => 'http://kumonos.jp/'} kumonos
       all rights reserved
       
+#fb-root
+:javascript
+  (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&appId=1452215268348852&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
 
+:javascript
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+
+:javascript
+  (function() {var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;po.src = 'https://apis.google.com/js/platform.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
 
 :javascript
   window.onload=function(){
