@@ -3,10 +3,12 @@
   %head
     %meta{ charset: 'UTF-8' }
     %meta{ name: 'viewport', content: 'initial-scale=1.0, user-scalable=no' }
-    %title #{rails_env}Who's who ++
+    %title
+      = content_for?(:title) ? yield(:title) : "#{rails_env}Who's who ++"
     = stylesheet_link_tag    'application'
     = javascript_include_tag 'application'
     = csrf_meta_tags
+    = yield :header
   %body
     .container
       - if flash.present?
