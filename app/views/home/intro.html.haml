@@ -1,3 +1,7 @@
+- content_for(:title) {"タイトルううう"}
+- content_for(:header) do
+  = stylesheet_link_tag "intro"
+
 #content
   .row
     .col-xs-12
@@ -50,14 +54,6 @@
   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
   })();
 
-:javascript
-  window.onload=function(){
-  var css=document.createElement("link");
-  css.setAttribute("rel","stylesheet");
-  css.setAttribute("type","text/css");
-  css.setAttribute("href","/assets/intro.css");
-  document.getElementsByTagName("head")[0].appendChild(css);
-  }
 :javascript
   $(document).ready(function() {
     var w = $(window).width();
