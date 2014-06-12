@@ -21,4 +21,6 @@ SampleKoalaRailsApp::Application.routes.draw do
     get '/dummy_login' => 'home#dummy_form'
     post '/dummy_login' => 'home#dummy_login'
   end
+
+  match '*path' => 'application#render_404', via: :all
 end
