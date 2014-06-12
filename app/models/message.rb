@@ -22,7 +22,7 @@ class Message < ActiveRecord::Base
     "#{self.message}
 
 --
-このメッセージは #{self.sender_profile.name} さんがあなたの友人の #{self.target_profile.name} さんに興味を持ち、 Who's who ++ 経由で送信したメッセージです。
+このメッセージは #{self.sender_profile.name} さんがあなたの友人の #{self.target_profile.name} ( #{self.target_profile.facebook_url} ) さんに興味を持ち、 Who's who ++ 経由で送信したメッセージです。
 #{self.recipient_profile.access_token_id.present? ? '' : "Who's who ++ は、「友人の友人」を探してつながれる Web サービスです。
 "}#{SITE_URL}/"
   end
