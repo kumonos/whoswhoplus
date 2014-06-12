@@ -23,7 +23,7 @@ class Message < ActiveRecord::Base
 
 --
 このメッセージは #{self.sender_profile.name} さんがあなたの友人の #{self.target_profile.name} さんに興味を持ち、 フレンズポップ経由で送信したメッセージです。
-#{self.recipient_profile.access_token_id.present? ? '' : "Who's who ++ は、「友人の友人」を探してつながれる Web サービスです。
+#{self.recipient_profile.access_token_id.present? ? '' : "フレンズポップは、「友人の友人」を探してつながれる Web サービスです。
 "}#{SITE_URL}/"
   end
 end
