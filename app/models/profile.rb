@@ -40,12 +40,6 @@ class Profile < ActiveRecord::Base
     profile = Profile.where(fb_id: me['id']).first
 
     if profile.nil?
-        #if me['gender'].nil?
-        #  me['gender']='empty'
-        #end
-        #if me['relationship_status'].nil?
-        #  me['gender']='empty'
-        #end
       if @genders.key? me['gender']
         gender = @genders[me['gender']] 
       else
@@ -53,7 +47,7 @@ class Profile < ActiveRecord::Base
       end 
 
       if @relationships.key? me['relationship_status']
-        relationship = @genders[me['relationship_status']]
+        relationship = @relationships[me['relationship_status']]
       else
         relationship = 'empty'
       end
