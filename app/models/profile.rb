@@ -85,12 +85,6 @@ class Profile < ActiveRecord::Base
       #TODO 途中で失敗してしまった場合の処理
       #存在していない場合は格納
       if !already_exist_friends.include? friend['id']
-        #if friend['gender'].nil?
-        #  friend['gender']='empty'
-        #end
-        #if friend['relationship_status'].nil?
-        #  friend['relationship_status']='empty'
-        #end
         if @genders.key? friend['gender']
           gender = @genders[friend['gender']] 
         else
