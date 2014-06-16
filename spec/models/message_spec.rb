@@ -49,7 +49,7 @@ http://localhost:3000/"
 
 --
 このメッセージは Bob さんがあなたの友人の Nancy ( #{@nancy.facebook_url} ) さんに興味を持ち、フレンズポップ経由で送信したメッセージです。
-Who's who ++ は、「友人の友人」を探してつながれる Web サービスです。
+フレンズポップは、「友人の友人」を探してつながれる Web サービスです。
 http://localhost:3000/"
       end
     end
