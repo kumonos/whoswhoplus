@@ -1,3 +1,5 @@
+- content_for(:search_result) do
+  = javascript_include_tag "jquery.lazyloads"
 - if @error_message.present?
   - @error_message.each do |f|
     = f[1] 
