@@ -5,8 +5,8 @@
     %p
 - if @results.present?
   = @results.size 
-  件(写真にマウスの乗せると名前、年齢が表示されます。)
+  件
   %br
   - @results.each do |f|
-    = link_to(lazy_image_tag(f['picture_url'],:size=>"100x100",:title=>"#{f.name} #{f.age_str}"), relations_path(user: f['fb_id']))
+    = link_to(lazy_image_tag(f['picture_url'], size:"100x100", title:"#{f.name} #{f.age_str}"), relations_path(user: f['fb_id']))
 

@@ -28,7 +28,7 @@ module ApplicationHelper
   end
 
   # image_tagの代わりにlazy-loadingタグを使うためのヘルパー
-  def lazy_image_tag source, options = {}
+  def lazy_image_tag (source, options = {})
     options['data-original'] = source
     if options[:class].blank?
       options[:class] = "lazy"
