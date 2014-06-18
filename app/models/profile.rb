@@ -18,8 +18,8 @@ class Profile < ActiveRecord::Base
   # Constants
   # -----------------------------------------------------------------
 
-  @genders = {'男性' => 'male', '女性' => 'female'}
-  @relationships = {
+  @@genders = {'男性' => 'male', '女性' => 'female'}
+  @@relationships_j2e = {
       '独身' => 'Single',
       '交際中' => 'In A Relationship',
       '婚約中' => 'Engaged',
@@ -27,6 +27,8 @@ class Profile < ActiveRecord::Base
       '複雑な関係' => 'It\'s Complicated',
       'オープンな関係' => 'In An Open Relationship'
     }
+  @@relationships_e2j =  @@relationships_j2e.invert
+
   # -----------------------------------------------------------------
   # Public Class Methods
   # -----------------------------------------------------------------
@@ -40,14 +42,14 @@ class Profile < ActiveRecord::Base
     profile = Profile.where(fb_id: me['id']).first
 
     if profile.nil?
-      if @genders.key? me['gender']
-        gender = @genders[me['gender']] 
+      if @@genders.key? me['gender']
+        gender = @@genders[me['gender']] 
       else
         gender = 'empty'
       end 
 
-      if @relationships.key? me['relationship_status']
-        relationship = @relationships[me['relationship_status']]
+      if @@relationships_j2e.key? me['relationship_status']
+        relationship = @@relationships_j2e[me['relationship_status']]
       else
         relationship = 'empty'
       end
@@ -268,17 +270,7 @@ class Profile < ActiveRecord::Base
   # 交際ステータスを文字列で返す
   # @return [String]
   def relationship_status_str
-    {
-      'Single' => '独身',
-      'In A Relationship' => '交際中',
-      'Engaged' => '婚約中',
-      'Married' => '既婚',
-      'It\'s Complicated' => '複雑な関係',
-      'In An Open Relationship' => 'オープンな関係',
-      'Widowed' => '配偶者と死別',
-      'Separated' => '別居',
-      'Divorced' => '離婚',
-    }[self.relationship_status].presence || 'データなし'
+    @@relationships_e2j[self.relationship_status].presence || 'データなし'
   end
 
 
