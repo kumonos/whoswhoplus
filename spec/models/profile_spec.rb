@@ -124,9 +124,9 @@ describe Profile do
       it { expect(build(:profile, relationship_status: 'Married').relationship_status_str).to eq '既婚' }
       it { expect(build(:profile, relationship_status: 'It\'s Complicated').relationship_status_str).to eq '複雑な関係' }
       it { expect(build(:profile, relationship_status: 'In An Open Relationship').relationship_status_str).to eq 'オープンな関係' }
-      it { expect(build(:profile, relationship_status: 'Widowed').relationship_status_str).to eq '配偶者と死別' }
-      it { expect(build(:profile, relationship_status: 'Separated').relationship_status_str).to eq '別居' }
-      it { expect(build(:profile, relationship_status: 'Divorced').relationship_status_str).to eq '離婚' }
+      it { expect(build(:profile, relationship_status: 'Widowed').relationship_status_str).to eq 'データなし' }
+      it { expect(build(:profile, relationship_status: 'Separated').relationship_status_str).to eq 'データなし' }
+      it { expect(build(:profile, relationship_status: 'Divorced').relationship_status_str).to eq 'データなし' }
       it { expect(build(:profile, relationship_status: nil).relationship_status_str).to eq 'データなし' }
     end
   end
