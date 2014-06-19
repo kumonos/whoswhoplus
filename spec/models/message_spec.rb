@@ -37,7 +37,7 @@ describe Message do
         expect(message.message_to_send).to eq "test
 
 --
-このメッセージは Bob さんがあなたの友人の Mary ( #{@mary.facebook_url} ) さんに興味を持ち、 Who's who ++ 経由で送信したメッセージです。
+このメッセージは Bob さんがあなたの友人の Mary ( #{@mary.facebook_url} ) さんに興味を持ち、フレンズポップ経由で送信したメッセージです。
 http://localhost:3000/"
       end
     end
@@ -48,8 +48,8 @@ http://localhost:3000/"
         expect(message.message_to_send).to eq "test
 
 --
-このメッセージは Bob さんがあなたの友人の Nancy ( #{@nancy.facebook_url} ) さんに興味を持ち、 Who\'s who ++ 経由で送信したメッセージです。
-Who's who ++ は、「友人の友人」を探してつながれる Web サービスです。
+このメッセージは Bob さんがあなたの友人の Nancy ( #{@nancy.facebook_url} ) さんに興味を持ち、フレンズポップ経由で送信したメッセージです。
+フレンズポップは、「友人の友人」を探してつながれる Web サービスです。
 http://localhost:3000/"
       end
     end

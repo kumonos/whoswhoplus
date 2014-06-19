@@ -15,6 +15,19 @@ class Profile < ActiveRecord::Base
   scope :has_token, -> { where.not(access_token_id: nil) }
 
   # -----------------------------------------------------------------
+  # Constants
+  # -----------------------------------------------------------------
+
+  @genders = {'男性' => 'male', '女性' => 'female'}
+  @relationships = {
+      '独身' => 'Single',
+      '交際中' => 'In A Relationship',
+      '婚約中' => 'Engaged',
+      '既婚' => 'Married',
+      '複雑な関係' => 'It\'s Complicated',
+      'オープンな関係' => 'In An Open Relationship'
+    }
+  # -----------------------------------------------------------------
   # Public Class Methods
   # -----------------------------------------------------------------
   # Facebook APIの返り値からユーザ情報を作成する
@@ -27,20 +40,25 @@ class Profile < ActiveRecord::Base
     profile = Profile.where(fb_id: me['id']).first
 
     if profile.nil?
-        if me['gender'].nil?
-          me['gender']='empty'
-        end
-        if me['relationship_status'].nil?
-          me['gender']='empty'
-        end
+      if @genders.key? me['gender']
+        gender = @genders[me['gender']] 
+      else
+        gender = 'empty'
+      end 
+
+      if @relationships.key? me['relationship_status']
+        relationship = @relationships[me['relationship_status']]
+      else
+        relationship = 'empty'
+      end
       # 存在していない場合新しく作る
       profile = Profile.create!(
         access_token_id: token.id,
         fb_id: me['id'],
         name: me['name'],
         birthday: nil, # TODO
-        gender: me['gender'],
-        relationship_status: me['relationship_status'],
+        gender: gender,
+        relationship_status: relationship,
         picture_url: me['picture'].try { |p| p['data'].try { |d| d['url'] } }
       )
     else
@@ -67,19 +85,24 @@ class Profile < ActiveRecord::Base
       #TODO 途中で失敗してしまった場合の処理
       #存在していない場合は格納
       if !already_exist_friends.include? friend['id']
-        if friend['gender'].nil?
-          friend['gender']='empty'
+        if @genders.key? friend['gender']
+          gender = @genders[friend['gender']] 
+        else
+          gender = 'empty'
         end
-        if friend['relationship_status'].nil?
-          friend['relationship_status']='empty'
-        end
+        if @relationships.key? friend['relationship_status']
+          relationship = @relationships[friend['relationship_status']]
+        else
+          relationship = 'empty'
+        end 
+
         data=Profile.create!(
           fb_id:friend['id'],
           name:friend['name'],
           birthday:friend['birthday'],
           age:Profile.age(friend['birthday']),
-          gender:friend['gender'],
-          relationship_status:friend['relationship_status'],
+          gender:gender,
+          relationship_status:relationship,
           picture_url:friend['picture'].try { |p| p['data'].try { |d| d['url'] } },
           )
       end

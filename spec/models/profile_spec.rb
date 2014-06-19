@@ -2,6 +2,57 @@ require 'spec_helper'
 
 describe Profile do
   describe 'Public Class Methods' do
+    describe '#insert_or_update' do
+      before do
+        #FacebookAPIから取得できるhashのデータ構造がprofilesと異なるので独自に作成しなくてはならない
+        @regist_user1 = {
+          "access_token"=>nil, 
+          "id"=>"1533446810",
+          "name"=>"田中 陸斗", 
+          "gender"=>"男性",
+          "relationship_status"=>"交際中"}
+        @regist_user2 = {
+          "access_token"=>nil, 
+          "id"=>"8145796810",
+          "name"=>"山田 花子", 
+          "gender"=>"女性",
+          "relationship_status"=>"既婚"}
+        @regist_user3 = {
+          "access_token"=>nil, 
+          "id"=>"3147896810",
+          "name"=>"佐藤 太郎", 
+          "gender"=>"男性",
+          "relationship_status"=>"配偶者と死別"}   
+        @regist_user4 = {
+          "access_token"=>nil, 
+          "id"=>"9147896810",
+          "name"=>"川田 琢磨", 
+          "gender"=>"男性",
+          "relationship_status"=>"既婚"}        
+      end
+      it '登録したユーザーの性別が男性の場合、maleを返す' do
+        access_token = AccessToken.create!(access_token: '456')       
+        profile = Profile.insert_or_update(@regist_user1,access_token)
+        expect(profile.gender).to eq 'male'
+      end
+      it '登録したユーザーの関係性が既婚の場合、relationship_statusはMarriedを返す' do
+        access_token = AccessToken.create!(access_token: '789')
+        profile = Profile.insert_or_update(@regist_user2,access_token)
+        expect(profile.relationship_status).to eq 'Married'
+      end
+      it '登録したユーザーの関係性が配偶者と死別の場合、relationship_statusはemptyを返す' do
+        access_token = AccessToken.create!(access_token: '910')
+        #regist_user = attributes_for(:regist_user, relationship_status: '配偶者と死別')
+        profile = Profile.insert_or_update(@regist_user3,access_token)
+        expect(profile.relationship_status).to eq 'empty'
+      end
+      it '登録したユーザーがすでにDBにいる(他のユーザーに登録されている)場合、token_idを更新する' do        
+        access_token = AccessToken.create!(access_token: '123')
+        create(:regist_user,fb_id: '9147896810')
+        profile = Profile.insert_or_update(@regist_user4,access_token)
+        expect(profile.access_token_id).to eq 1
+      end
+    end
     describe '#find_by_fb_id' do
       pending
     end
