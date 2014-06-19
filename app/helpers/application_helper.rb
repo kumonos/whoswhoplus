@@ -26,4 +26,16 @@ module ApplicationHelper
   def lf2br(str)
     str.gsub(/\n/, '<br>').html_safe
   end
+
+  # image_tagの代わりにlazy-loadingタグを使うためのヘルパー
+  def lazy_image_tag (source, options = {})
+    options['data-original'] = source
+    if options[:class].blank?
+      options[:class] = "lazy"
+    else
+      options[:class] = options[:class].to_s + " lazy"
+    end
+    image_tag 'image_dummy.jpg', options
+  end
+
 end
