@@ -87,7 +87,7 @@ class Profile < ActiveRecord::Base
       #TODO 途中で失敗してしまった場合の処理
       #存在していない場合は格納
       if !already_exist_friends.include? friend['id']
-        if @genders.key? friend['gender']
+        if @@genders.key? friend['gender']
           gender = @@genders[friend['gender']] 
         else
           gender = 'empty'
