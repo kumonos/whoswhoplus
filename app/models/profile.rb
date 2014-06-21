@@ -88,12 +88,12 @@ class Profile < ActiveRecord::Base
       #存在していない場合は格納
       if !already_exist_friends.include? friend['id']
         if @genders.key? friend['gender']
-          gender = @genders[friend['gender']] 
+          gender = @@genders[friend['gender']] 
         else
           gender = 'empty'
         end
-        if @relationships.key? friend['relationship_status']
-          relationship = @relationships[friend['relationship_status']]
+        if @@relationships_j2e.key? friend['relationship_status']
+          relationship = @@relationships_j2e[friend['relationship_status']]
         else
           relationship = 'empty'
         end 
