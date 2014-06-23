@@ -27,6 +27,8 @@ group :development do
   # CLI Tools
   gem 'erb2haml'
   gem 'rspec-kickstarter'
+  gem 'spring'
+  gem 'spring-commands-rspec'
 end
 
 group :test do
