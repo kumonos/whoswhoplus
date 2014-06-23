@@ -8,3 +8,20 @@ nav.navbar{
     text-decoration: none;
   }
 }
+
+footer {
+  background: #ffffff;
+  margin: 1em 0 0;
+  padding: 1em;
+  text-align: left;
+
+  .copy {
+    clear: both;
+    text-align: left;
+    color: #222;
+    font-size: 14px;
+
+    hr { margin-top: 40px; margin-bottom: 10px; }
+    span { float: right; }
+  }
+}
