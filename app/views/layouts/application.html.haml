@@ -21,28 +21,29 @@
       - if flash.present?
         - flash.each do |type, msg|
           %div{class: "alert alert-#{type.to_s}"}= msg.html_safe
-      %nav.navbar.navbar-default{role: "navigation"}
-        .navbar-header
-          %button.navbar-toggle{"data-target" => ".navbar-ex1-collapse", "data-toggle" => "collapse", :type => "button"}
-            %span.sr-only Toggle navigation
-            %span.icon-bar
-            %span.icon-bar
-            %span.icon-bar
-          %a.navbar-brand{href: root_path} Friends Pop
-        .collapse.navbar-collapse.navbar-ex1-collapse
-          %ul.nav.navbar-nav
-            %li
-              = link_to root_path do
-                %i.fa.fa-users
-                友人一覧
-            %li
-              = link_to messages_path do
-                %i.fa.fa-list
-                利用履歴
-            %li
-              = link_to sign_out_path do
-                %i.fa.fa-power-off
-                サインアウト
+      - if session[:current_user].present?
+        %nav.navbar.navbar-default{role: "navigation"}
+          .navbar-header
+            %button.navbar-toggle{"data-target" => ".navbar-ex1-collapse", "data-toggle" => "collapse", :type => "button"}
+              %span.sr-only Toggle navigation
+              %span.icon-bar
+              %span.icon-bar
+              %span.icon-bar
+            %a.navbar-brand{href: root_path} Friends Pop
+          .collapse.navbar-collapse.navbar-ex1-collapse
+            %ul.nav.navbar-nav
+              %li
+                = link_to root_path do
+                  %i.fa.fa-users
+                  友人一覧
+              %li
+                = link_to messages_path do
+                  %i.fa.fa-list
+                  利用履歴
+              %li
+                = link_to sign_out_path do
+                  %i.fa.fa-power-off
+                  サインアウト
       = yield
   %footer
     .container
