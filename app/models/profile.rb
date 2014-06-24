@@ -245,7 +245,7 @@ class Profile < ActiveRecord::Base
   # Facebook のページ URL を返す
   # @return [String]
   def facebook_url
-    "https://www.facebook.com/#{self.fb_id}"
+    "fb.com/#{self.fb_id}"
   end
 
   # 性別を文字列で返す
