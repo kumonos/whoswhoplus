@@ -53,6 +53,11 @@
           %a.twitter-share-button{ "data-hashtags" => "friends_pop", "data-lang" => "ja", "data-url" => "http://friends-pop.kumonos.jp/", href: "https://twitter.com/share" } ツイート
           %br
           .g-plusone{ href: "http://friends-pop.kumonos.jp/", "data-annotation" => "inline", "data-size" => "medium", "data-width" => "300" }
+          %br
+          %span
+            = javascript_include_tag '//media.line.me/js/line-button.js?v=20140411'
+            :javascript
+              new media_line_me.LineButton({"pc":false,"lang":"ja","type":"a","text":"フレンズポップ","withUrl":true});
         .copy
           2014
           %a{ href: 'http://kumonos.jp/' } kumonos
