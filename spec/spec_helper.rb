@@ -42,5 +42,9 @@ RSpec.configure do |config|
   # FactoryGirlを組み込む
   config.include FactoryGirl::Syntax::Methods
 
+  # ログイン状態を振る舞う
   config.include SignInMacros
+
+  # ファイルタイプから種類を推測
+  config.infer_spec_type_from_file_location!
 end

@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.0.5'
+gem 'rails', '4.0.8'
 
 # Facebook API
 gem 'omniauth-facebook'
@@ -33,8 +33,8 @@ end
 
 group :test do
   # Specs
-  # rc1 にすると have が使えない？　のでひとまず beta2 固定
-  gem 'rspec-rails', '3.0.0.beta2'
+  gem 'rspec-rails'
+  gem 'rspec-collection_matchers'
   gem 'factory_girl_rails'
   gem 'faker'
 end
