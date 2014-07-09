@@ -1,3 +1,4 @@
+require 'resque/server'
 SampleKoalaRailsApp::Application.routes.draw do
   root :to => 'home#index'
 
@@ -23,4 +24,6 @@ SampleKoalaRailsApp::Application.routes.draw do
   end
 
   match '*path' => 'application#render_404', via: :all
+
+  mount Resque::Server.new, at: "/resque"
 end

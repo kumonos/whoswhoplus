@@ -21,6 +21,7 @@ class HomeController < ApplicationController
       Rails.logger.info access_token.inspect
 
       api = Koala::Facebook::API.new(token)
+      Resque.enqueue(Dataloader,token)  #非同期処理に渡す
       profile = Profile.insert_or_update(api.get_object('/me','fields'=>'name,gender,picture.width(200).height(200)','locale' =>'ja_JP'), access_token)
       Rails.logger.info profile.inspect
       

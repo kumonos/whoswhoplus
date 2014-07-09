@@ -18,6 +18,7 @@ gem 'uglifier'
 gem 'jquery-rails'
 gem 'therubyracer'
 gem 'cloudinary'
+gem 'resque'
 
 group :development do
   # Debugging
