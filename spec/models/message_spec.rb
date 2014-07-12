@@ -31,25 +31,25 @@ describe Message do
       @nancy = create(:profile, name: 'Nancy', access_token_id: nil)
     end
 
-    context '紹介を依頼する相手が Who\'s who ++ ユーザの場合' do
+    context '紹介を依頼する相手が フレンズポップユーザの場合' do
       it '送られた理由を説明し、サービス紹介は省略する' do
         message = Message.new(message: 'test', fb_id_from: @bob.fb_id, fb_id_to: @mike.fb_id, fb_id_target: @mary.fb_id)
         expect(message.message_to_send).to eq "test
 
 --
-このメッセージは Bob さんがあなたの友人の Mary ( #{@mary.facebook_url} ) さんに興味を持ち、フレンズポップ経由で送信したメッセージです。
+このメッセージは Bob さんがあなたの友人の Mary ( #{@mary.facebook_short_url} ) さんに興味を持ち、フレンズポップ経由で送信しました！
 http://localhost:3000/"
       end
     end
 
-    context '紹介を依頼する相手が Who\'s who ++ ユーザではない場合' do
+    context '紹介を依頼する相手が フレンズポップユーザではない場合' do
       it '送られた理由とサービス紹介を返す' do
         message = Message.new(message: 'test', fb_id_from: @bob.fb_id, fb_id_to: @mary.fb_id, fb_id_target: @nancy.fb_id)
         expect(message.message_to_send).to eq "test
 
 --
-このメッセージは Bob さんがあなたの友人の Nancy ( #{@nancy.facebook_url} ) さんに興味を持ち、フレンズポップ経由で送信したメッセージです。
-フレンズポップは、「友人の友人」を探してつながれる Web サービスです。
+このメッセージは Bob さんがあなたの友人の Nancy ( #{@nancy.facebook_short_url} ) さんに興味を持ち、フレンズポップ経由で送信しました！
+フレンズポップは、「カワイイ女子」「イケてる男子」を探してつながれる Web サービスです。
 http://localhost:3000/"
       end
     end

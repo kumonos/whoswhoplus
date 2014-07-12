@@ -99,11 +99,15 @@ describe Profile do
     end
 
     describe '#name_with_link' do
-      it { expect(build(:profile, fb_id: 'youcune', name: 'なかにしゆう').name_with_link).to eq '<a href="fb.com/youcune" target="_blank">なかにしゆう</a>' }
+      it { expect(build(:profile, fb_id: 'youcune', name: 'なかにしゆう').name_with_link).to eq '<a href="https://www.facebook.com/youcune" target="_blank">なかにしゆう</a>' }
     end
 
     describe '#facebook_url' do
-      it { expect(build(:profile, fb_id: 'youcune').facebook_url).to eq 'fb.com/youcune' }
+      it { expect(build(:profile, fb_id: 'youcune').facebook_url).to eq 'https://www.facebook.com/youcune' }
+    end
+
+    describe '#facebook_short_url' do
+      it { expect(build(:profile, fb_id: 'youcune').facebook_short_url).to eq 'fb.com/youcune' }
     end
 
     describe '#gender_str' do

@@ -245,6 +245,12 @@ class Profile < ActiveRecord::Base
   # Facebook のページ URL を返す
   # @return [String]
   def facebook_url
+    "https://www.facebook.com/#{self.fb_id}"
+  end
+
+  # Facebook のページのshort URL を返す
+  # @return [String]
+    def facebook_short_url
     "fb.com/#{self.fb_id}"
   end
 

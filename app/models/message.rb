@@ -22,8 +22,8 @@ class Message < ActiveRecord::Base
     "#{self.message}
 
 --
-このメッセージは #{self.sender_profile.name} さんがあなたの友人の #{self.target_profile.name} ( #{self.target_profile.facebook_url} ) さんに興味を持ち、フレンズポップ経由で送信したメッセージです。
-#{self.recipient_profile.access_token_id.present? ? '' : "フレンズポップは、「友人の友人」を探してつながれる Web サービスです。
+このメッセージは #{self.sender_profile.name} さんがあなたの友人の #{self.target_profile.name} ( #{self.target_profile.facebook_short_url} ) さんに興味を持ち、フレンズポップ経由で送信しました！
+#{self.recipient_profile.access_token_id.present? ? '' : "フレンズポップは、「カワイイ女子」「イケてる男子」を探してつながれる Web サービスです。
 "}#{SITE_URL}/"
   end
 end
