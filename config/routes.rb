@@ -25,5 +25,6 @@ SampleKoalaRailsApp::Application.routes.draw do
 
   match '*path' => 'application#render_404', via: :all
 
-  mount Resque::Server.new, at: "/resque"
+  #resque
+  mount Resque::Server.new, at: '/resque'
 end
