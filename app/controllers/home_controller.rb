@@ -23,9 +23,7 @@ class HomeController < ApplicationController
       api = Koala::Facebook::API.new(token)
       profile = Profile.insert_or_update(api.get_object('/me','fields'=>'name,gender,picture.width(200).height(200)','locale' =>'ja_JP'), access_token)
       Rails.logger.info profile.inspect
-      
-      update_friends_data(profile.fb_id)
-
+      Resque.enqueue(Dataloader,profile.fb_id) #非同期処理に渡す
       session[:current_user] = profile.id
       flash[:success] = 'サインインしました！'
     rescue => e
