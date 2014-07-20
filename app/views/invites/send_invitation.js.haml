@@ -1,0 +1,21 @@
+:plain
+var title       =   '.modal-title',
+    loader      =   '.ajax-loader',
+    content     =   '.modal-body-content',
+    dataRemote  =   'a[data-remote=true]',
+    modal       =   '#ajax-modal';
+
+
+$(title).html('招待しました！');
+//hides the modal and shows the ajax content
+$(loader).fadeToggle('fast', function() {
+  $(content).hide().html('<%= j render("new") %>');
+  $(modal).modal();
+});
+//brings the loader back up + gets rid of the content when linking to another controller method etc
+$(content).on('click', dataRemote, function(){
+  $(content).fadeOut('slow', function() {
+    $(content).empty();
+    $(loader).fadeIn('slow');
+  });
+});

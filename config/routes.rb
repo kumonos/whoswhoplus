@@ -17,8 +17,12 @@ SampleKoalaRailsApp::Application.routes.draw do
   # 友人の友人一覧表示画面
   get '/friends/:user_fb_id/:fb_id' => 'friends#show', as: :friends
 
-  # 招待ページ
-  get '/invite' => 'home#invite', as: :invite
+  # 招待一覧ページ
+  #resources :invites, only: [:new]
+  get '/invite' => 'invites#new', as: :new_invite
+
+  # 招待メッセージページ
+  get '/invite' => 'invites#send_invitation', as: :send_invitation
 
   # 開発環境のみのダミーログイン画面
   if Rails.env.development?
