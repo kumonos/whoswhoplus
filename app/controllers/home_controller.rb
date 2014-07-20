@@ -41,6 +41,12 @@ class HomeController < ApplicationController
     redirect_to root_path
   end
 
+  # get /invite
+  def invite
+    @invite_friends=Profile.checkFriendsWithNoToken(@current_user.fb_id)
+    render 'invite'
+  end
+
   #ユーザーの友人情報を取得または更新する
   # @param fb_id
   def update_friends_data(fb_id)

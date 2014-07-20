@@ -1,0 +1,15 @@
+%h3 フレンズポップに友人を招待する
+招待するボタンを押すと、Facebook メッセンジャー経由でフレンズポップに招待ができます
+
+%h3 以下の友人をフレンズポップに招待できます
+%ul
+.via-candidates.row
+  - @invite_friends.each do |f|
+    .via-candidate.col-xs-6.col-sm-3.col-md-2
+      = image_tag f.picture_url, size: '50x50', alt: f.name
+      %br
+      = f.name
+      %br
+      = link_to '<i class="fa fa-paper-plane-o"></i>招待する'.html_safe, new_message_path(user: f.fb_id, via: f.fb_id), class: 'btn btn-primary btn-xs'
+
+%p{ style: 'margin-top: 10px;' }= link_to '<i class="fa fa-angle-double-left"></i> 戻る'.html_safe, root_path, class: 'btn btn-default'
