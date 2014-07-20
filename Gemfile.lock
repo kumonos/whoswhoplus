@@ -50,6 +50,7 @@ GEM
     coffee-script-source (1.7.0)
     columnize (0.8.9)
     commonjs (0.2.7)
+    daemon-spawn (0.4.2)
     debug_inspector (0.0.2)
     debugger-linecache (1.2.0)
     diff-lcs (1.2.5)
@@ -244,6 +245,7 @@ DEPENDENCIES
   binding_of_caller
   cloudinary
   coffee-rails
+  daemon-spawn
   erb2haml
   execjs
   facebook_chat
@@ -257,8 +259,8 @@ DEPENDENCIES
   omniauth-facebook
   pry-byebug
   rails (= 4.0.8)
-  rspec-collection_matchers
   resque
+  rspec-collection_matchers
   rspec-kickstarter
   rspec-rails
   sass-rails
