@@ -1,9 +1,11 @@
-#ajax-modal.modal.hide.fade{:tabindex => "-1"}
-  .modal-header
-    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} &times;
-    %h3.modal-title 招待しますか
-  .modal-body
-    .modal-body-content 招待しますか？
-    .ajax-loader
-  .modal-footer
-    %button.btn{"data-dismiss" => "modal", :type => "button"} Close
+#ajax-modal.modal.fade{:tabindex => "-1"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"aria-hidden" => "true","data-dismiss" => "modal", :type => "button"} &times;
+        %h3.modal-title 招待中です！
+      .modal-body
+        .modal-body-content FacebookMessenger 経由で紹介メッセージを送付しています
+        .ajax-loader
+      .modal-footer
+        %button.btn{"data-dismiss" => "modal", :type => "button"} Close

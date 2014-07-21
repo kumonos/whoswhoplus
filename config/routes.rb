@@ -20,9 +20,8 @@ SampleKoalaRailsApp::Application.routes.draw do
   # 招待一覧ページ
   #resources :invites, only: [:new]
   get '/invite' => 'invites#new', as: :new_invite
-
-  # 招待メッセージページ
-  get '/invite' => 'invites#send_invitation', as: :send_invitation
+  get '/invite/send_invitation' => 'invites#send_invitation', as: :send_invitation
+  
 
   # 開発環境のみのダミーログイン画面
   if Rails.env.development?
