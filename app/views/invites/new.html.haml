@@ -6,7 +6,7 @@
 .via-candidates.row
   - @invite_friends.each do |f|
     .via-candidate.col-xs-6.col-sm-3.col-md-2
-      = image_tag f.picture_url, size: '50x50', alt: f.name
+      = lazy_image_tag f.picture_url, size: '50x50', alt: f.name
       %br
       = f.name
       %br
