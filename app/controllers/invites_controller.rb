@@ -9,9 +9,7 @@ class InvitesController < ApplicationController
   def send_invitation
     fb_id = params[:via]	
     @current_user.chat_api.try { |c| c.send(fb_id, message_to_invite) }
-    #respond_to do |format|
-    #  format.js
-    #end
+    render :nothing => true
   end
 
   private
