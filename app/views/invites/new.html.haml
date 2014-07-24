@@ -10,7 +10,7 @@
       %br
       = f.name
       %br
-      = link_to '<i class="fa fa-icon-lightbulb"></i>招待する'.html_safe ,send_invitation_path(via: f.fb_id), data: {toggle: "modal", target: "#ajax-modal" }, remote: "true",class: 'btn btn-primary btn-xs'
+      = link_to '招待する'.html_safe ,send_invitation_path(via: f.fb_id), data: {toggle: "modal", target: "#ajax-modal" }, remote: "true",class: 'btn btn-primary btn-xs'
       = render 'invites/modal'
       
 
