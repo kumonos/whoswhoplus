@@ -7,20 +7,18 @@ class InvitesController < ApplicationController
 
   # 
   def send_invitation
-
     fb_id = params[:via]	
     @current_user.chat_api.try { |c| c.send(fb_id, message_to_invite) }
-
-    respond_to do |format|
-      format.js
-    end
+    #respond_to do |format|
+    #  format.js
+    #end
   end
 
   private
     def message_to_invite
       " #{@current_user.name} さんがあなたをフレンズポップに招待しています！
 フレンズポップは、「カワイイ女子」「イケてる男子」を探してつながれる Web サービスです。
-}#{SITE_URL}/"
+#{SITE_URL}/"
     end
 
 end

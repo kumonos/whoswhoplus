@@ -4,18 +4,15 @@
       content     =   '.modal-body-content',
       dataRemote  =   'a[data-remote=true]',
       modal       =   '#ajax-modal';
+      btn         =   '.btn'
   
   
   $(title).html('招待しました！');
-  //hides the modal and shows the ajax content
-  $(loader).fadeToggle('fast', function() {
-    $(content).hide().html('<%= j render("new") %>');
-    $(modal).modal();
+  $(content).html('FacebookMessenger 経由で紹介メッセージを送付しました');
+
+  $(btn).on('click',function(){
+  	$(title).html('招待中です！');
+    $(content).html('FacebookMessenger 経由で紹介メッセージを送付しています');
+
   });
-  //brings the loader back up + gets rid of the content when linking to another controller method etc
-  $(content).on('click', dataRemote, function(){
-    $(content).fadeOut('slow', function() {
-      $(content).empty();
-      $(loader).fadeIn('slow');
-    });
-  });
+ 
