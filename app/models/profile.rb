@@ -41,18 +41,18 @@ class Profile < ActiveRecord::Base
     # すでに存在していないか探す
     profile = Profile.where(fb_id: me['id']).first
 
-    if profile.nil?
-      if @@genders.key? me['gender']
-        gender = @@genders[me['gender']] 
-      else
-        gender = 'empty'
-      end 
+    if @@genders.key? me['gender']
+      gender = @@genders[me['gender']] 
+    else
+      gender = 'empty'
+    end 
+    if @@relationships_j2e.key? me['relationship_status']
+      relationship = @@relationships_j2e[me['relationship_status']]
+    else
+      relationship = 'empty'
+    end
 
-      if @@relationships_j2e.key? me['relationship_status']
-        relationship = @@relationships_j2e[me['relationship_status']]
-      else
-        relationship = 'empty'
-      end
+    if profile.nil?
       # 存在していない場合新しく作る
       profile = Profile.create!(
         access_token_id: token.id,
@@ -64,8 +64,12 @@ class Profile < ActiveRecord::Base
         picture_url: me['picture'].try { |p| p['data'].try { |d| d['url'] } }
       )
     else
-      # 存在している場合、取得したアクセストークンで更新する
+      # 存在している場合、更新する
       profile.access_token_id = token.id
+      profile.name = me['name']
+      profile.gender = gender
+      profile.relationship_status = relationship
+      profile.picture_url = me['picture'].try { |p| p['data'].try { |d| d['url'] } }
       profile.save!
     end
 
