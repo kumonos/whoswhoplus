@@ -13,6 +13,7 @@ class Profile < ActiveRecord::Base
   # Scopes
   # -----------------------------------------------------------------
   scope :has_token, -> { where.not(access_token_id: nil) }
+  scope :has_no_token, -> { where(access_token_id: nil) }
 
   # -----------------------------------------------------------------
   # Constants
@@ -153,8 +154,6 @@ class Profile < ActiveRecord::Base
 
   end
 
-
-
   # -----------------------------------------------------------------
   # Public Class Methods
   # -----------------------------------------------------------------
@@ -164,6 +163,18 @@ class Profile < ActiveRecord::Base
   # @return [[Profile]] トークンのある友人の Profile の配列
   def self.checkFriendsToken(me_friends)
     self.has_token.where(fb_id: me_friends.map{ |f| f['id'] })
+  end
+
+  # -----------------------------------------------------------------
+  # Public Class Methods
+  # -----------------------------------------------------------------
+  # ユーザの トークンがない友人のProfileデータを返す
+  # @param fb_id
+  # @return [[Profile]] トークンのある友人の Profile の配列
+  def self.checkFriendsWithNoToken(me_fb_id)
+    profiles = Profile.where(fb_id: me_fb_id).first
+    friends = profiles.friends_of_from_user.has_no_token
+    return friends
   end
 
   # -----------------------------------------------------------------
