@@ -162,7 +162,7 @@ class Profile < ActiveRecord::Base
   # @param [Hash] /me/friendの返り値
   # @return [[Profile]] トークンのある友人の Profile の配列
   def self.checkFriendsToken(me_friends)
-    self.has_token.where(fb_id: me_friends.map{ |f| f['id'] })
+    self.has_token.where(fb_id: me_friends.map{ |f| f['id']})
   end
 
   # -----------------------------------------------------------------
@@ -189,7 +189,8 @@ class Profile < ActiveRecord::Base
                       .group(:fb_id_to)
                       .order('count_fb_id_to desc')
                       .count(:fb_id_to).keys.first(10)
-    friends = Profile.where(fb_id: friends_id.map{ |f| f['id']})                  
+    friends = Profile.where(fb_id: friends_id.map{ |f| f})  
+              
     return friends
   end
 
