@@ -20,7 +20,6 @@ gem 'therubyracer'
 gem 'cloudinary'
 gem 'resque'
 gem 'daemon-spawn', :require => 'daemon_spawn'
-gem 'rb-readline'
 
 group :development do
   # Debugging
