@@ -3,6 +3,18 @@
 
 %h3 以下の友人をフレンズポップに招待できます
 %ul
+  %h4 以下の友人は共通の友人が多いので、招待してみましょう
+  .via-candidates.row
+    - @invite_mutual_friends.each do |m|
+      .via-candidate.col-xs-6.col-sm-3.col-md-2
+        = lazy_image_tag m.picture_url, size: '50x50', alt: m.name
+        %br
+        = m.name
+        %br
+        = link_to '招待する'.html_safe ,send_invitation_path(via: m.fb_id), data: {toggle: "modal", target: "#ajax-modal" }, remote: "true",class: 'btn btn-primary btn-xs'
+        = render 'invites/modal'
+
+%ul
 .via-candidates.row
   - @invite_friends.each do |f|
     .via-candidate.col-xs-6.col-sm-3.col-md-2

@@ -180,6 +180,22 @@ class Profile < ActiveRecord::Base
   # -----------------------------------------------------------------
   # Public Class Methods
   # -----------------------------------------------------------------
+  # ユーザの 共通の友人のが多いProfileデータ上位１０位を返す
+  # @param fb_id
+  # @return [[Profile]] トークンのある友人の Profile の配列
+  def self.checkFriendsMutual(me_fb_id)
+    profiles = Profile.where(fb_id: me_fb_id).first
+    friends_id = Relation.where(fb_id_from: profiles.friends_of_from_user.has_token.pluck(:fb_id))
+                      .group(:fb_id_to)
+                      .order(‘count_fb_id_to desc’)
+                      .count(:fb_id_to).keys.first(10)
+    friends = Profile.where(fb_id: friends_id.map{ |f| f['id']})                  
+    return friends
+  end
+
+  # -----------------------------------------------------------------
+  # Public Class Methods
+  # -----------------------------------------------------------------
   # ユーザーの情報を取得する
   # 
   # @param fb_id
