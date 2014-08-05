@@ -188,7 +188,7 @@ class Profile < ActiveRecord::Base
     friends_id = Relation.where(fb_id_from: profiles.friends_of_from_user.has_token.pluck(:fb_id))
                       .group(:fb_id_to)
                       .order('count_fb_id_to desc')
-                      .count(:fb_id_to).keys.has_no_token.first(100)
+                      .count(:fb_id_to).keys.first(100)
     friends = Profile.where(fb_id: friends_id.map{ |f| f})
               
     return friends
