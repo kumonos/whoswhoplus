@@ -162,7 +162,7 @@ class Profile < ActiveRecord::Base
   # @param [Hash] /me/friendの返り値
   # @return [[Profile]] トークンのある友人の Profile の配列
   def self.checkFriendsToken(me_friends)
-    self.has_token.where(fb_id: me_friends.map{ |f| f['id'] })
+    self.has_token.where(fb_id: me_friends.map{ |f| f['id']})
   end
 
   # -----------------------------------------------------------------
@@ -174,6 +174,23 @@ class Profile < ActiveRecord::Base
   def self.checkFriendsWithNoToken(me_fb_id)
     profiles = Profile.where(fb_id: me_fb_id).first
     friends = profiles.friends_of_from_user.has_no_token
+    return friends
+  end
+
+  # -----------------------------------------------------------------
+  # Public Class Methods
+  # -----------------------------------------------------------------
+  # ユーザの 共通の友人のが多いProfileデータ上位１０位を返す
+  # @param fb_id
+  # @return [[Profile]] トークンのある友人の Profile の配列
+  def self.checkFriendsMutual(me_fb_id)
+    profiles = Profile.where(fb_id: me_fb_id).first
+    friends_id = Relation.where(fb_id_from: profiles.friends_of_from_user.has_token.pluck(:fb_id))
+                      .group(:fb_id_to)
+                      .order('count_fb_id_to desc')
+                      .count(:fb_id_to).keys.first(20)
+    friends = Profile.where(fb_id: friends_id.map{ |f| f}).has_no_token
+              
     return friends
   end
 

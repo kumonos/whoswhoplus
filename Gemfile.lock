@@ -158,6 +158,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     raindrops (0.13.0)
     rake (10.3.2)
+    rb-readline (0.5.1)
     redis (3.1.0)
     redis-namespace (1.5.0)
       redis (~> 3.0, >= 3.0.4)
@@ -259,6 +260,7 @@ DEPENDENCIES
   omniauth-facebook
   pry-byebug
   rails (= 4.0.8)
+  rb-readline (~> 0.5.1)
   resque
   rspec-collection_matchers
   rspec-kickstarter

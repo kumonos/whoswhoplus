@@ -3,6 +3,7 @@ class InvitesController < ApplicationController
   # GET /invites/new
   def new
   	@invite_friends=Profile.checkFriendsWithNoToken(@current_user.fb_id)
+    @invite_mutual_friends=Profile.checkFriendsMutual(@current_user.fb_id)
   end
 
   # 
