@@ -2,7 +2,8 @@
 %html
   %head
     %meta{ charset: 'UTF-8' }
-    %meta{ name: 'viewport', content: 'initial-scale=1.0, user-scalable=no'}
+    %meta{ name: 'viewport', content: 'initial-scale=1.0, user-scalable=no' }
+    %meta{ name: 'description', content: '「友人の友人」を探そう、つながろう。友人紹介サービスです。' }
     %meta{property:"og:title",content:"フレンズポップ(friends-pop)"}
     %meta{property:"og:type",content:"website"}
     %meta{property:"og:url",content:"http://friends-pop.kumonos.jp"}
@@ -10,8 +11,7 @@
     %meta{property:"og:image",content:"http://res.cloudinary.com/whoswhoplus/image/upload/v1402806372/title_friends-pop_wdovqb.png"}
     %meta{property:"og:site_name",content:"フレンズポップ"}
     %meta{property:"og:description",content:"「友人の友人」を探そう、つながろう。友人紹介サービスです。"}
-    %title
-      = content_for?(:title) ? yield(:title) : "#{rails_env}Friends Pop(フレンズポップ)"
+    %title= "#{rails_env}#{content_for?(:title) ? yield(:title) : 'Friends Pop(フレンズポップ) | 「友人の友人」を探そう、つながろう'}"
     = stylesheet_link_tag    'application'
     = javascript_include_tag 'application'
     = csrf_meta_tags
