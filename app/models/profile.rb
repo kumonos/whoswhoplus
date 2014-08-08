@@ -177,22 +177,6 @@ class Profile < ActiveRecord::Base
     return friends
   end
 
-  # -----------------------------------------------------------------
-  # Public Class Methods
-  # -----------------------------------------------------------------
-  # ユーザの 共通の友人のが多いProfileデータ上位１０位を返す
-  # @param fb_id
-  # @return [[Profile]] トークンのある友人の Profile の配列
-  def self.checkFriendsMutual(me_fb_id)
-    profiles = Profile.where(fb_id: me_fb_id).first
-    friends_id = Relation.where(fb_id_from: profiles.friends_of_from_user.has_token.pluck(:fb_id))
-                      .group(:fb_id_to)
-                      .order('count_fb_id_to desc')
-                      .count(:fb_id_to).keys.first(20)
-    friends = Profile.where(fb_id: friends_id.map{ |f| f}).has_no_token
-              
-    return friends
-  end
 
   # -----------------------------------------------------------------
   # Public Class Methods
@@ -311,5 +295,16 @@ class Profile < ActiveRecord::Base
     @@relationships_e2j[self.relationship_status].presence || 'データなし'
   end
 
-
+  # ユーザの 共通の友人のが多いProfileデータ上位2０位のうちトークンがないもの(招待できる人)を返す
+  # @return [[Profile]] トークンのある友人の Profile の配列
+  def checkFriendsMutual
+    profiles = Profile.where(fb_id: self.fb_id).first
+    friends_id = Relation.where(fb_id_from: profiles.friends_of_from_user.has_token.pluck(:fb_id))
+                      .group(:fb_id_to)
+                      .order('count_fb_id_to desc')
+                      .count(:fb_id_to).keys.first(20)
+    friends = Profile.where(fb_id: friends_id).has_no_token
+              
+    return friends
+  end
 end
