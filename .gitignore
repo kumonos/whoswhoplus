@@ -20,4 +20,4 @@ config/initializers/constants.rb
 /.idea
 
 # Ignore dump.rdb
-/dump.rdb
+dump.rdb
