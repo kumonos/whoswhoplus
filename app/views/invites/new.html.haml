@@ -12,7 +12,7 @@
       = m.name
       %br
       = link_to '招待する'.html_safe ,send_invitation_path(via: m.fb_id), data: {toggle: "modal", target: "#ajax-modal" }, remote: "true",class: 'btn btn-primary btn-xs'
-      = render 'invites/modal'
+      = render 'invites/create_message'
 %h3 あなたの友人一覧
 %ul
 .via-candidates.row
@@ -22,8 +22,8 @@
       %br
       = f.name
       %br
-      = link_to '招待する'.html_safe ,send_invitation_path(via: f.fb_id), data: {toggle: "modal", target: "#ajax-modal" }, remote: "true",class: 'btn btn-primary btn-xs'
-      = render 'invites/modal'
+      = link_to '招待する'.html_safe ,show_invitation_path(via: f.fb_id), data: {toggle: "modal", target: "#ajax-modal" }, remote: "true",class: 'btn btn-primary btn-xs'
+      =# =render 'invites/modal'
       
 
 %p{ style: 'margin-top: 10px;' }= link_to '<i class="fa fa-angle-double-left"></i> 戻る'.html_safe, root_path, class: 'btn btn-default'

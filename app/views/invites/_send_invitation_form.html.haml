@@ -1,0 +1,16 @@
+#ajax-modal.modal.fade{:tabindex => "-1"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"aria-hidden" => "true","data-dismiss" => "modal", :type => "button"} &times;
+        %h3.modal-title 招待メッセージ
+      = form_for @message, remote: true, html: { class: "form-horizontal", style: "display:inline;" } do |f|  
+        .modal-body
+          .modal-body-content
+            %p.small この招待メッセージは #{@via.name} さんに送られます。
+            = f.text_area :message, id: 'message-body', class: 'form-control'
+            = hidden_field_tag :user, @current_user.fb_id
+            = hidden_field_tag :via, @via.fb_id
+          .ajax-loader
+        .modal-footer
+          %p.pull-right= button_tag '<i class="fa fa-envelope-o"></i> 送信する'.html_safe, class: 'btn btn-primary'
