@@ -21,7 +21,7 @@ SampleKoalaRailsApp::Application.routes.draw do
   #resources :invites, only: [:new]
   get '/invites' => 'invites#new', as: :new_invite
   get '/invites/show' => 'invites#show', as: :show_invitation 
-  get '/invites/send_invitation' => 'invites#send_invitation', as: :send_invitation
+  post '/invites/send_invitation' => 'invites#send_invitation', as: :send_invitation
   
 
   # 開発環境のみのダミーログイン画面

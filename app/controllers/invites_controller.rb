@@ -4,26 +4,21 @@ class InvitesController < ApplicationController
   def new
   	@invite_friends=Profile.checkFriendsWithNoToken(@current_user.fb_id)
     @invite_mutual_friends=@current_user.checkFriendsMutual
+    @message = Message.new  
   end
 
-  def show
-    @message = Message.new
-    @via = Profile.find_by_fb_id(params[:via])
-    render 'create_message'
-  end
-
-  # 
   def send_invitation
+    @via = Profile.find_by_fb_id(params[:via])
     @message = Message.new(message_params)
     fb_id = params[:via]
-
     begin
       @message.save!
-      @current_user.chat_api.try { |c| c.send(fb_id, message_to_invite) }
+      @current_user.chat_api.try { |c| c.send(@via.fb_id, message_to_invite) }
     rescue ActiveRecord::RecordInvalid => e
         flash.now[:danger] = @message.errors.full_messages.first.presence || 'エラーが発生しました'        
     end
-    render 'invites/modal'
+    flash[:success] = 'success!'
+    #画面遷移????
   end
 
   private
