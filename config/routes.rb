@@ -18,11 +18,7 @@ SampleKoalaRailsApp::Application.routes.draw do
   get '/friends/:user_fb_id/:fb_id' => 'friends#show', as: :friends
 
   # 招待一覧ページ
-  #resources :invites, only: [:new]
-  get '/invites' => 'invites#new', as: :new_invite
-  get '/invites/show' => 'invites#show', as: :show_invitation 
-  post '/invites/send_invitation' => 'invites#send_invitation', as: :send_invitation
-  
+  resources :invites, only: [:new, :create]
 
   # 開発環境のみのダミーログイン画面
   if Rails.env.development?

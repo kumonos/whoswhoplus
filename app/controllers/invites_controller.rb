@@ -7,18 +7,15 @@ class InvitesController < ApplicationController
     @message = Message.new  
   end
 
-  def send_invitation
-    @via = Profile.find_by_fb_id(params[:via])
+  # POST /invites
+  def create
     @message = Message.new(message_params)
-    fb_id = params[:via]
-    begin
-      @message.save!
-      @current_user.chat_api.try { |c| c.send(@via.fb_id, message_to_invite) }
-    rescue ActiveRecord::RecordInvalid => e
-        flash.now[:danger] = @message.errors.full_messages.first.presence || 'エラーが発生しました'        
-    end
-    flash[:success] = 'success!'
-    #画面遷移????
+
+    # エラーになったらメール通知を飛ばすようにするため rescue しない
+    @message.save!
+    @current_user.chat_api.send(@message.fb_id_to, message_to_invite)
+
+    render json: { result: 'OK' }, status: :created
   end
 
   private
@@ -32,7 +29,9 @@ class InvitesController < ApplicationController
     end
 
     def message_params
-      params.require(:message).permit(:message).merge(fb_id_from: @current_user.fb_id, fb_id_to: @via.fb_id, fb_id_target: @via.fb_id)
+      params
+        .require(:message)
+        .permit(:message, :fb_id_to, :fb_id_target)
+        .merge(fb_id_from: @current_user.fb_id)
     end
-
 end

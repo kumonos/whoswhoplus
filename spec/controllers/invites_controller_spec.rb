@@ -36,15 +36,21 @@ describe InvitesController do
     end
   end
 
-  describe 'GET send_invitation' do
+  describe 'POST create' do
   	before do
   		fake_signed_in @from
-  		Profile.any_instance.stub(:chat_api).and_return(nil)
-  		get :send_invitation, via: @to.fb_id
+      expect_any_instance_of(Profile).to receive_message_chain(:chat_api, :send).and_return(nil)
   	end
 
-  	it '200 OK' do
-      expect(response.status).to eq(200)
+  	it '201 Created' do
+      post :create, message: { message: Faker::Lorem.paragraph, fb_id_to: 1, fb_id_target: 1 }
+      expect(response.status).to eq(201)
+    end
+
+    it 'Message が 1 件増える' do
+      expect {
+        post :create, message: { message: Faker::Lorem.paragraph, fb_id_to: 1, fb_id_target: 1 }
+      }.to change(Message, :count).by 1
     end
 
     it '招待メッセージを送信' 

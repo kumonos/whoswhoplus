@@ -11,8 +11,7 @@
       %br
       = m.name
       %br
-      = link_to '招待する'.html_safe ,send_invitation_path(via: m.fb_id), data: {toggle: "modal", target: "#ajax-modal" }, remote: "true",class: 'btn btn-primary btn-xs'
-      =#= render 'invites/create_message'
+      = link_to '招待する', '#', data: {toggle: "modal", target: "#ajax-modal" }, class: 'btn btn-primary btn-xs'
 %h3 あなたの友人一覧
 %ul
 .via-candidates.row
@@ -29,14 +28,15 @@
         .modal-header
           %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} &times;
           %h3.modal-title 招待メッセージ
-        = form_for @message, html: { class: 'form-horizontal', id: 'send-invitation-form' }, url: send_invitation_path do |m|
+        = form_for @message, html: { class: 'form-horizontal', id: 'send-invitation-form' } do |f|
           .modal-body
             .modal-body-content
               %p.small この招待メッセージは <span id="invitee-name"></span> さんに送られます。
-              = m.text_area :message, id: 'message-body', class: 'form-control'
-              = hidden_field_tag :invitee, nil, id: 'invitee-fb-id'
+              = f.text_area :message, id: 'message-body', class: 'form-control'
+              = f.hidden_field :fb_id_to, class: 'invitee-fb-id'
+              = f.hidden_field :fb_id_target, class: 'invitee-fb-id'
             .ajax-loader
           .modal-footer
-            %p.pull-right= button_tag '<i class="fa fa-envelope-o"></i> 送信する'.html_safe, class: 'btn btn-primary'
+            %p.pull-right= button_tag '<i class="fa fa-envelope-o"></i> 送信する'.html_safe, class: 'btn btn-primary', id: 'send-invitation-btn'
       
 %p{ style: 'margin-top: 10px;' }= link_to '<i class="fa fa-angle-double-left"></i> 戻る'.html_safe, root_path, class: 'btn btn-default'
