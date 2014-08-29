@@ -1,27 +1,15 @@
 %h3 フレンズポップに友人を招待する
 招待するボタンを押すと、Facebook メッセンジャー経由でフレンズポップに招待ができます
 
-%h3 以下の友人は共通の友人が多いみたいです。招待しましょう！
-%br
-%ul
-.via-candidates.row
-  - @invite_mutual_friends.each do |m|
-    .via-candidate.col-xs-6.col-sm-3.col-md-2
-      = lazy_image_tag m.picture_url, size: '50x50', alt: m.name
-      %br
-      = m.name
-      %br
-      = link_to '招待する', '#', data: {toggle: "modal", target: "#ajax-modal" }, class: 'btn btn-primary btn-xs'
+- if @invite_mutual_friends.present?
+  %h3 以下の友人は共通の友人が多いみたいです。招待しましょう！
+  .via-candidates.row
+    - @invite_mutual_friends.each do |_|
+      = render 'invitee', user: _
 %h3 あなたの友人一覧
-%ul
 .via-candidates.row
-  - @invite_friends.each do |f|
-    .via-candidate.col-xs-6.col-sm-3.col-md-2
-      = lazy_image_tag f.picture_url, size: '50x50', alt: f.name
-      %br
-      = f.name
-      %br
-      = button_tag '招待する'.html_safe, data: {name: f.name, fb_id: f.fb_id}, class: 'btn btn-primary btn-xs invite-btn'
+  - @invite_friends.each do |_|
+    = render 'invitee', user: _
   #invite-modal.modal.fade
     .modal-dialog
       .modal-content
