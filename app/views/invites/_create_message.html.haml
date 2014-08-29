@@ -1,0 +1,7 @@
+:javascript
+  $('#via_name').html('data-name');
+  $('#via_fb_id').html('data-fb_id');
+  $('#ajax-modal').html(
+    "#{escape_javascript(render :partial =>'send_invitation_form')}";
+  );
+  $('#ajax-modal').modal('show');
