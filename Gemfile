@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.0.8'
+gem 'rails', '4.0.10'
 
 # Facebook API
 gem 'omniauth-facebook'
-gem 'koala', "~>1.8.0rc1"
+gem 'koala', "~> 1.10.0rc"
 gem 'facebook_chat'
 
 # Views
@@ -20,7 +20,7 @@ gem 'therubyracer'
 gem 'cloudinary'
 gem 'resque'
 gem 'daemon-spawn', :require => 'daemon_spawn'
-gem 'rb-readline', '~> 0.5.1'
+gem 'rb-readline'
 
 group :development do
   # Debugging
