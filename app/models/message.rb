@@ -9,7 +9,7 @@ class Message < ActiveRecord::Base
   # ------------------------------------------------------------------
   # Validations
   # ------------------------------------------------------------------
-  validates :message, length: { minimum: 1, maximum: 4096 }
+  validates :message, length: { maximum: 4096 }, presence: true
   validates :fb_id_from,   length: { minimum: 1, maximum: 256 }
   validates :fb_id_to,     length: { minimum: 1, maximum: 256 }
   validates :fb_id_target, length: { minimum: 1, maximum: 256 }

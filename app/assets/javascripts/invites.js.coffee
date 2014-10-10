@@ -34,10 +34,12 @@ $ ->
         .addClass('btn-success')
         .html('<i class="fa fa-check"></i> 送信しました！')
       setTimeout (=> $modal.modal('hide')), 1250
-    .fail =>
+    .fail (jqXHR) =>
+      message = (jqXHR.responseJSON && jqXHR.responseJSON.error) ? '失敗：再度お試しください'
+
       # 失敗したら失敗の表示をする
       $submit_btn
         .removeClass('btn-primary')
         .addClass('btn-danger')
-        .html('<i class="fa fa-times"></i> 失敗')
+        .html("<i class=\"fa fa-times\"></i> #{message}")
       setTimeout reset_submit_btn, 4000
