@@ -11,11 +11,14 @@ class InvitesController < ApplicationController
   def create
     @message = Message.new(message_params)
 
-    # エラーになったらメール通知を飛ばすようにするため rescue しない
-    @message.save!
-    @current_user.chat_api.send(@message.fb_id_to, message_to_invite)
-
-    render json: { result: 'OK' }, status: :created
+    if @message.valid?
+      # 想定外エラーになったらメール通知を飛ばすようにするため rescue しない
+      @message.save!
+      @current_user.chat_api.send(@message.fb_id_to, message_to_invite)
+      render json: { result: 'OK' }, status: :created
+    else
+      render json: { result: 'NG', error: @message.errors.full_messages.first }, status: :unprocessable_entity
+    end
   end
 
   private
