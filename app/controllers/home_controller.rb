@@ -57,6 +57,12 @@ class HomeController < ApplicationController
     end
   end
 
+  # GET /privacy
+  # プライバシーポリシー
+  def privacy
+    render
+  end
+
   # GET /dummy_login
   # 危険なので開発環境でしか呼べないようにすること！
   def dummy_form

@@ -20,6 +20,9 @@ SampleKoalaRailsApp::Application.routes.draw do
   # 招待一覧ページ
   resources :invites, only: [:new, :create]
 
+  # プライバシーポリシー
+  get '/privacy' => 'home#privacy'
+
   # 開発環境のみのダミーログイン画面
   if Rails.env.development?
     get '/dummy_login' => 'home#dummy_form'
