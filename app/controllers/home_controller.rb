@@ -2,11 +2,12 @@ class HomeController < ApplicationController
   # GET /
   # ログイン状態に応じて画面を切り替える
   def index
-
-
     if @current_user
       # ログイン状態
+      # FriendsPopを利用している友人を更新
       @friends = Profile.checkFriendsToken(@current_user.api.get_object('/me/friends','fields'=>'name,gender,picture.width(200).height(200)','locale' =>'ja_JP'))
+      #バックグラウンドで友人の画像を更新
+      Resque.enqueue(Dataloader, @current_user.fb_id)
     else
       render 'intro'
     end

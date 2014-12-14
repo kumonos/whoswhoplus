@@ -112,6 +112,11 @@ class Profile < ActiveRecord::Base
           relationship_status:relationship,
           picture_url:friend['picture'].try { |p| p['data'].try { |d| d['url'] } },
           )
+      else
+        #存在している場合、画像だけ更新
+        profile = Profile.where(fb_id: friend['id']).first
+        profile.picture_url = friend['picture'].try { |p| p['data'].try { |d| d['url'] } }
+        profile.save!
       end
     end  
   end
