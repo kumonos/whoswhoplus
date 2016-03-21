@@ -1,6 +1,0 @@
-.via-candidate.col-xs-6.col-sm-3.col-md-2
-  = lazy_image_tag user.picture_url, size: '50x50', alt: user.name
-  %br
-  = user.name
-  %br
-  = button_tag '招待する', data: {name: user.name, fb_id: user.fb_id}, class: 'btn btn-primary btn-xs invite-btn'

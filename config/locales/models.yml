@@ -1,5 +1,0 @@
-ja:
-  activerecord:
-    attributes:
-      message:
-        message: 本文

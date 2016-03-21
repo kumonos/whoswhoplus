@@ -1,7 +1,0 @@
-.text-center
-  %div
-    %i.fa.fa-5x.fa-exclamation-triangle
-%h2 内部サーバーエラー
-%p
-  サーバーに技術的な問題が発生しております。お手数ですが時間を空けてもう一度お試しください。エラーが繰り返す場合は、お問い合せ番号 #{@inquiry_key} を添えて下記のボタンからお問い合わせください。
-%p= link_to '<i class="fa fa-envelope-o"></i> お問い合わせ'.html_safe, "mailto:whoswhoplus-support@kumonos.jp?body=#{@inquiry_key}", class: 'btn btn-info'
